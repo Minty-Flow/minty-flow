@@ -42,20 +42,21 @@ function walk(
       const nextPrefix = prefix + (isLast ? "    " : "│   ");
       const fullPath = path.join(dir, entry.name);
 
-      const icon = entry.isDirectory() ? "📁 " : "📄 ";
+      // const icon = entry.isDirectory() ? "📁 " : "📄 ";
 
       if (entry.isDirectory()) {
         return (
           prefix +
           connector +
-          icon +
+          // icon +
           entry.name +
           "/\n" +
           walk(fullPath, nextPrefix, depth + 1)
         );
       }
 
-      return prefix + connector + icon + entry.name + "\n";
+      // return prefix + connector + icon + entry.name + "\n";
+      return prefix + connector + entry.name + "\n";
     })
     .join("");
 }
