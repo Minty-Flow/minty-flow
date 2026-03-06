@@ -613,7 +613,8 @@
         "restore": "استعادة",
         "account": "حساب",
         "toAccount": "إلى الحساب",
-        "tags": "العلامات"
+        "tags": "العلامات",
+        "location": "موقع"
       },
       "recurring": {
         "label": "معاملة متكررة",

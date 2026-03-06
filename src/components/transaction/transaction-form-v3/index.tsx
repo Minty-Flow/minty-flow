@@ -76,6 +76,8 @@ import { useFormConversionRate } from "./use-form-conversion-rate"
 import { useFormDatePicker } from "./use-form-date-picker"
 import { useFormLocation } from "./use-form-location"
 
+// TODO: on isRTL switch up the chevron and there are some hardcoded strings lets translate
+
 export function TransactionFormV3({
   transaction,
   accounts,
@@ -775,7 +777,7 @@ export function TransactionFormV3({
           {locationEnabled && (
             <View style={transactionFormStyles.fieldBlock}>
               <Text variant="small" style={transactionFormStyles.sectionLabel}>
-                Location
+                {t("components.transactionForm.fields.location")}
               </Text>
               <FormLocationPicker
                 location={location}

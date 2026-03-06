@@ -617,7 +617,8 @@
         "tapToEditNotes": "Tap to edit notes",
         "addNotes": "Add notes...",
         "moveToTrash": "Move to trash",
-        "restore": "Restore"
+        "restore": "Restore",
+        "location": "Location"
       },
       "recurring": {
         "label": "Recurring transaction",
