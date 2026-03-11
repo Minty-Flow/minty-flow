@@ -1,6 +1,6 @@
 # Project Structure
 
-Generated on: 2026-03-08T17:30:28.292Z
+Generated on: 2026-03-11T15:02:41.184Z
 
 ```
 ./
@@ -628,6 +628,20 @@ Generated on: 2026-03-08T17:30:28.292Z
 │   │   │   ├── math-toolbar.tsx
 │   │   │   ├── math-utils.ts
 │   │   │   └── styles.ts
+│   │   ├── stats/
+│   │   │   ├── chart-container.tsx
+│   │   │   ├── chart-crosshair.tsx
+│   │   │   ├── currency-hero-row.tsx
+│   │   │   ├── currency-stat-section.tsx
+│   │   │   ├── daily-expense-line-chart.tsx
+│   │   │   ├── delta-badge.tsx
+│   │   │   ├── stat-hero-card.tsx
+│   │   │   ├── stats-averages-row.tsx
+│   │   │   ├── stats-category-pie.tsx
+│   │   │   ├── stats-empty-state.tsx
+│   │   │   ├── stats-pending-notice.tsx
+│   │   │   ├── stats-skeleton.tsx
+│   │   │   └── stats-uncategorized-alert.tsx
 │   │   ├── tag/
 │   │   │   ├── action-buttons.tsx
 │   │   │   ├── delete-section.tsx
@@ -749,11 +763,10 @@ Generated on: 2026-03-08T17:30:28.292Z
 │   ├── contexts/
 │   │   └── scroll-into-view-context.tsx
 │   ├── database/
+│   │   ├── migrations/
 │   │   ├── models/
 │   │   │   ├── account.ts
-│   │   │   ├── budget.ts
 │   │   │   ├── category.ts
-│   │   │   ├── goal.ts
 │   │   │   ├── loan.ts
 │   │   │   ├── recurring-transaction.ts
 │   │   │   ├── tag.ts
@@ -763,12 +776,10 @@ Generated on: 2026-03-08T17:30:28.292Z
 │   │   ├── services/
 │   │   │   ├── account-service.ts
 │   │   │   ├── balance-service.ts
-│   │   │   ├── budget-service.ts
 │   │   │   ├── category-service.ts
-│   │   │   ├── goal-service.ts
-│   │   │   ├── loan-service.ts
 │   │   │   ├── README.md
 │   │   │   ├── recurring-transaction-service.ts
+│   │   │   ├── stats-service.ts
 │   │   │   ├── tag-service.ts
 │   │   │   ├── transaction-service.ts
 │   │   │   └── transfer-service.ts
@@ -783,6 +794,7 @@ Generated on: 2026-03-08T17:30:28.292Z
 │   ├── hooks/
 │   │   ├── exchange-rates-editor.reducer.ts
 │   │   ├── use-balance-before.ts
+│   │   ├── use-chart-font.ts
 │   │   ├── use-location-permission-status.ts
 │   │   ├── use-navigation-guard.ts
 │   │   ├── use-notification-permission-status.ts
@@ -791,6 +803,7 @@ Generated on: 2026-03-08T17:30:28.292Z
 │   │   ├── use-recurring-transaction-sync.ts
 │   │   ├── use-retention-cleanup.ts
 │   │   ├── use-scroll-into-view.ts
+│   │   ├── use-stats.ts
 │   │   └── use-time-reactivity.ts
 │   ├── i18n/
 │   │   ├── translation/
@@ -846,12 +859,11 @@ Generated on: 2026-03-08T17:30:28.292Z
 │   │   └── unistyles.ts
 │   ├── types/
 │   │   ├── accounts.ts
-│   │   ├── budgets.ts
 │   │   ├── categories.ts
 │   │   ├── currency.ts
-│   │   ├── goals.ts
 │   │   ├── loans.ts
 │   │   ├── new.ts
+│   │   ├── stats.ts
 │   │   ├── tags.ts
 │   │   ├── transaction-filters.ts
 │   │   ├── transactions.ts
@@ -868,6 +880,7 @@ Generated on: 2026-03-08T17:30:28.292Z
 │       ├── parse-math-expression.ts
 │       ├── pending-transactions.ts
 │       ├── recurrence.ts
+│       ├── stats-date-range.ts
 │       ├── string-utils.ts
 │       ├── theme-utils.ts
 │       ├── time-utils.ts

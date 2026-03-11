@@ -65,6 +65,9 @@ const FORMAT = {
   LOAN_DATE: "PP",
   MONTH_NAME: "LLLL",
   MONTH_NAME_YEAR: "LLLL yyyy",
+  SHORT_MONTH_NAME: "MMM",
+  DAY_YEAR: "d, yyyy",
+  SHORT_MONTH_DAY_YEAR: "MMM d, yyyy",
 } as const
 
 // Helper to get the current locale object from the store
@@ -252,4 +255,19 @@ export function getMonthNames(): string[] {
  */
 export function getDisplayMonthTitle(year: number, monthIndex: number) {
   return fmt(new Date(year, monthIndex, 1), FORMAT.MONTH_NAME_YEAR)
+}
+
+/** Short month name (e.g. "Feb"). */
+export function formatShortMonthName(date: DateInput): string {
+  return formatWithPattern(date, FORMAT.SHORT_MONTH_NAME)
+}
+
+/** Day and year (e.g. "15, 2025"). */
+export function formatDayYear(date: DateInput): string {
+  return formatWithPattern(date, FORMAT.DAY_YEAR)
+}
+
+/** Short month, day, and year (e.g. "Feb 15, 2025"). */
+export function formatShortMonthDayYear(date: DateInput): string {
+  return formatWithPattern(date, FORMAT.SHORT_MONTH_DAY_YEAR)
 }

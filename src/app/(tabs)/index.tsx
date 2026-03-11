@@ -227,7 +227,7 @@ const styles = StyleSheet.create((theme) => ({
   },
   header: {
     marginHorizontal: 20,
-    marginTop: 40,
+    marginTop: 50,
     marginBottom: 10,
     flexDirection: "row",
     alignItems: "center",

@@ -210,7 +210,102 @@
       },
       "emptyState": {
         "title": "لا توجد بيانات لهذه الفترة",
-        "description": "أضف معاملات لرؤية إحصائياتك"
+        "description": "أضف معاملات لرؤية إحصائياتك",
+        "addFirst": "أضف معاملتك الأولى",
+        "allPending": "جميع المعاملات معلقة",
+        "allTransfers": "جميع المعاملات هي التحويلات",
+        "noTransactionsEver": "لا توجد معاملات حتى الآن"
+      },
+      "accountBreakdown": {
+        "title": "عن طريق الحساب",
+        "spent": "المصروف",
+        "earned": "الدخل"
+      },
+      "averages": {
+        "expense": "متوسط \nحساب",
+        "income": "متوسط \nدخل",
+        "net": "متوسط \nشبكة",
+        "title": "المتوسطات اليومية"
+      },
+      "balanceChart": {
+        "closing": "إغلاق",
+        "opening": "افتتاح",
+        "title": "التوازن مع مرور الوقت"
+      },
+      "calendarHeatmap": {
+        "title": "خريطة الحرارة للإنفاق"
+      },
+      "categoryDeltas": {
+        "decreased": "انخفضت",
+        "increased": "زيادة",
+        "none": "لا أحد",
+        "title": "تغييرات الفئة"
+      },
+      "chart": {
+        "categoryBreakdown": "حسب الفئة",
+        "dailyTrend": "الاتجاه اليومي",
+        "incomeVsExpense": "الدخل مقابل النفقات",
+        "netWorth": "صافي القيمة مع مرور الوقت",
+        "noPreviousData": "لا توجد بيانات سابقة",
+        "periodComparison": "مقارنة الفترة",
+        "spendingByCategory": "الإنفاق حسب الفئة",
+        "prevPeriod": "السابق",
+        "expenseForecastTitle": "توقعات المصروفات لـ {{month}}",
+        "expenseTotalTitle": "إجمالي مصروفات {{month}}"
+      },
+      "currency": {
+        "sectionHeader": "{{عملة}}"
+      },
+      "dateRange": {
+        "thisMonth": "هذا الشهر"
+      },
+      "dayOfWeek": {
+        "title": "الإنفاق حسب يوم الأسبوع"
+      },
+      "delta": {
+        "notAvailable": "لا يوجد"
+      },
+      "hero": {
+        "netFlow": "صافي التدفق",
+        "totalExpense": "إجمالي النفقات",
+        "totalIncome": "إجمالي الدخل",
+        "transactionCount": "{{count}} معاملة",
+        "onPaceFor": "في مسار ~{{amount}}"
+      },
+      "moreOptions": "المزيد من الخيارات",
+      "pendingNotice": "{{count}} المعاملات المعلقة مستبعدة من الإحصائيات",
+      "pieToggle": {
+        "expenses": "نفقات",
+        "income": "دخل",
+        "noData": "لا توجد بيانات لهذا العرض"
+      },
+      "savingsRate": {
+        "negative": "الإنفاق أكثر من الكسب",
+        "noIncome": "لا دخل هذه الفترة",
+        "savedOf": "ل",
+        "savedPrefix": "أنقذ",
+        "savedSuffix": "دخل",
+        "title": "معدل الادخار"
+      },
+      "subtypeBreakdown": {
+        "fixed": "يتكرر",
+        "title": "توزيع النفقات",
+        "variable": "لمرة واحدة"
+      },
+      "tagBreakdown": {
+        "title": "بواسطة العلامة",
+        "transactions": "{{عدد}} من المعاملات"
+      },
+      "topCategory": {
+        "subtitle": "فئة الإنفاق الأعلى"
+      },
+      "topTransactions": {
+        "title": "أعلى النفقات"
+      },
+      "uncategorized": {
+        "categorizeNow": "تصنيف الآن",
+        "description": "بعض المعاملات ليس لها فئة معينة",
+        "title": "{{عدد}} غير مصنف"
       }
     },
     "settings": {

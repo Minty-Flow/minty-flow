@@ -3,9 +3,7 @@ import SQLiteAdapter from "@nozbe/watermelondb/adapters/sqlite"
 
 import migrations from "./migrations"
 import AccountModel from "./models/account"
-import BudgetModel from "./models/budget"
 import CategoryModel from "./models/category"
-import GoalModel from "./models/goal"
 import LoanModel from "./models/loan"
 import RecurringTransactionModel from "./models/recurring-transaction"
 import TagModel from "./models/tag"
@@ -44,9 +42,7 @@ export const database = new Database({
   adapter,
   modelClasses: [
     AccountModel,
-    BudgetModel,
     CategoryModel,
-    GoalModel,
     LoanModel,
     RecurringTransactionModel,
     TagModel,

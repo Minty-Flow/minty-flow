@@ -198,19 +198,114 @@
       "title": "Statistics",
       "description": "Your financial overview",
       "reorderHint": "Use arrows to reorder",
+      "moreOptions": "More options",
       "periodSelector": {
         "month": "Month",
         "year": "Year",
         "custom": "Custom"
       },
-      "charts": {
+      "currency": {
+        "sectionHeader": "{{currency}}"
+      },
+      "hero": {
+        "totalExpense": "Total Expense",
+        "totalIncome": "Total Income",
+        "netFlow": "Net Flow",
+        "transactionCount": "{{count}} txn",
+        "onPaceFor": "On pace for ~{{amount}}"
+      },
+      "averages": {
+        "title": "Daily Averages",
+        "expense": "Avg. Expense",
+        "income": "Avg. Income",
+        "net": "Avg. Net"
+      },
+      "chart": {
+        "dailyTrend": "Daily Trend",
+        "periodComparison": "Period Comparison",
+        "noPreviousData": "No previous data",
+        "spendingByCategory": "Spending by Category",
         "incomeVsExpense": "Income vs Expense",
         "categoryBreakdown": "By Category",
-        "netWorth": "Net Worth Over Time"
+        "netWorth": "Net Worth Over Time",
+        "prevPeriod": "Previous",
+        "expenseForecastTitle": "Expense forecast for {{month}}",
+        "expenseTotalTitle": "{{month}} total expense"
+      },
+      "pieToggle": {
+        "expenses": "Expenses",
+        "income": "Income",
+        "noData": "No data for this view"
       },
       "emptyState": {
         "title": "No data for this period",
-        "description": "Add transactions to see your stats"
+        "description": "Add transactions to see your stats",
+        "allPending": "All transactions are pending",
+        "allTransfers": "All transactions are transfers",
+        "noTransactionsEver": "No transactions yet",
+        "addFirst": "Add your first transaction"
+      },
+      "savingsRate": {
+        "title": "Savings Rate",
+        "noIncome": "No income this period",
+        "negative": "Spending more than earning",
+        "savedPrefix": "Saved",
+        "savedOf": "of",
+        "savedSuffix": "income"
+      },
+      "pendingNotice": "{{count}} pending transactions excluded from stats",
+      "uncategorized": {
+        "title": "{{count}} uncategorized",
+        "description": "Some transactions have no category assigned",
+        "categorizeNow": "Categorize now"
+      },
+      "topCategory": {
+        "subtitle": "Top spending category"
+      },
+      "topTransactions": {
+        "title": "Top Expenses"
+      },
+      "accountBreakdown": {
+        "title": "By Account",
+        "spent": "Spent",
+        "earned": "Earned"
+      },
+      "tagBreakdown": {
+        "title": "By Tag",
+        "transactions": "{{count}} transactions"
+      },
+      "categoryDeltas": {
+        "title": "Category Changes",
+        "increased": "Increased",
+        "decreased": "Decreased",
+        "none": "None"
+      },
+      "subtypeBreakdown": {
+        "title": "Expense Breakdown",
+        "fixed": "Recurring",
+        "variable": "One-time"
+      },
+      "balanceChart": {
+        "title": "Balance Over Time",
+        "opening": "Opening",
+        "closing": "Closing"
+      },
+      "dayOfWeek": {
+        "title": "Spending by Day of Week"
+      },
+      "calendarHeatmap": {
+        "title": "Spending Heatmap"
+      },
+      "delta": {
+        "notAvailable": "N/A"
+      },
+      "dateRange": {
+        "thisMonth": "This month"
+      },
+      "charts": {
+        "categoryBreakdown": "category breakdown",
+        "incomeVsExpense": "Income Vs Expense",
+        "netWorth": "net work"
       }
     },
     "settings": {

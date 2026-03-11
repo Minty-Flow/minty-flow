@@ -266,7 +266,7 @@ const styles = StyleSheet.create((theme) => ({
     alignItems: "center",
     justifyContent: "space-between",
 
-    marginTop: 40,
+    marginTop: 50,
     marginBottom: 10,
   },
   actionButtons: {

@@ -42,7 +42,7 @@ export default class TransactionModel extends Model implements Transaction {
 
   // Additional fields
   @field("subtype") subtype!: string | null
-  @field("extra") private extraJson!: string | null
+  @field("extra") extraJson!: string | null
   @field("has_attachments") hasAttachments!: boolean
 
   // Foreign key column + relation for category (nullable for uncategorized transactions)

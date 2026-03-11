@@ -160,6 +160,21 @@ export const VALID_ICON_NAMES = defineValidIcons([
   "format-list-bulleted",
   "restore",
   "dots-triangle",
+  "plus-circle",
+  "cash-plus",
+  "bank",
+  "arrow-down-circle",
+  "arrow-up-circle",
+  "calendar-today",
+  "calendar-week",
+  "calendar-month",
+  "calendar-range",
+  "sync",
+  "gesture-tap",
+  "tray",
+  "hand-pointing-up",
+  "bank",
+  "refresh",
 ] as const)
 
 /**
@@ -175,6 +190,7 @@ export type IconSize =
   | 16
   | 18
   | 20
+  | 22
   | 24
   | 28
   | 32
@@ -207,6 +223,7 @@ export type IconSize =
   | 240
   | 248
   | 256
+  | 26
 
 /**
  * Props for the IconSymbol component.
