@@ -225,7 +225,7 @@ export type IconSize =
   | 256
   | 26
 
-type IconSymbolProps = Omit<SvgProps, "width" | "height" | "style"> & {
+type IconSymbolProps = Omit<SvgProps, "width" | "height"> & {
   name: IconSymbolName
   size?: IconSize
   color?: string | OpaqueColorValue
