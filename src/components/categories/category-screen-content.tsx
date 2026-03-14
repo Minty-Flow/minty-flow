@@ -13,7 +13,6 @@ import { CategoryList } from "./category-list"
 
 interface CategoryScreenContentProps {
   subtitle: string
-  includeArchived: boolean
   initialType?: TransactionType
   searchPlaceholder?: string
   extraListProps?: {
@@ -25,7 +24,6 @@ interface CategoryScreenContentProps {
 
 export function CategoryScreenContent({
   subtitle,
-  includeArchived,
   initialType,
   searchPlaceholder,
   extraListProps,
@@ -88,7 +86,6 @@ export function CategoryScreenContent({
       {/* Category List */}
       <CategoryList
         type={activeTab}
-        includeArchived={includeArchived}
         searchQuery={searchQuery}
         {...extraListProps}
       />

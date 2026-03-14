@@ -18,7 +18,6 @@ export const schema = appSchema({
         { name: "icon", type: "string", isOptional: true },
         { name: "color_scheme_name", type: "string", isOptional: true },
         { name: "transaction_count", type: "number" },
-        { name: "is_archived", type: "boolean" },
         { name: "created_at", type: "number" },
         { name: "updated_at", type: "number" },
       ],
@@ -34,7 +33,6 @@ export const schema = appSchema({
         { name: "currency_code", type: "string" },
         { name: "icon", type: "string", isOptional: true },
         { name: "color_scheme_name", type: "string", isOptional: true },
-        { name: "is_archived", type: "boolean" },
         { name: "is_primary", type: "boolean" },
         { name: "exclude_from_balance", type: "boolean" },
         { name: "created_at", type: "number" },
@@ -148,7 +146,6 @@ export const schema = appSchema({
         { name: "icon", type: "string", isOptional: true },
         { name: "color_scheme_name", type: "string", isOptional: true },
         { name: "is_completed", type: "boolean" },
-        { name: "is_archived", type: "boolean" },
         { name: "created_at", type: "number" },
         { name: "updated_at", type: "number" },
       ],
@@ -175,7 +172,6 @@ export const schema = appSchema({
           isOptional: true,
         },
         { name: "is_paid", type: "boolean" },
-        { name: "is_archived", type: "boolean" },
         { name: "created_at", type: "number" },
         { name: "updated_at", type: "number" },
       ],
@@ -205,22 +201,46 @@ export const schema = appSchema({
       columns: [
         { name: "name", type: "string" },
         { name: "amount", type: "number" },
-        { name: "spent_amount", type: "number" }, // Track current spending
         { name: "currency_code", type: "string" },
         { name: "period", type: "string" }, // "daily" | "weekly" | "monthly" | "yearly" | "custom"
         { name: "start_date", type: "number" },
         { name: "end_date", type: "number", isOptional: true },
-        {
-          name: "category_id",
-          type: "string",
-          isIndexed: true,
-          isOptional: true,
-        }, // Budget for specific category
         { name: "alert_threshold", type: "number", isOptional: true }, // Percentage (e.g., 80 for 80%)
         { name: "is_active", type: "boolean" },
-        { name: "is_archived", type: "boolean" },
+        { name: "icon", type: "string", isOptional: true },
+        { name: "color_scheme_name", type: "string", isOptional: true },
         { name: "created_at", type: "number" },
         { name: "updated_at", type: "number" },
+      ],
+    }),
+
+    // Join table for Budgets and Accounts
+    tableSchema({
+      name: "budget_accounts",
+      columns: [
+        { name: "budget_id", type: "string", isIndexed: true },
+        { name: "account_id", type: "string", isIndexed: true },
+        { name: "created_at", type: "number" },
+      ],
+    }),
+
+    // Join table for Budgets and categories
+    tableSchema({
+      name: "budget_categories",
+      columns: [
+        { name: "budget_id", type: "string", isIndexed: true },
+        { name: "category_id", type: "string", isIndexed: true },
+        { name: "created_at", type: "number" },
+      ],
+    }),
+
+    // Join table for Goals and Accounts
+    tableSchema({
+      name: "goal_accounts",
+      columns: [
+        { name: "goal_id", type: "string", isIndexed: true },
+        { name: "account_id", type: "string", isIndexed: true },
+        { name: "created_at", type: "number" },
       ],
     }),
   ],

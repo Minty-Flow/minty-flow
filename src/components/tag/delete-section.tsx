@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next"
 import { StyleSheet } from "react-native-unistyles"
 
 import { Button } from "~/components/ui/button"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
 
@@ -20,7 +20,7 @@ export const DeleteSection = ({ onDeletePress }: DeleteSectionProps) => {
         onPress={onDeletePress}
         style={styles.actionButton}
       >
-        <IconSymbol name="trash-can" size={20} style={styles.deleteIcon} />
+        <IconSvg name="trash" size={20} color={styles.deleteIcon.color} />
         <Text variant="default" style={styles.deleteText}>
           {t("screens.settings.tags.form.deleteLabel")}
         </Text>

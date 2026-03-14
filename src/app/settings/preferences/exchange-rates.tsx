@@ -18,7 +18,7 @@ import { SearchInput } from "~/components/search-input"
 import { SmartAmountInput } from "~/components/smart-amount-input"
 import { ActivityIndicatorMinty } from "~/components/ui/activity-indicator-minty"
 import { Button } from "~/components/ui/button"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
@@ -317,7 +317,7 @@ export default function ExchangeRatesScreen() {
           onPress={() => setInfoModalVisible(true)}
           accessibilityLabel={t("screens.settings.exchangeRates.a11y.info")}
         >
-          <IconSymbol name="information" size={24} />
+          <IconSvg name="info-circle" size={24} />
         </Button>
       ),
     })
@@ -351,7 +351,6 @@ export default function ExchangeRatesScreen() {
         title={t("screens.settings.exchangeRates.infoModal.title")}
         description={t("screens.settings.exchangeRates.infoModal.description")}
         okLabel={t("screens.settings.exchangeRates.infoModal.ok")}
-        icon="information"
       />
     </>
   )

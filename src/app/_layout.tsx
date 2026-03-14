@@ -108,12 +108,6 @@ export default function RootLayout() {
                 name="settings/categories/index"
                 options={{ title: t("components.categories.title") }}
               />
-              <Stack.Screen
-                name="settings/categories/archived"
-                options={{
-                  title: t("components.categories.form.title.archived"),
-                }}
-              />
 
               <Stack.Screen
                 name="settings/categories/[categoryId]/index"
@@ -161,8 +155,22 @@ export default function RootLayout() {
                 }}
               />
               <Stack.Screen
-                name="settings/budgets"
+                name="settings/budgets/index"
                 options={{ title: t("screens.settings.budgets.title") }}
+              />
+              <Stack.Screen
+                name="settings/budgets/[budgetId]/modify"
+                options={({ route }) => {
+                  const params = route.params as
+                    | { budgetId?: string }
+                    | undefined
+                  return {
+                    title:
+                      params?.budgetId === NewEnum.NEW
+                        ? t("screens.settings.budgets.form.title.create")
+                        : t("screens.settings.budgets.form.title.edit"),
+                  }
+                }}
               />
               <Stack.Screen
                 name="settings/pending-transactions"
@@ -173,8 +181,20 @@ export default function RootLayout() {
                 options={{ title: t("screens.settings.billSplitter.title") }}
               />
               <Stack.Screen
-                name="settings/goals"
+                name="settings/goals/index"
                 options={{ title: t("screens.settings.goals.title") }}
+              />
+              <Stack.Screen
+                name="settings/goals/[goalId]/modify"
+                options={({ route }) => {
+                  const params = route.params as { goalId?: string } | undefined
+                  return {
+                    title:
+                      params?.goalId === NewEnum.NEW
+                        ? t("screens.settings.goals.form.title.create")
+                        : t("screens.settings.goals.form.title.edit"),
+                  }
+                }}
               />
 
               {/* settings screens preferences */}

@@ -13,7 +13,7 @@ import { PrivacyEyeControl } from "~/components/privacy-eye-control"
 import { ReorderableListV2 } from "~/components/reorderable-list-v2"
 import { SearchInput } from "~/components/search-input"
 import { Button } from "~/components/ui/button"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
 import type AccountModel from "~/database/models/account"
@@ -131,16 +131,16 @@ const AccountsScreenInner = ({
           {isReorderMode ? (
             <>
               <Button variant="ghost" size="icon" onPress={handleCancelReorder}>
-                <IconSymbol name="close" size={24} />
+                <IconSvg name="x" size={24} />
               </Button>
               <Button variant="ghost" size="icon" onPress={handleSaveReorder}>
-                <IconSymbol name="check" size={24} />
+                <IconSvg name="check" size={24} />
               </Button>
             </>
           ) : (
             <>
               <Button variant="ghost" size="icon" onPress={handleToggleReorder}>
-                <IconSymbol name="swap-vertical" size={24} />
+                <IconSvg name="arrow-move-vertical" size={24} />
               </Button>
 
               <PrivacyEyeControl />
@@ -214,7 +214,7 @@ const AccountsScreenInner = ({
           !isReorderMode ? (
             <View style={styles.footer}>
               <Button onPress={handleAddAccount} variant="secondary">
-                <IconSymbol name="plus" size={24} />
+                <IconSvg name="plus" size={24} />
                 <Text variant="default">
                   {t("screens.accounts.addNewAccount")}
                 </Text>
@@ -231,11 +231,8 @@ const AccountsScreenInner = ({
 const enhance = withObservables(
   ["excludeFromTotals"],
   ({ excludeFromTotals = true }: { excludeFromTotals?: boolean }) => ({
-    accountModels: observeAccountModels(false),
-    accountsWithMonthTotals: observeAccountsWithMonthTotals(
-      false,
-      excludeFromTotals,
-    ),
+    accountModels: observeAccountModels(),
+    accountsWithMonthTotals: observeAccountsWithMonthTotals(excludeFromTotals),
   }),
 )
 

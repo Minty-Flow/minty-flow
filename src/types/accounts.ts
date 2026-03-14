@@ -40,7 +40,6 @@ export interface Account {
   icon: string | null
   colorSchemeName: string | null
   colorScheme: MintyColorScheme | null // Computed from colorSchemeName via registry
-  isArchived: boolean
   isPrimary: boolean
   excludeFromBalance: boolean
   createdAt: Date

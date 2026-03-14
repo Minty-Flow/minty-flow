@@ -34,7 +34,6 @@ export interface Category {
   colorSchemeName: string | null
   colorScheme: MintyColorScheme | null // Computed from colorSchemeName via registry
   transactionCount: number
-  isArchived: boolean
   createdAt: Date
   updatedAt: Date
 }

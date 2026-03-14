@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next"
 import { ScrollView } from "react-native"
 import { StyleSheet, useUnistyles } from "react-native-unistyles"
 
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { InfoBanner } from "~/components/ui/info-banner"
 import { Pressable } from "~/components/ui/pressable"
 import { Switch } from "~/components/ui/switch"
@@ -37,8 +37,8 @@ function LayoutPreview({ variant }: { variant: TransferLayoutType }) {
     theme.colors.customColors?.success ?? theme.colors.primary
   return (
     <View native style={styles.previewRow}>
-      <IconSymbol
-        name="swap-horizontal"
+      <IconSvg
+        name="transfer"
         size={18}
         color={theme.colors.customColors?.semi}
       />
@@ -127,7 +127,7 @@ export default function TransfersPreferencesScreen() {
                   <LayoutPreview variant={option.value} />
                 </View>
                 {isSelected ? (
-                  <IconSymbol
+                  <IconSvg
                     name="check"
                     size={20}
                     color={theme.colors.primary}

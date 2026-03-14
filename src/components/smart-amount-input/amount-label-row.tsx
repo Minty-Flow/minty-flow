@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next"
 
-import { IconSymbol } from "../ui/icon-symbol"
+import { IconSvg } from "../ui/icon-svg"
 import { Pressable } from "../ui/pressable"
 import { Text } from "../ui/text"
 import { View } from "../ui/view"
@@ -36,7 +36,7 @@ export const AmountLabelRow = ({
           "components.transactionForm.amountInput.mathToolbarHint",
         )}
       >
-        <IconSymbol name="calculator" size={24} />
+        <IconSvg name="calculator" size={24} />
       </Pressable>
     </View>
   )

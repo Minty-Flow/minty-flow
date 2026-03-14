@@ -11,7 +11,7 @@ import { useUnistyles } from "react-native-unistyles"
 
 import { DateRangePresetModal } from "~/components/date-range-preset-modal"
 import { Chip } from "~/components/ui/chips"
-import { IconSymbol, type IconSymbolName } from "~/components/ui/icon-symbol"
+import { IconSvg, type IconSymbolName } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import type {
@@ -309,7 +309,7 @@ export function TransactionFilterHeader({
   }[] = [
     {
       key: "search",
-      icon: "magnify",
+      icon: "search",
       label: isSearchActive
         ? searchState.query || t("components.filters.chips.untitled")
         : t("common.actions.search"),
@@ -324,43 +324,43 @@ export function TransactionFilterHeader({
     },
     {
       key: "categories",
-      icon: "shape",
+      icon: "category",
       label: categoryLabel,
       active: isCategoriesActive,
     },
     {
       key: "tags",
-      icon: "tag-multiple",
+      icon: "tags",
       label: tagLabel,
       active: isTagsActive,
     },
     {
       key: "pending",
-      icon: "progress-clock",
+      icon: "clock",
       label: pendingLabel,
       active: isPendingActive,
     },
     {
       key: "type",
-      icon: "swap-horizontal",
+      icon: "switch-horizontal",
       label: typeLabel,
       active: isTypeActive,
     },
     {
       key: "attachments",
-      icon: "attachment",
+      icon: "paperclip",
       label: attachmentLabel,
       active: isAttachmentsActive,
     },
     {
       key: "currency",
-      icon: "currency-usd",
+      icon: "currency-dollar",
       label: currencyLabel,
       active: isCurrencyActive,
     },
     {
       key: "groupBy",
-      icon: "dots-triangle",
+      icon: "grip-horizontal",
       label: groupByLabel,
       active: isGroupByActive,
     },
@@ -382,7 +382,7 @@ export function TransactionFilterHeader({
             style={[filterHeaderStyles.clearAllPill, { borderColor }]}
             onPress={handleClearAll}
           >
-            <IconSymbol name="close-circle" size={18} />
+            <IconSvg name="circle-x" size={18} />
             <Text
               variant="default"
               style={[
@@ -408,7 +408,7 @@ export function TransactionFilterHeader({
                   ? handleDatePress()
                   : togglePanel(key as FilterPanelKey)
               }
-              leading={<IconSymbol name={icon} size={18} />}
+              leading={<IconSvg name={icon} size={18} />}
             />
           )
         })}

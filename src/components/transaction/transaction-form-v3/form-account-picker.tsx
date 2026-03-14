@@ -12,7 +12,7 @@ import { useUnistyles } from "react-native-unistyles"
 import { DynamicIcon } from "~/components/dynamic-icon"
 import { Money } from "~/components/money"
 import { ChevronIcon } from "~/components/ui/chevron-icon"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Input } from "~/components/ui/input"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
@@ -117,7 +117,7 @@ export function FormAccountPicker({
         {selectedAccount ? (
           <>
             <DynamicIcon
-              icon={selectedAccount.icon || "wallet-bifold"}
+              icon={selectedAccount.icon || "wallet"}
               size={24}
               colorScheme={getThemeStrict(selectedAccount.colorSchemeName)}
               variant="badge"
@@ -149,7 +149,7 @@ export function FormAccountPicker({
         ) : (
           <>
             <DynamicIcon
-              icon="wallet-bifold"
+              icon="wallet"
               size={24}
               color={theme.colors.primary}
               variant="badge"
@@ -161,8 +161,8 @@ export function FormAccountPicker({
             >
               {t("screens.accounts.a11y.select")}
             </Text>
-            <IconSymbol
-              name={accountPickerOpen ? "close" : "chevron-down"}
+            <IconSvg
+              name={accountPickerOpen ? "x" : "chevron-down"}
               size={20}
               style={transactionFormStyles.chevronIcon}
             />
@@ -202,7 +202,7 @@ export function FormAccountPicker({
                 }}
               >
                 <DynamicIcon
-                  icon={account.icon || "wallet-bifold"}
+                  icon={account.icon || "wallet"}
                   size={24}
                   colorScheme={getThemeStrict(account.colorSchemeName)}
                   variant="badge"

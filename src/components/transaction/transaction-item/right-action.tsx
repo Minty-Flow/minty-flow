@@ -6,7 +6,7 @@ import Animated, {
 } from "react-native-reanimated"
 import { StyleSheet } from "react-native-unistyles"
 
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { View } from "~/components/ui/view"
 
@@ -46,8 +46,8 @@ export const RightAction = ({
         accessibilityLabel={accessibilityLabel}
       >
         <Animated.View style={iconStyle}>
-          <IconSymbol
-            name="trash-can"
+          <IconSvg
+            name="trash"
             size={24}
             color={rightActionStyles.trashIcon.color}
           />

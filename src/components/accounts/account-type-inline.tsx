@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next"
 import { View } from "react-native"
 import { StyleSheet } from "react-native-unistyles"
 
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { useScrollIntoView } from "~/hooks/use-scroll-into-view"
@@ -62,7 +62,7 @@ export function AccountTypeInline({
         disabled={!editable}
       >
         <View style={styles.triggerLeft}>
-          <IconSymbol name="shape" size={24} />
+          <IconSvg name="category" size={24} />
           <Text variant="default" style={styles.triggerLabel}>
             {t("screens.accounts.form.typeLabel")}
           </Text>
@@ -102,7 +102,11 @@ export function AccountTypeInline({
                 {t.label}
               </Text>
               {selectedType === t.type && (
-                <IconSymbol name="check" size={20} style={styles.optionCheck} />
+                <IconSvg
+                  name="check"
+                  size={20}
+                  color={styles.optionCheck.color}
+                />
               )}
             </Pressable>
           ))}

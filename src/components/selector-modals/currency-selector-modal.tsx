@@ -13,7 +13,7 @@ import { StyleSheet } from "react-native-unistyles"
 import { SearchInput } from "~/components/search-input"
 import { Button } from "~/components/ui/button"
 import { ChevronIcon } from "~/components/ui/chevron-icon"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { currencyRegistryService } from "~/services/currency-registry"
@@ -160,7 +160,7 @@ export function CurrencySelectorModal({
           disabled={!editable}
         >
           <View style={triggerStyles.triggerLeft}>
-            <IconSymbol name="currency-usd" size={24} />
+            <IconSvg name="currency-dollar" size={24} />
             <Text variant="default" style={triggerStyles.triggerLabel}>
               {t("components.selectors.currency.triggerLabel")}
             </Text>

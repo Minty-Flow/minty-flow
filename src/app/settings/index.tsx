@@ -5,7 +5,7 @@ import { StyleSheet } from "react-native-unistyles"
 
 import { ActionItem } from "~/components/action-item"
 import { ProfileSection } from "~/components/profile/profile-section"
-import type { IconSymbolName } from "~/components/ui/icon-symbol"
+import type { IconSymbolName } from "~/components/ui/icon-svg"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
 import type { TranslationKey } from "~/i18n/config"
@@ -21,27 +21,27 @@ const moneyManagementItems: SettingsItem[] = [
   {
     titleKey: "screens.accounts.title",
     route: "/settings/all-accounts",
-    icon: "wallet-bifold",
+    icon: "wallet",
   },
   {
     titleKey: "screens.settings.loans.title",
     route: "/settings/loans",
-    icon: "handshake",
+    icon: "affiliate",
   },
   {
     titleKey: "components.categories.title",
     route: "/settings/categories",
-    icon: "shape",
+    icon: "category",
   },
   {
     titleKey: "screens.settings.tags.title",
     route: "/settings/tags",
-    icon: "tag-multiple",
+    icon: "tags",
   },
   {
     titleKey: "screens.settings.trash.title",
     route: "/settings/trash",
-    icon: "trash-can",
+    icon: "trash",
   },
   {
     titleKey: "screens.settings.goals.title",
@@ -56,12 +56,12 @@ const moneyManagementItems: SettingsItem[] = [
   {
     titleKey: "screens.settings.pending.title",
     route: "/settings/pending-transactions",
-    icon: "progress-clock",
+    icon: "clock",
   },
   {
     titleKey: "screens.settings.billSplitter.title",
     route: "/settings/bill-splitter",
-    icon: "format-page-split",
+    icon: "page-break",
   },
 ]
 
@@ -69,12 +69,12 @@ const otherSettingsItems: SettingsItem[] = [
   {
     titleKey: "screens.settings.preferences.title",
     route: "/settings/preferences",
-    icon: "puzzle-edit",
+    icon: "puzzle",
   },
   {
     titleKey: "screens.settings.dataManagement.title",
     route: "/settings/data-management",
-    icon: "server",
+    icon: "database",
     soon: true,
   },
 ]

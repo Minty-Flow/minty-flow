@@ -162,9 +162,6 @@ export const changeIconInlineStyles = StyleSheet.create((theme) => ({
     paddingHorizontal: 16,
     gap: 12,
   },
-  optionIcon: {
-    color: theme.colors.primary,
-  },
   optionText: {
     color: theme.colors.primary,
     fontSize: 16,

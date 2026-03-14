@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next"
 import { StyleSheet } from "react-native-unistyles"
 
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
 
@@ -55,10 +55,10 @@ export function DeltaBadge({
       >
         {formattedDelta}
       </Text>
-      <IconSymbol
+      <IconSvg
         name={iconName}
         size={iconSize}
-        style={isGood ? styles.goodText : styles.badText}
+        color={isGood ? styles.goodText.color : styles.badText.color}
       />
     </View>
   )

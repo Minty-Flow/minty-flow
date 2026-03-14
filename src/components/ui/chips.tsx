@@ -2,7 +2,7 @@ import type { ReactNode } from "react"
 import type { StyleProp, TextStyle, ViewStyle } from "react-native"
 import { StyleSheet, useUnistyles } from "react-native-unistyles"
 
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
@@ -53,7 +53,7 @@ export function Chip({
       >
         {label}
       </Text>
-      {selected && !hideCheck ? <IconSymbol name="check" size={14} /> : null}
+      {selected && !hideCheck ? <IconSvg name="check" size={14} /> : null}
     </Pressable>
   )
 }

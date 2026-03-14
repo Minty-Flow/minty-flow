@@ -2,7 +2,7 @@ import { ScrollView, View } from "react-native"
 
 import { DynamicIcon } from "~/components/dynamic-icon"
 import { Chip } from "~/components/ui/chips"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import type { Tag } from "~/types/tags"
 
 import { filterHeaderStyles } from "../filter-header.styles"
@@ -51,7 +51,7 @@ export function TagsPanel({
                     variant="raw"
                   />
                 ) : (
-                  <IconSymbol name="tag" size={18} />
+                  <IconSvg name="tag" size={18} />
                 )
               }
             />

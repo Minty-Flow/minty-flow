@@ -1,5 +1,3 @@
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons"
-import type { ComponentProps } from "react"
 import { memo, useCallback, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { FlatList, Modal, Pressable, TextInput, View } from "react-native"
@@ -9,13 +7,13 @@ import { StyleSheet, useUnistyles } from "react-native-unistyles"
 import { Button } from "~/components/ui/button"
 import { Text } from "~/components/ui/text"
 import {
-  MATERIAL_SYMBOLS,
+  MINTY_SVGS,
   type MintyIconData,
 } from "~/constants/minty-icons-selection"
 import type { MintyColorScheme } from "~/styles/theme/types"
 
 import { DynamicIcon } from "../dynamic-icon"
-import { IconSymbol } from "../ui/icon-symbol"
+import { IconSvg, type IconSymbolName } from "../ui/icon-svg"
 
 interface IconSelectionModalProps {
   visible: boolean
@@ -50,13 +48,7 @@ const IconItem = memo(
         ]}
         onPress={() => onPress(iconName)}
       >
-        <MaterialCommunityIcons
-          name={
-            iconName as ComponentProps<typeof MaterialCommunityIcons>["name"]
-          }
-          size={28}
-          color={color}
-        />
+        <IconSvg name={iconName as IconSymbolName} size={28} color={color} />
       </Pressable>
     )
   },
@@ -80,7 +72,7 @@ const SearchHeader = memo(
     const { t } = useTranslation()
     return (
       <View style={styles.searchContainer}>
-        <IconSymbol name="magnify" size={20} color={styles.searchIcon.color} />
+        <IconSvg name="search" size={20} color={styles.searchIcon.color} />
         <TextInput
           style={styles.searchInput}
           placeholder={t("components.iconPicker.searchPlaceholder")}
@@ -92,7 +84,7 @@ const SearchHeader = memo(
         />
         {searchQuery.length > 0 && (
           <Pressable onPress={onClear}>
-            <IconSymbol name="close" size={20} color={placeholderTextColor} />
+            <IconSvg name="x" size={20} color={placeholderTextColor} />
           </Pressable>
         )}
       </View>
@@ -172,7 +164,7 @@ export const IconSelectionModal = ({
   )
 
   const availableIcons = useMemo(
-    () => searchIcons(MATERIAL_SYMBOLS, searchQuery),
+    () => searchIcons(MINTY_SVGS, searchQuery),
     [searchQuery, searchIcons],
   )
 
@@ -257,7 +249,7 @@ export const IconSelectionModal = ({
           keyboardShouldPersistTaps="always"
           ListEmptyComponent={
             <View style={styles.emptyState}>
-              <IconSymbol
+              <IconSvg
                 name="alert-circle"
                 size={48}
                 color={theme.colors.onSecondary}

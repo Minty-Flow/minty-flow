@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next"
 
 import { Button } from "~/components/ui/button"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
 import type TransactionModel from "~/database/models/transaction"
@@ -35,7 +35,7 @@ export function FormDeleteActions({
           accessibilityLabel={t("screens.settings.trash.a11y.restore")}
           accessibilityRole="button"
         >
-          <IconSymbol name="delete-restore" size={20} />
+          <IconSvg name="trash-off" size={20} />
           <Text variant="default">
             {t("components.transactionForm.fields.restore")}
           </Text>
@@ -49,10 +49,10 @@ export function FormDeleteActions({
           )}
           accessibilityRole="button"
         >
-          <IconSymbol
-            name="trash-can"
+          <IconSvg
+            name="trash"
             size={20}
-            style={transactionFormStyles.deleteButtonColor}
+            color={transactionFormStyles.deleteButtonColor.color}
           />
           <Text
             variant="default"
@@ -75,10 +75,10 @@ export function FormDeleteActions({
         accessibilityLabel={t("screens.settings.trash.a11y.moveToTrash")}
         accessibilityRole="button"
       >
-        <IconSymbol
-          name="trash-can"
+        <IconSvg
+          name="trash"
           size={20}
-          style={transactionFormStyles.deleteButtonColor}
+          color={transactionFormStyles.deleteButtonColor.color}
         />
         <Text variant="default" style={transactionFormStyles.deleteButtonColor}>
           {t("components.transactionForm.fields.moveToTrash")}

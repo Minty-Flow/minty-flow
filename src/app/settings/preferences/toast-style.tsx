@@ -5,7 +5,7 @@ import { StyleSheet, useUnistyles } from "react-native-unistyles"
 
 import { ConfirmModal } from "~/components/confirm-modal"
 import { Button } from "~/components/ui/button"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Switch } from "~/components/ui/switch"
 import { Text } from "~/components/ui/text"
@@ -140,7 +140,7 @@ export default function ToastStyleScreen() {
                     </Text>
                   </View>
                   {isSelected ? (
-                    <IconSymbol
+                    <IconSvg
                       name="check"
                       size={20}
                       color={theme.colors.primary}

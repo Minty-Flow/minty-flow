@@ -267,9 +267,9 @@
 
 ## 🚀 Beta Release Priority Order
 
-1. [ ] **Stats tab** — at minimum a monthly income/expense chart
-2. [ ] **Goals** — DB + service ready, just needs screens
-4. [ ] **Budgets** — DB + service ready, just needs screens
+1. [x] **Stats tab** — at minimum a monthly income/expense chart
+2. [x] **Goals** — DB + service ready, just needs screens
+4. [x] **Budgets** — DB + service ready, just needs screens
 5. [ ] **Loans** — DB + service ready, just needs screens
 6. [ ] **Data Management** — at minimum CSV export
 7. [ ] **Error boundary / crash screen** — no error boundary exists anywhere in the app

@@ -1,4 +1,4 @@
-import type { IconSymbolName } from "~/components/ui/icon-symbol"
+import type { IconSymbolName } from "~/components/ui/icon-svg"
 
 const IMAGE_EXTENSIONS = new Set([
   "png",
@@ -59,7 +59,7 @@ export function getFileExtension(nameOrUri: string): string {
 }
 
 /**
- * Map file extension to DynamicIcon/IconSymbol name for attachment display.
+ * Map file extension to DynamicIcon/IconSvg name for attachment display.
  * Uses the same logic as the design tip (FileImage, FileSpreadsheet, etc.)
  * mapped to MaterialCommunityIcons names.
  */
@@ -72,25 +72,25 @@ export function getFileIconForExtension(ext: string): IconSymbolName {
     case "bmp":
     case "tiff":
     case "svg":
-      return "file-image"
+      return "photo"
     case "xls":
     case "xlsx":
     case "ods":
     case "csv":
-      return "file-chart"
-    case "doc":
-    case "docx":
-    case "odt":
-    case "txt":
-      return "file-document"
+      return "file"
+    // case "doc":
+    // case "docx":
+    // case "odt":
+    // case "txt":
+    //   return "file-document"
     case "pdf":
-      return "file-pdf-box"
+      return "file-type-pdf"
     case "zip":
     case "rar":
     case "7z":
     case "tar":
     case "gz":
-      return "archive"
+      return "file-zip"
     case "mov":
     case "avi":
     case "mp4":
@@ -99,11 +99,11 @@ export function getFileIconForExtension(ext: string): IconSymbolName {
     case "mkv":
     case "webm":
     case "flv":
-      return "file-video"
-    case "ppt":
-    case "pptx":
-    case "odp":
-      return "file-presentation-box"
+      return "video"
+    // case "ppt":
+    // case "pptx":
+    // case "odp":
+    //   return "file-presentation-box"
     default:
       return "file"
   }

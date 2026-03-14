@@ -5,7 +5,7 @@ import { StyleSheet } from "react-native-unistyles"
 
 import { ActionItem } from "~/components/action-item"
 import { ToggleItem } from "~/components/toggle-item"
-import type { IconSymbolName } from "~/components/ui/icon-symbol"
+import type { IconSymbolName } from "~/components/ui/icon-svg"
 import { InfoBanner } from "~/components/ui/info-banner"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
@@ -22,27 +22,27 @@ const appearanceItems: PreferenceItem[] = [
   {
     titleKey: "screens.settings.preferences.appearance.theme.title",
     route: "/settings/preferences/theme",
-    icon: "palette-swatch",
+    icon: "palette",
   },
   {
     titleKey: "screens.settings.preferences.appearance.moneyFormatting.title",
     route: "/settings/preferences/money-formatting",
-    icon: "pound",
+    icon: "hash",
   },
   {
     titleKey: "screens.settings.preferences.appearance.toast.title",
     route: "/settings/preferences/toast-style",
-    icon: "toaster",
+    icon: "alert-square-rounded",
   },
   {
     titleKey: "screens.settings.preferences.appearance.transactionStyle.title",
     route: "/settings/preferences/transaction-appearance",
-    icon: "format-list-bulleted",
+    icon: "list-details",
   },
   {
     titleKey: "screens.settings.preferences.appearance.buttonPlacement.title",
     route: "/settings/preferences/button-placement",
-    icon: "dots-triangle",
+    icon: "circles",
   },
 ]
 
@@ -50,17 +50,17 @@ const otherPreferenceItems: PreferenceItem[] = [
   {
     titleKey: "screens.settings.preferences.language.title",
     route: "/settings/preferences/language",
-    icon: "translate",
+    icon: "language",
   },
   {
     titleKey: "screens.settings.transfers.title",
     route: "/settings/preferences/transfers",
-    icon: "swap-horizontal",
+    icon: "transfer",
   },
   {
     titleKey: "screens.settings.pending.title",
     route: "/settings/preferences/pending-transactions",
-    icon: "progress-clock",
+    icon: "clock",
   },
   {
     titleKey: "screens.settings.exchangeRates.title",
@@ -70,17 +70,17 @@ const otherPreferenceItems: PreferenceItem[] = [
   {
     titleKey: "screens.settings.trash.title",
     route: "/settings/preferences/trash-bin",
-    icon: "trash-can",
+    icon: "trash",
   },
   {
     titleKey: "screens.settings.privacy.title",
     route: "/settings/preferences/privacy",
-    icon: "shield-alert",
+    icon: "shield-exclamation",
   },
   {
     titleKey: "screens.settings.preferences.transactionLocation.title",
     route: "/settings/preferences/transaction-location",
-    icon: "map-marker",
+    icon: "map-pin",
   },
   {
     titleKey: "screens.settings.reminders.title",
@@ -137,7 +137,9 @@ export default function PreferencesScreen() {
 
           <View style={styles.itemsList}>
             <ToggleItem
-              icon={disableSound ? "vibrate-off" : "vibrate"}
+              icon={
+                disableSound ? "device-mobile-off" : "device-mobile-vibration"
+              }
               title={t(
                 "screens.settings.preferences.buttonFeedback.soundHaptic.title",
               )}

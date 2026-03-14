@@ -10,7 +10,7 @@ import { View as RNView, ScrollView } from "react-native"
 import { useUnistyles } from "react-native-unistyles"
 
 import { DynamicIcon } from "~/components/dynamic-icon"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Input } from "~/components/ui/input"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
@@ -124,10 +124,10 @@ export function FormTagsPicker({
               ? t("common.actions.cancel")
               : t("components.transactionForm.a11y.addTag")}
           </Text>
-          <IconSymbol
-            name={tagPickerOpen ? "close" : "plus"}
+          <IconSvg
+            name={tagPickerOpen ? "x" : "plus"}
             size={16}
-            style={tagPickerOpen && { color: theme.colors.customColors.semi }}
+            color={tagPickerOpen ? theme.colors.customColors.semi : undefined}
           />
         </Pressable>
         {selectedTags.map((tag) => (
@@ -157,10 +157,10 @@ export function FormTagsPicker({
             >
               {tag.name}
             </Text>
-            <IconSymbol
-              name="close"
+            <IconSvg
+              name="x"
               size={14}
-              style={transactionFormStyles.tagChipRemoveIcon}
+              color={transactionFormStyles.tagChipRemoveIcon.color}
             />
           </Pressable>
         ))}
@@ -223,7 +223,7 @@ export function FormTagsPicker({
               })
             }}
           >
-            <IconSymbol name="tag-plus" size={20} />
+            <IconSvg name="tag-plus" size={20} />
             <Text
               variant="default"
               style={transactionFormStyles.createTagRowText}

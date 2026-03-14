@@ -11,7 +11,7 @@ import { MonthYearPicker } from "~/components/month-year-picker"
 import { TransactionFilterHeader } from "~/components/transaction/transaction-filter-header"
 import { TransactionSectionList } from "~/components/transaction/transaction-section-list"
 import { Button } from "~/components/ui/button"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
 import { getMonthRange } from "~/database/services/account-service"
@@ -135,10 +135,7 @@ const CategoryDetailsScreenInner = ({
             size="icon"
             onPress={() => setShowFilters((v) => !v)}
           >
-            <IconSymbol
-              name={showFilters ? "filter-variant-remove" : "filter-variant"}
-              size={20}
-            />
+            <IconSvg name={showFilters ? "filter-off" : "filter"} size={20} />
           </Button>
           <Button
             variant="ghost"
@@ -150,7 +147,7 @@ const CategoryDetailsScreenInner = ({
               })
             }
           >
-            <IconSymbol name="pencil" size={20} />
+            <IconSvg name="pencil" size={20} />
           </Button>
         </View>
       ),

@@ -49,7 +49,11 @@ export const TagCard = ({ tag }: TagCardProps) => {
         </Text>
       </View>
 
-      <ChevronIcon direction="trailing" size={20} style={styles.chevron} />
+      <ChevronIcon
+        direction="trailing"
+        size={20}
+        color={styles.chevron.color}
+      />
     </Pressable>
   )
 }

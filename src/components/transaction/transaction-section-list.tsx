@@ -22,7 +22,7 @@ import { StyleSheet } from "react-native-unistyles"
 import { Money } from "~/components/money"
 import { TransactionItem } from "~/components/transaction/transaction-item"
 import { UpcomingTransactionsSection } from "~/components/transaction/upcoming-transactions-section"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
 import type { TransactionWithRelations } from "~/database/services/transaction-service"
@@ -119,7 +119,7 @@ export function TransactionSectionList({
   const renderEmptyList = useCallback(
     () => (
       <View style={styles.emptyState}>
-        <IconSymbol name="wallet" size={48} style={styles.emptyIcon} />
+        <IconSvg name="wallet" size={48} style={styles.emptyIcon} />
         <Text variant="default" style={styles.emptyTitle}>
           {t("screens.home.emptyState.title")}
         </Text>

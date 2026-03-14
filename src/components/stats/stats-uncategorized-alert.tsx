@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next"
 import { StyleSheet, useUnistyles } from "react-native-unistyles"
 
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
@@ -24,8 +24,8 @@ export function StatsUncategorizedAlert({
 
   return (
     <View style={styles.banner}>
-      <IconSymbol
-        name="alert"
+      <IconSvg
+        name="alert-circle"
         size={18}
         color={theme.colors.customColors.expense}
       />

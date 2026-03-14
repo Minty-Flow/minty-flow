@@ -4,9 +4,9 @@ import { StyleSheet } from "react-native-unistyles"
 
 import {
   type IconSize,
-  IconSymbol,
+  IconSvg,
   type IconSymbolName,
-} from "~/components/ui/icon-symbol"
+} from "~/components/ui/icon-svg"
 import { View } from "~/components/ui/view"
 import type { MintyColorScheme } from "~/styles/theme/types"
 import { isImageUrl } from "~/utils/is-image-url"
@@ -94,7 +94,7 @@ export function DynamicIcon({
   // ---------- Fallback ----------
   if (!icon) {
     if (isRaw) {
-      return <IconSymbol name="adjust" size={size} color={color} />
+      return <IconSvg name="circle-dot" size={size} color={color} />
     }
 
     return (
@@ -105,16 +105,14 @@ export function DynamicIcon({
           bgColor && { backgroundColor: bgColor },
         ]}
       >
-        <IconSymbol name="adjust" size={size} color={color} />
+        <IconSvg name="circle-dot" size={size} color={color} />
       </View>
     )
   }
 
-  // ---------- IconSymbol ----------
+  // ---------- IconSvg ----------
   if (isRaw) {
-    return (
-      <IconSymbol name={icon as IconSymbolName} size={size} color={color} />
-    )
+    return <IconSvg name={icon as IconSymbolName} size={size} color={color} />
   }
 
   return (
@@ -125,7 +123,7 @@ export function DynamicIcon({
         bgColor && { backgroundColor: bgColor },
       ]}
     >
-      <IconSymbol name={icon as IconSymbolName} size={size} color={color} />
+      <IconSvg name={icon as IconSymbolName} size={size} color={color} />
     </View>
   )
 }

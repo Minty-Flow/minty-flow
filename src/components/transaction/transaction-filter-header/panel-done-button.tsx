@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next"
 
 import { Button } from "~/components/ui/button"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Text } from "~/components/ui/text"
 
 import { filterHeaderStyles } from "./filter-header.styles"
@@ -26,7 +26,7 @@ export function PanelDoneButton({
       disabled={disabled}
       style={filterHeaderStyles.doneHit}
     >
-      {hideIcon ? null : <IconSymbol name="check-circle" size={18} />}
+      {hideIcon ? null : <IconSvg name="circle-check" size={18} />}
       <Text style={filterHeaderStyles.doneText}>
         {t("common.actions.done")}
       </Text>

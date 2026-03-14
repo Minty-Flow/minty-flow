@@ -11,7 +11,7 @@ import { MonthYearPicker } from "~/components/month-year-picker"
 import { TransactionFilterHeader } from "~/components/transaction/transaction-filter-header"
 import { TransactionSectionList } from "~/components/transaction/transaction-section-list"
 import { Button } from "~/components/ui/button"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
 import {
@@ -99,10 +99,7 @@ const AccountDetailsScreenInner = ({
             size="icon"
             onPress={() => setShowFilters((v) => !v)}
           >
-            <IconSymbol
-              name={showFilters ? "filter-variant-remove" : "filter-variant"}
-              size={20}
-            />
+            <IconSvg name={showFilters ? "filter-off" : "filter"} size={20} />
           </Button>
           <Button
             variant="ghost"
@@ -114,7 +111,7 @@ const AccountDetailsScreenInner = ({
               })
             }
           >
-            <IconSymbol name="pencil" size={20} />
+            <IconSvg name="pencil" size={20} />
           </Button>
         </View>
       ),
@@ -143,7 +140,7 @@ const AccountDetailsScreenInner = ({
         {/* Top Row: Icon + Name/Meta */}
         <View style={styles.headerTopRow}>
           <DynamicIcon
-            icon={account.icon || "wallet-bifold-outline"}
+            icon={account.icon || "wallet"}
             size={32}
             variant="badge"
             colorScheme={account.colorScheme ?? undefined}
@@ -155,7 +152,7 @@ const AccountDetailsScreenInner = ({
               {account.isPrimary && (
                 <>
                   <Text style={styles.metaSeparator}>/</Text>
-                  <IconSymbol
+                  <IconSvg
                     name="star"
                     size={14}
                     color={theme.colors.customColors.warning}
@@ -428,7 +425,7 @@ const EnhancedAccountDetailsScreen = withObservables(
         excludeFromTotals,
       ),
       transactionsFull: observeTransactionModelsFull(queryFilters, [
-        observeAccountModels(false),
+        observeAccountModels(),
         observeCategoriesByType(TransactionTypeEnum.EXPENSE),
         observeCategoriesByType(TransactionTypeEnum.INCOME),
         observeCategoriesByType(TransactionTypeEnum.TRANSFER),

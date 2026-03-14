@@ -1,9 +1,10 @@
-import type { Control, UseFormSetValue } from "react-hook-form"
+import type { Control } from "react-hook-form"
 import { Controller } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
+import { Separator } from "~/components/ui/separator"
 import { Switch } from "~/components/ui/switch"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
@@ -15,14 +16,12 @@ interface AccountSwitchesSectionProps {
   control: Control<AddAccountsFormInput>
   isAddMode: boolean
   formIsPrimary: boolean | undefined
-  setValue: UseFormSetValue<AddAccountsFormInput>
 }
 
 export function AccountSwitchesSection({
   control,
   isAddMode,
   formIsPrimary,
-  setValue,
 }: AccountSwitchesSectionProps) {
   const { t } = useTranslation()
 
@@ -39,7 +38,7 @@ export function AccountSwitchesSection({
             accessibilityState={{ checked: value }}
           >
             <View style={accountModifyStyles.switchLeft}>
-              <IconSymbol name="playlist-remove" size={24} />
+              <IconSvg name="playlist-x" size={24} />
               <Text variant="default" style={accountModifyStyles.switchLabel}>
                 {t("screens.accounts.form.excludeFromBalanceLabel")}
               </Text>
@@ -52,6 +51,8 @@ export function AccountSwitchesSection({
         )}
       />
 
+      {!isAddMode && <Separator />}
+
       {!isAddMode && (
         <View style={accountModifyStyles.primaryAccountBlock}>
           <Controller
@@ -60,16 +61,12 @@ export function AccountSwitchesSection({
             render={({ field: { value, onChange } }) => (
               <Pressable
                 style={accountModifyStyles.switchRow}
-                onPress={() => {
-                  const next = !value
-                  if (next) setValue("isArchived", false, { shouldDirty: true })
-                  onChange(next)
-                }}
+                onPress={() => onChange(!value)}
                 accessibilityRole="switch"
                 accessibilityState={{ checked: value }}
               >
                 <View style={accountModifyStyles.switchLeft}>
-                  <IconSymbol name="star" size={24} />
+                  <IconSvg name="star" size={24} />
                   <Text
                     variant="default"
                     style={accountModifyStyles.switchLabel}
@@ -86,9 +83,9 @@ export function AccountSwitchesSection({
           />
           {formIsPrimary && (
             <View style={accountModifyStyles.primaryAccountHintContainer}>
-              <IconSymbol
-                name="information"
-                style={accountModifyStyles.primaryAccountHintIcon}
+              <IconSvg
+                name="info-circle"
+                color={accountModifyStyles.primaryAccountHintIcon.color}
                 size={14}
               />
               <Text
@@ -97,40 +94,13 @@ export function AccountSwitchesSection({
               >
                 {t("screens.accounts.form.primaryAccountHint")}
               </Text>
+              <Separator />
             </View>
           )}
+          <Separator />
         </View>
       )}
-
-      {!isAddMode && (
-        <Controller
-          control={control}
-          name="isArchived"
-          render={({ field: { value, onChange } }) => (
-            <Pressable
-              style={accountModifyStyles.switchRow}
-              onPress={() => {
-                const next = !value
-                if (next) setValue("isPrimary", false, { shouldDirty: true })
-                onChange(next)
-              }}
-              accessibilityRole="switch"
-              accessibilityState={{ checked: value }}
-            >
-              <View style={accountModifyStyles.switchLeft}>
-                <IconSymbol name="archive-arrow-down" size={24} />
-                <Text variant="default" style={accountModifyStyles.switchLabel}>
-                  {t("screens.accounts.form.archiveLabel")}
-                </Text>
-              </View>
-
-              <View pointerEvents="none">
-                <Switch value={value} />
-              </View>
-            </Pressable>
-          )}
-        />
-      )}
+      {!isAddMode && <Separator />}
     </View>
   )
 }

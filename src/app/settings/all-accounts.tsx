@@ -5,7 +5,7 @@ import { ScrollView } from "react-native"
 import { StyleSheet, useUnistyles } from "react-native-unistyles"
 
 import { AccountCard } from "~/components/accounts/account-card"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
@@ -29,10 +29,7 @@ const AllAccountsScreenInner = ({ accounts }: AllAccountsScreenInnerProps) => {
     })
   }
 
-  const sortedAccounts = [...accounts].sort((a, b) => {
-    if (a.isArchived === b.isArchived) return 0
-    return a.isArchived ? 1 : -1
-  })
+  const sortedAccounts = accounts
 
   return (
     <View style={styles.container}>
@@ -42,7 +39,7 @@ const AllAccountsScreenInner = ({ accounts }: AllAccountsScreenInnerProps) => {
         showsVerticalScrollIndicator={false}
       >
         <Pressable style={styles.newAccountButton} onPress={handleAddAccount}>
-          <IconSymbol name="plus" size={32} color={theme.colors.onSecondary} />
+          <IconSvg name="plus" size={32} color={theme.colors.onSecondary} />
           <Text variant="default" style={styles.newAccountText}>
             {t("screens.accounts.addNew")}
           </Text>
@@ -61,8 +58,7 @@ const AllAccountsScreenInner = ({ accounts }: AllAccountsScreenInnerProps) => {
 }
 
 const AllAccountsScreen = withObservables([], () => ({
-  // observeAccounts(true) fetches ALL accounts, including archived ones
-  accounts: observeAccounts(true),
+  accounts: observeAccounts(),
 }))
 
 export default AllAccountsScreen(AllAccountsScreenInner)

@@ -85,11 +85,10 @@ RTL layout is driven by `useLanguageStore` — `PagerView` and `GestureHandlerRo
 
 ### Component Conventions
 
-- UI primitives in `src/components/ui/`: `Button`, `Text`, `View`, `Pressable`, `Input`, `Switch`, `Chips`, `Toast`, `Tooltip`, `IconSymbol`
+- UI primitives in `src/components/ui/`: `Button`, `Text`, `View`, `Pressable`, `Input`, `Switch`, `Chips`, `Toast`, `Tooltip`, `IconSvg`
 - Feature components grouped by domain: `accounts/`, `categories/`, `tags/`, `transaction/`, `theme/`
 - Complex components use a directory with `index.ts` barrel, `*.styles.ts`, `types.ts`, and split sub-files
 - `ActionItem` (`src/components/action-item.tsx`) is the standard settings-row component
-- `IconSymbol` wraps MaterialCommunityIcons (see `src/components/ui/icon-symbol.tsx`)
 
 ### Linting
 

@@ -10,7 +10,7 @@ import { useUnistyles } from "react-native-unistyles"
 import type { IconSize } from "./icon-symbol"
 
 /**
- * Props for the IconSymbol component on iOS.
+ * Props for the IconSvg component on iOS.
  */
 type IconSymbolProps = {
   /**
@@ -47,7 +47,7 @@ type IconSymbolProps = {
  *
  * @example
  * ```tsx
- * <IconSymbol name="circle.dotted" size={32} color="#007AFF" weight="bold" />
+ * <IconSvg name="circle.dotted" size={32} color="#007AFF" weight="bold" />
  * ```
  *
  * @param props - The component props
@@ -56,7 +56,7 @@ type IconSymbolProps = {
  * @see {@link https://developer.apple.com/sf-symbols/ | SF Symbols Documentation}
  * @see {@link https://docs.expo.dev/versions/latest/sdk/symbols/ | Expo Symbols Documentation}
  */
-export const IconSymbol = ({
+export const IconSvg = ({
   name,
   size = 24,
   color,

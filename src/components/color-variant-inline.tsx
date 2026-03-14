@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next"
 import { View } from "react-native"
 import { StyleSheet } from "react-native-unistyles"
 
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { useScrollIntoView } from "~/hooks/use-scroll-into-view"
@@ -136,7 +136,7 @@ export function ColorVariantInline({
       {/* Trigger row – same look as the previous "Change color" row */}
       <Pressable style={styles.triggerRow} onPress={handleToggle}>
         <View style={styles.triggerLeft}>
-          <IconSymbol name="palette" size={24} />
+          <IconSvg name="palette" size={24} />
           <Text variant="default" style={styles.triggerLabel}>
             {t("components.colorPicker.changeColor")}
           </Text>

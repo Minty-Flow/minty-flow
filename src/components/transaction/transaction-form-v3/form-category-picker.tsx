@@ -128,7 +128,7 @@ export function FormCategoryPicker({
                   accessibilityState={{ selected: isSelected }}
                 >
                   <DynamicIcon
-                    icon={category.icon || "shape"}
+                    icon={category.icon || "category"}
                     size={32}
                     colorScheme={getThemeStrict(category.colorSchemeName)}
                     variant="badge"

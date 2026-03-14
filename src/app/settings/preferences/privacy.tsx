@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next"
 import { Alert, ScrollView } from "react-native"
 import { StyleSheet } from "react-native-unistyles"
 
-import type { IconSymbolName } from "~/components/ui/icon-symbol"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import type { IconSymbolName } from "~/components/ui/icon-svg"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Switch } from "~/components/ui/switch"
 import { Text } from "~/components/ui/text"
@@ -67,14 +67,14 @@ export default function PrivacyScreen() {
     {
       id: "maskNumberOnShake",
       label: t("screens.settings.privacy.settings.maskNumberOnShake"),
-      icon: "pulse",
+      icon: "activity",
       value: maskOnShake,
       onValueChange: setMaskOnShake,
     },
     {
       id: "lockApp",
       label: t("screens.settings.privacy.settings.lockApp"),
-      icon: "cellphone-lock",
+      icon: "password-mobile-phone",
       value: lockAppEnabled,
       onValueChange: handleLockAppChange,
     },
@@ -107,7 +107,7 @@ export default function PrivacyScreen() {
             disabled={setting.disabled}
           >
             <View style={styles.iconContainer}>
-              <IconSymbol name={setting.icon} size={24} />
+              <IconSvg name={setting.icon} size={24} />
             </View>
             <View style={styles.labelContainer}>
               <Text variant="p" style={styles.settingLabel}>

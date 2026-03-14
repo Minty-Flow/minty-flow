@@ -7,7 +7,7 @@ import { StyleSheet } from "react-native-unistyles"
 import { ConfirmModal } from "~/components/confirm-modal"
 import { ChevronIcon } from "~/components/ui/chevron-icon"
 import { ChoiceChips } from "~/components/ui/chips"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
@@ -115,7 +115,7 @@ export default function TrashBinScreen() {
         <ChevronIcon
           direction={"trailing"}
           size={18}
-          style={styles.actionItemIcon}
+          color={styles.actionItemIcon.color}
         />
       </Pressable>
 
@@ -135,10 +135,10 @@ export default function TrashBinScreen() {
             </View>
           </View>
         </View>
-        <IconSymbol
-          style={styles.actionTrashItemIcon}
-          name="trash-can"
+        <IconSvg
+          name="trash"
           size={18}
+          color={styles.actionTrashItemIcon.color}
         />
       </Pressable>
 
@@ -152,7 +152,7 @@ export default function TrashBinScreen() {
         confirmLabel={t("screens.settings.trash.empty.modal.confirm")}
         cancelLabel={t("screens.settings.trash.empty.modal.cancel")}
         variant="destructive"
-        icon="trash-can"
+        icon="trash"
       />
     </ScrollView>
   )

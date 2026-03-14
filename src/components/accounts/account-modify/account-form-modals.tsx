@@ -48,7 +48,7 @@ export function AccountFormModals({
           confirmLabel={t("common.actions.delete")}
           cancelLabel={t("common.actions.cancel")}
           variant="destructive"
-          icon="trash-can"
+          icon="trash"
         />
       )}
 

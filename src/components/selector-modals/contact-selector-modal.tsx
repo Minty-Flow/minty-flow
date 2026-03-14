@@ -17,7 +17,7 @@ import { SearchInput } from "~/components/search-input"
 import { ActivityIndicatorMinty } from "~/components/ui/activity-indicator-minty"
 import { Button } from "~/components/ui/button"
 import { ChevronIcon } from "~/components/ui/chevron-icon"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { Toast } from "~/utils/toast"
@@ -250,7 +250,7 @@ export function ContactSelectorModal({
           disabled={!editable}
         >
           <View style={triggerStyles.triggerLeft}>
-            <IconSymbol name="account-details" size={24} />
+            <IconSvg name="address-book" size={24} />
             <Text variant="default" style={triggerStyles.triggerLabel}>
               {t("components.selectors.contacts.triggerLabel")}
             </Text>

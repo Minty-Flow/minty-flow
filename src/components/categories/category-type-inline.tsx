@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next"
 import { View } from "react-native"
 import { StyleSheet } from "react-native-unistyles"
 
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { useScrollIntoView } from "~/hooks/use-scroll-into-view"
@@ -76,7 +76,7 @@ export function CategoryTypeInline({
         disabled={!editable}
       >
         <View style={styles.triggerLeft}>
-          <IconSymbol name="shape" size={24} />
+          <IconSvg name="category" size={24} />
           <Text variant="default" style={styles.triggerLabel}>
             {t("components.categories.form.typeLabel")}
           </Text>
@@ -89,7 +89,8 @@ export function CategoryTypeInline({
             <ChevronIcon
               direction={expanded ? "up" : "trailing"}
               size={20}
-              style={styles.chevronIcon}
+              style={styles.chevronIconOpacity}
+              color={styles.chevronIconColor.color}
             />
           )}
         </View>
@@ -116,7 +117,11 @@ export function CategoryTypeInline({
                 {opt.label}
               </Text>
               {selectedType === opt.type && (
-                <IconSymbol name="check" size={20} style={styles.optionCheck} />
+                <IconSvg
+                  name="check"
+                  size={20}
+                  color={styles.optionCheck.color}
+                />
               )}
             </Pressable>
           ))}
@@ -157,9 +162,11 @@ const styles = StyleSheet.create((theme) => ({
     color: theme.colors.onSecondary,
     opacity: 0.7,
   },
-  chevronIcon: {
-    color: theme.colors.onSecondary,
+  chevronIconOpacity: {
     opacity: 0.4,
+  },
+  chevronIconColor: {
+    color: theme.colors.onSecondary,
   },
   panel: {
     paddingHorizontal: 20,

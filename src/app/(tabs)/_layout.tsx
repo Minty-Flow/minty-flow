@@ -13,7 +13,7 @@ import Animated, {
 import { StyleSheet, useUnistyles } from "react-native-unistyles"
 
 import { Button } from "~/components/ui/button"
-import { IconSymbol, type IconSymbolName } from "~/components/ui/icon-symbol"
+import { IconSvg, type IconSymbolName } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Tooltip } from "~/components/ui/tooltip"
 import { View } from "~/components/ui/view"
@@ -87,7 +87,7 @@ const AnimatedFABOption = ({
         animatedStyle,
       ]}
     >
-      <IconSymbol name={option.icon} size={24} color={option.iconColor} />
+      <IconSvg name={option.icon} size={24} color={option.iconColor} />
     </AnimatedPressable>
   )
 }
@@ -155,7 +155,7 @@ const TabLayout = () => {
 
   const fabOptionsByType: Record<string, FABOption> = {
     income: {
-      icon: "chevron-double-down",
+      icon: "chevrons-down",
       color: theme.colors.customColors.income,
       iconColor: theme.colors.onError,
       label: t("navigation.fab.income"),
@@ -165,7 +165,7 @@ const TabLayout = () => {
       },
     },
     expense: {
-      icon: "chevron-double-up",
+      icon: "chevrons-up",
       color: theme.colors.customColors.expense,
       iconColor: theme.colors.onError,
       label: t("navigation.fab.expense"),
@@ -175,7 +175,7 @@ const TabLayout = () => {
       },
     },
     transfer: {
-      icon: "swap-horizontal",
+      icon: "transfer",
       color: theme.colors.secondary,
       iconColor: theme.colors.onSecondary,
       label: t("navigation.fab.transfer"),
@@ -224,7 +224,7 @@ const TabLayout = () => {
               onPress={() => setPage(0)}
               style={styles.tabButton}
             >
-              <IconSymbol name="circle" style={isActiveTab(0)} />
+              <IconSvg name="circle" style={isActiveTab(0)} />
             </Button>
           </Tooltip>
 
@@ -235,7 +235,7 @@ const TabLayout = () => {
               onPress={() => setPage(1)}
               style={styles.tabButton}
             >
-              <IconSymbol name="chart-box" style={isActiveTab(1)} />
+              <IconSvg name="chart-dots" style={isActiveTab(1)} />
             </Button>
           </Tooltip>
 
@@ -249,7 +249,7 @@ const TabLayout = () => {
               onPress={() => setPage(2)}
               style={styles.tabButton}
             >
-              <IconSymbol name="wallet-bifold" style={isActiveTab(2)} />
+              <IconSvg name="wallet" style={isActiveTab(2)} />
             </Button>
           </Tooltip>
 
@@ -260,7 +260,7 @@ const TabLayout = () => {
               onPress={() => setPage(3)}
               style={styles.tabButton}
             >
-              <IconSymbol name="cog" style={isActiveTab(3)} />
+              <IconSvg name="settings" style={isActiveTab(3)} />
             </Button>
           </Tooltip>
         </View>
@@ -323,11 +323,7 @@ const TabLayout = () => {
                   { backgroundColor: theme.colors.primary },
                 ]}
               >
-                <IconSymbol
-                  name="plus"
-                  size={28}
-                  color={theme.colors.onPrimary}
-                />
+                <IconSvg name="plus" size={28} color={theme.colors.onPrimary} />
               </Button>
             </Animated.View>
           </Tooltip>

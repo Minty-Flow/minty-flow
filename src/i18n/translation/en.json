@@ -526,14 +526,91 @@
       "goals": {
         "title": "Goals",
         "description": "Set and track your financial goals",
-        "body": "Set and track your financial goals. Monitor your progress and stay motivated to achieve your financial objectives.",
-        "empty": "No goals set yet"
+        "body": "Set savings targets and track progress",
+        "empty": "No goals yet. Create one to start saving.",
+        "addNew": "New Goal",
+        "card": {
+          "saved": "Saved",
+          "of": "of",
+          "remaining": "remaining",
+          "targetDate": "Target",
+          "completed": "Completed",
+          "daysLeft": "{{count}} days left",
+          "overdue": "Overdue by {{count}} days",
+          "noDeadline": "No deadline"
+        },
+        "form": {
+          "title": {
+            "create": "New Goal",
+            "edit": "Edit Goal"
+          },
+          "nameLabel": "Goal Name",
+          "namePlaceholder": "e.g. Vacation Fund",
+          "descriptionLabel": "Description",
+          "descriptionPlaceholder": "Optional note about this goal",
+          "targetAmountLabel": "Target Amount",
+          "targetDateLabel": "Target Date",
+          "currencyLabel": "Currency",
+          "accountsLabel": "Funding Accounts",
+          "accountsPlaceholder": "Select accounts",
+          "deleteLabel": "Delete Goal",
+          "loadingText": "Loading goal...",
+          "toast": {
+            "notFound": "Goal not found.",
+            "createFailed": "Failed to create goal.",
+            "updateFailed": "Failed to update goal.",
+            "deleteFailed": "Failed to delete goal.",
+            "accountsCleared": "Accounts cleared — they don't match the new currency."
+          }
+        }
       },
       "budgets": {
         "title": "Budgets",
         "description": "Create and manage your budgets",
-        "body": "Create and manage your budgets. Set spending limits for different categories and track your progress throughout the month.",
-        "empty": "No budgets created yet"
+        "body": "Track your spending limits",
+        "empty": "No budgets yet. Create one to start tracking.",
+        "addNew": "New Budget",
+        "periods": {
+          "daily": "Daily",
+          "weekly": "Weekly",
+          "monthly": "Monthly",
+          "yearly": "Yearly",
+          "custom": "Custom"
+        },
+        "card": {
+          "spent": "Spent",
+          "of": "of",
+          "remaining": "remaining",
+          "noCategory": "All Categories",
+          "overBudget": "Over budget"
+        },
+        "form": {
+          "title": {
+            "create": "New Budget",
+            "edit": "Edit Budget"
+          },
+          "nameLabel": "Budget Name",
+          "namePlaceholder": "e.g. Groceries",
+          "amountLabel": "Limit",
+          "periodLabel": "Period",
+          "categoryLabel": "Categories",
+          "categoryPlaceholder": "All Categories",
+          "currencyLabel": "Currency",
+          "accountsLabel": "Accounts",
+          "accountsPlaceholder": "Select accounts",
+          "alertThresholdLabel": "Alert at (%)",
+          "startDateLabel": "Start Date",
+          "endDateLabel": "End Date",
+          "deleteLabel": "Delete Budget",
+          "loadingText": "Loading budget...",
+          "toast": {
+            "notFound": "Budget not found.",
+            "createFailed": "Failed to create budget.",
+            "updateFailed": "Failed to update budget.",
+            "deleteFailed": "Failed to delete budget.",
+            "accountsCleared": "Accounts cleared — they don't match the new currency."
+          }
+        }
       },
       "loans": {
         "title": "Loans",
@@ -902,13 +979,11 @@
       "form": {
         "title": {
           "create": "Create Category",
-          "edit": "Edit Category",
-          "archived": "Archived Categories"
+          "edit": "Edit Category"
         },
         "nameLabel": "Category name",
         "namePlaceholder": "Groceries, Dining out, etc.",
         "typeLabel": "Type",
-        "archiveLabel": "Archive category",
         "deleteLabel": "Permanently delete",
         "loadingText": "Loading category...",
         "deleteModal": {
@@ -977,7 +1052,8 @@
         "attachments": "Attachments",
         "pendingStatus": "Pending Status",
         "thisMonth": "This month",
-        "untitled": "Untitled"
+        "untitled": "Untitled",
+        "typeCount": "type count"
       },
       "attachmentOptions": {
         "has": "Has Attachments",
@@ -1091,6 +1167,14 @@
     },
     "searchInput": {
       "placeholder": "Search..."
+    },
+    "currencyAccountSelector": {
+      "currencyLabel": "Currency",
+      "accountsLabel": "Accounts",
+      "selectAll": "Select all {{currency}} accounts",
+      "noAccountsForCurrency": "No accounts for this currency",
+      "accountsClearedTitle": "Accounts cleared",
+      "accountsClearedDescription": "Selected accounts were removed because they don't match {{currency}}."
     }
   },
   "validation": {

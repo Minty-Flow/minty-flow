@@ -50,7 +50,7 @@ const DOW_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] as const
  * within [fromDate, toDate], hydrating account currency, category info,
  * accountId, accountBalanceBefore, and subtype.
  */
-export async function fetchStatsTransactions(
+async function fetchStatsTransactions(
   fromDate: Date,
   toDate: Date,
 ): Promise<StatsRawRow[]> {

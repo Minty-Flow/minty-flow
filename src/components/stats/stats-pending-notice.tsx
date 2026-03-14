@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next"
 import { StyleSheet, useUnistyles } from "react-native-unistyles"
 
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
 import type { PendingSummary } from "~/types/stats"
@@ -22,7 +22,7 @@ export function StatsPendingNotice({
 
   return (
     <View style={styles.banner}>
-      <IconSymbol name="information" size={18} color={theme.colors.primary} />
+      <IconSvg name="info-circle" size={18} color={theme.colors.primary} />
       <Text style={styles.message}>
         {t("screens.stats.pendingNotice", { count: pendingSummary.count })}
       </Text>

@@ -8,11 +8,9 @@ import { CategoryTypeInline } from "~/components/categories/category-type-inline
 import { ChangeIconInline } from "~/components/change-icon-inline"
 import { ColorVariantInline } from "~/components/color-variant-inline"
 import { Button } from "~/components/ui/button"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Input } from "~/components/ui/input"
-import { Pressable } from "~/components/ui/pressable"
 import { Separator } from "~/components/ui/separator"
-import { Switch } from "~/components/ui/switch"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
 import { ScrollIntoViewProvider } from "~/contexts/scroll-into-view-context"
@@ -67,10 +65,9 @@ export function CategoryModifyContent({
     resolver: zodResolver(addCategoriesSchema),
     defaultValues: {
       name: category?.name || "",
-      icon: category?.icon || "shape",
+      icon: category?.icon || "category",
       type: TransactionType,
       colorSchemeName: category?.colorSchemeName || undefined,
-      isArchived: category?.isArchived || false,
     },
   })
 
@@ -100,7 +97,6 @@ export function CategoryModifyContent({
           type: data.type,
           icon: data.icon,
           colorSchemeName: data.colorSchemeName,
-          isArchived: data.isArchived,
         })
 
         allowNavigation()
@@ -118,7 +114,6 @@ export function CategoryModifyContent({
           name: trimmedName,
           icon: data.icon,
           colorSchemeName: data.colorSchemeName,
-          isArchived: data.isArchived,
         })
 
         allowNavigation()
@@ -238,7 +233,7 @@ export function CategoryModifyContent({
             )}
           </View>
 
-          <View style={categoryModifyStyles.settingsList}>
+          <View>
             <CategoryTypeInline
               selectedType={formType}
               onTypeSelected={(type) =>
@@ -256,37 +251,6 @@ export function CategoryModifyContent({
 
           <Separator />
 
-          <View style={categoryModifyStyles.switchesSection}>
-            {!isAddMode && (
-              <Controller
-                control={control}
-                name="isArchived"
-                render={({ field: { value, onChange } }) => (
-                  <Pressable
-                    style={categoryModifyStyles.switchRow}
-                    onPress={() => onChange(!value)}
-                    accessibilityRole="switch"
-                    accessibilityState={{ checked: value }}
-                  >
-                    <View style={categoryModifyStyles.switchLeft}>
-                      <IconSymbol name="archive-arrow-down" size={24} />
-                      <Text
-                        variant="default"
-                        style={categoryModifyStyles.switchLabel}
-                      >
-                        {t("components.categories.form.archiveLabel")}
-                      </Text>
-                    </View>
-
-                    <View pointerEvents="none">
-                      <Switch value={value} />
-                    </View>
-                  </Pressable>
-                )}
-              />
-            )}
-          </View>
-
           {!isAddMode && <Separator />}
         </View>
 
@@ -297,10 +261,10 @@ export function CategoryModifyContent({
               onPress={() => setDeleteModalVisible(true)}
               style={categoryModifyStyles.actionButton}
             >
-              <IconSymbol
-                name="trash-can"
+              <IconSvg
+                name="trash"
                 size={20}
-                style={categoryModifyStyles.deleteIcon}
+                color={categoryModifyStyles.deleteIcon.color}
               />
               <Text variant="default" style={categoryModifyStyles.deleteText}>
                 {t("components.categories.form.deleteLabel")}

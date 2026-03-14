@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next"
 import { useUnistyles } from "react-native-unistyles"
 
 import { Money } from "~/components/money"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
 import { type TransactionType, TransactionTypeEnum } from "~/types/transactions"
@@ -65,7 +65,7 @@ export const TransactionItemRight = ({
 
       {showRecurringBadge && (
         <View style={transactionItemStyles.statusBadge}>
-          <IconSymbol
+          <IconSvg
             name="repeat"
             size={12}
             color={theme.colors.customColors.info}
@@ -83,8 +83,8 @@ export const TransactionItemRight = ({
 
       {showPendingBadge && (
         <View style={transactionItemStyles.statusBadge}>
-          <IconSymbol
-            name="progress-clock"
+          <IconSvg
+            name="clock"
             size={12}
             color={theme.colors.customColors.warning}
           />

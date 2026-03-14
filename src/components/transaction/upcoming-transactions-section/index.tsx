@@ -5,7 +5,7 @@ import { useUnistyles } from "react-native-unistyles"
 import { ConfirmModal } from "~/components/confirm-modal"
 import { Button } from "~/components/ui/button"
 import { ChevronIcon } from "~/components/ui/chevron-icon"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
@@ -188,7 +188,7 @@ export function UpcomingTransactionsSection({
         confirmLabel={t("screens.home.upcoming.confirmAll.button")}
         cancelLabel={t("common.actions.cancel")}
         variant="default"
-        icon="check-circle"
+        icon="circle-check"
       />
 
       {recurringToDelete && recurringRule && (
@@ -225,7 +225,7 @@ export function UpcomingTransactionsSection({
         </View>
 
         <View style={sectionStyles.headerRight}>
-          <IconSymbol
+          <IconSvg
             name={collapsed ? "chevron-down" : "chevron-up"}
             size={16}
             color={theme.colors.customColors.semi}
@@ -262,7 +262,7 @@ export function UpcomingTransactionsSection({
                   { backgroundColor: `${theme.colors.customColors.info}18` },
                 ]}
               >
-                <IconSymbol
+                <IconSvg
                   name="repeat"
                   size={14}
                   color={theme.colors.customColors.info}
@@ -286,8 +286,8 @@ export function UpcomingTransactionsSection({
                   { backgroundColor: `${theme.colors.customColors.warning}18` },
                 ]}
               >
-                <IconSymbol
-                  name="progress-clock"
+                <IconSvg
+                  name="clock"
                   size={14}
                   color={theme.colors.customColors.warning}
                 />
@@ -349,8 +349,8 @@ export function UpcomingTransactionsSection({
                     )}
                     accessibilityRole="button"
                   >
-                    <IconSymbol
-                      name="check-all"
+                    <IconSvg
+                      name="checks"
                       size={14}
                       color={theme.colors.customColors.success}
                     />

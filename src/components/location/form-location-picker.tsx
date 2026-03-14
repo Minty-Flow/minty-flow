@@ -9,7 +9,7 @@ import { WebView } from "react-native-webview"
 
 import { DynamicIcon } from "~/components/dynamic-icon"
 import { ActivityIndicatorMinty } from "~/components/ui/activity-indicator-minty"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
@@ -100,7 +100,7 @@ export function FormLocationPicker({
 
         {/* "Tap to edit" hint bar pinned to bottom */}
         <View style={styles.hintBar} pointerEvents="none">
-          <IconSymbol name="information" size={14} style={styles.hintIcon} />
+          <IconSvg name="info-circle" size={14} style={styles.hintIcon} />
           <Text style={styles.hintText}>
             {t("components.locationPicker.tapToEdit")}
           </Text>
@@ -115,7 +115,7 @@ export function FormLocationPicker({
             accessibilityRole="button"
             accessibilityLabel={t("components.locationPicker.removeLocation")}
           >
-            <IconSymbol name="close" size={14} style={styles.clearIcon} />
+            <IconSvg name="x" size={14} color={styles.clearIcon.color} />
           </Pressable>
         </View>
       </View>

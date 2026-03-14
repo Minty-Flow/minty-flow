@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native-unistyles"
 
-import { IconSymbol, type IconSymbolName } from "./ui/icon-symbol"
+import { IconSvg, type IconSymbolName } from "./ui/icon-svg"
 import { Pressable } from "./ui/pressable"
 import { Switch } from "./ui/switch"
 import { Text } from "./ui/text"
@@ -24,7 +24,7 @@ export const ToggleItem = ({
   return (
     <Pressable style={styles.toggleItem} onPress={() => onValueChange(!value)}>
       <View style={styles.toggleItemIcon}>
-        <IconSymbol name={icon} size={20} />
+        <IconSvg name={icon} size={20} />
       </View>
       <View style={styles.toggleItemContent}>
         <Text style={styles.toggleItemTitle}>{title}</Text>

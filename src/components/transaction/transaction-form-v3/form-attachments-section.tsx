@@ -6,7 +6,7 @@ import { DynamicIcon } from "~/components/dynamic-icon"
 import { AttachmentPreviewModal } from "~/components/transaction/attachment-preview-modal"
 import { Button } from "~/components/ui/button"
 import { ChevronIcon } from "~/components/ui/chevron-icon"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
@@ -116,7 +116,7 @@ export function FormAttachmentsSection({
                   )}
                   hitSlop={8}
                 >
-                  <IconSymbol name="close" size={20} />
+                  <IconSvg name="x" size={20} />
                 </Button>
               </View>
             ))}
@@ -140,7 +140,7 @@ export function FormAttachmentsSection({
                 )
           }
         >
-          <IconSymbol
+          <IconSvg
             name="plus"
             size={20}
             color={theme.colors.customColors.semi}
@@ -148,7 +148,7 @@ export function FormAttachmentsSection({
           <Text variant="default" style={transactionFormStyles.addFilesLabel}>
             {t("components.transactionForm.addFiles.label")}
           </Text>
-          <IconSymbol
+          <IconSvg
             name={addFilesExpanded ? "chevron-up" : "chevron-down"}
             size={20}
             style={transactionFormStyles.chevronIcon}

@@ -7,7 +7,7 @@ import { StyleSheet } from "react-native-unistyles"
 
 import { SearchInput } from "~/components/search-input"
 import { TagCard } from "~/components/tags/tag-card"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
@@ -53,7 +53,7 @@ const TagsScreenInner = ({ tags }: TagsScreenInnerProps) => {
         showsVerticalScrollIndicator={false}
       >
         <Pressable style={styles.newTagButton} onPress={handleAddTag}>
-          <IconSymbol name="plus" size={24} />
+          <IconSvg name="plus" size={24} />
           <Text variant="default" style={styles.newTagText}>
             {t("screens.settings.tags.newTag")}
           </Text>

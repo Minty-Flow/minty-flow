@@ -15,7 +15,7 @@ import { StyleSheet } from "react-native-unistyles"
 
 import { ActivityIndicatorMinty } from "~/components/ui/activity-indicator-minty"
 import { Button } from "~/components/ui/button"
-import { IconSymbol, type IconSymbolName } from "~/components/ui/icon-symbol"
+import { IconSvg, type IconSymbolName } from "~/components/ui/icon-svg"
 import { Text } from "~/components/ui/text"
 import { logger } from "~/utils/logger"
 
@@ -38,7 +38,7 @@ interface ConfirmModalProps {
   cancelLabel?: string
   /** "destructive" uses red/danger styling for the confirm button. */
   variant?: "destructive" | "default"
-  /** Optional icon name shown above the title (e.g. "trash-can"). */
+  /** Optional icon name shown above the title (e.g. "trash"). */
   icon?: IconSymbolName
 }
 
@@ -95,7 +95,7 @@ export function ConfirmModal({
           >
             {icon ? (
               <View style={styles.iconRow}>
-                <IconSymbol
+                <IconSvg
                   name={icon}
                   size={40}
                   color={styles.iconColor(variant).color}

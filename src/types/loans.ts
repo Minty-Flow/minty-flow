@@ -29,7 +29,6 @@ export interface Loan {
   dueDate: Date | null
   accountId: string | null
   isPaid: boolean
-  isArchived: boolean
   createdAt: Date
   updatedAt: Date
   // Computed properties (from model getters)

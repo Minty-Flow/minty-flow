@@ -13,7 +13,7 @@ import {
 import { StyleSheet } from "react-native-unistyles"
 
 import { Button } from "~/components/ui/button"
-import { IconSymbol, type IconSymbolName } from "~/components/ui/icon-symbol"
+import { IconSvg, type IconSymbolName } from "~/components/ui/icon-svg"
 import { Text } from "~/components/ui/text"
 
 import { Pressable } from "./ui/pressable"
@@ -39,7 +39,7 @@ export function InfoModal({
   title,
   description,
   okLabel,
-  icon,
+  icon = "info-circle",
 }: InfoModalProps) {
   const { t } = useTranslation()
   const resolvedOkLabel = okLabel ?? t("common.actions.ok")
@@ -72,11 +72,7 @@ export function InfoModal({
           >
             {icon ? (
               <View style={styles.iconRow}>
-                <IconSymbol
-                  name={icon}
-                  size={40}
-                  color={styles.iconColor.color}
-                />
+                <IconSvg name={icon} size={40} color={styles.iconColor.color} />
               </View>
             ) : null}
 

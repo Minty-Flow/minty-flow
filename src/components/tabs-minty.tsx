@@ -1,7 +1,7 @@
 import { Pressable, type StyleProp, type ViewStyle } from "react-native"
 import { StyleSheet } from "react-native-unistyles"
 
-import { IconSymbol, type IconSymbolName } from "./ui/icon-symbol"
+import { IconSvg, type IconSymbolName } from "./ui/icon-svg"
 import { Text } from "./ui/text"
 import { View } from "./ui/view"
 
@@ -52,10 +52,10 @@ export const TabsMinty = <T,>({
             onPress={() => onValueChange(item.value)}
           >
             {item.icon && (
-              <IconSymbol
+              <IconSvg
                 name={item.icon}
                 size={18}
-                style={[styles.icon, isActive && styles.iconActive]}
+                color={isActive ? styles.iconActive.color : styles.icon.color}
               />
             )}
             <Text

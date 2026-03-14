@@ -7,7 +7,7 @@ import { View } from "~/components/ui/view"
 import type { TranslationKey } from "~/i18n/config"
 import { type TransactionType, TransactionTypeEnum } from "~/types/transactions"
 
-import { IconSymbol, type IconSymbolName } from "../ui/icon-symbol"
+import { IconSvg, type IconSymbolName } from "../ui/icon-svg"
 
 interface TransactionTypeSelectorProps {
   value: TransactionType
@@ -20,15 +20,15 @@ const TYPE_CONFIG: Record<
 > = {
   [TransactionTypeEnum.EXPENSE]: {
     labelKey: "common.transaction.types.expense",
-    icon: "chevron-double-up",
+    icon: "chevrons-up",
   },
   [TransactionTypeEnum.INCOME]: {
     labelKey: "common.transaction.types.income",
-    icon: "chevron-double-down",
+    icon: "chevrons-down",
   },
   [TransactionTypeEnum.TRANSFER]: {
     labelKey: "common.transaction.types.transfer",
-    icon: "swap-horizontal",
+    icon: "transfer",
   },
 }
 
@@ -54,9 +54,9 @@ export const TransactionTypeSelector = ({
             onPress={() => onChange(type)}
             style={[styles.segment, isSelected && styles.active]}
           >
-            <IconSymbol
+            <IconSvg
               name={config.icon}
-              style={isSelected && styles.activeText}
+              color={isSelected ? styles.activeText.color : undefined}
             />
             <Text
               style={[styles.segmentLabel, isSelected && styles.activeText]}

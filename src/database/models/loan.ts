@@ -35,7 +35,6 @@ export default class LoanModel extends Model implements LoanType {
   @field("account_id") accountId!: string | null
   @relation("accounts", "account_id") account!: AccountModel | null
   @field("is_paid") isPaid!: boolean
-  @field("is_archived") isArchived!: boolean
   @date("created_at") createdAt!: Date
   @date("updated_at") updatedAt!: Date
 
