@@ -7,7 +7,7 @@ import { StyleSheet } from "react-native-unistyles"
 
 import { DynamicIcon } from "~/components/dynamic-icon"
 import { Button } from "~/components/ui/button"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
@@ -95,7 +95,6 @@ const CategoryPresetsScreenInner = ({
       type: preset.type,
       icon: preset.icon,
       colorSchemeName: preset.colorSchemeName,
-      isArchived: false as const,
     }))
 
     // Only keep the side-effectful async work inside try/catch
@@ -146,7 +145,7 @@ const CategoryPresetsScreenInner = ({
           </View>
         ) : isSelected ? (
           <View style={styles.checkmark}>
-            <IconSymbol
+            <IconSvg
               name="check"
               size={16}
               color={styles.checkmarkColor.color}
@@ -154,7 +153,7 @@ const CategoryPresetsScreenInner = ({
           </View>
         ) : (
           <View style={styles.plusButton}>
-            <IconSymbol name="plus" size={20} />
+            <IconSvg name="plus" size={20} />
           </View>
         )}
       </Pressable>
@@ -193,7 +192,7 @@ const CategoryPresetsScreenInner = ({
 const EnhancedCategoryPresetsScreen = withObservables(
   ["type"],
   ({ type }: { type: TransactionType }) => ({
-    categories: observeCategoriesByType(type, true),
+    categories: observeCategoriesByType(type),
   }),
 )(CategoryPresetsScreenInner)
 

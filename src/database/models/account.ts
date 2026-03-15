@@ -29,7 +29,6 @@ export default class AccountModel extends Model implements Account {
   @field("currency_code") currencyCode!: string
   @field("icon") icon!: string | null
   @field("color_scheme_name") colorSchemeName!: string | null
-  @field("is_archived") isArchived!: boolean
   @field("is_primary") isPrimary!: boolean
   @field("exclude_from_balance") excludeFromBalance!: boolean
   @date("created_at") createdAt!: Date

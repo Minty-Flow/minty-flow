@@ -334,7 +334,7 @@ import { Tabs } from "expo-router";
     name="index"
     options={{
       title: "Home",
-      tabBarIcon: ({ color }) => <IconSymbol name="house.fill" color={color} />,
+      tabBarIcon: ({ color }) => <IconSvg name="house.fill" color={color} />,
       tabBarBadge: 3,
     }}
   />

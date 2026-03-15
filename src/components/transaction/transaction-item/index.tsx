@@ -6,7 +6,7 @@ import Swipeable, {
 import type { SharedValue } from "react-native-reanimated"
 import { useUnistyles } from "react-native-unistyles"
 
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { View } from "~/components/ui/view"
 import type { TransactionWithRelations } from "~/database/services/transaction-service"
@@ -82,7 +82,7 @@ export const TransactionItem = ({
         ? Math.abs(transaction.amount) * conversionRate
         : transaction.amount / conversionRate
       : null
-  const icon = isTransfer ? "swap-horizontal" : category?.icon
+  const icon = isTransfer ? "transfer" : category?.icon
   const amountTone = isTransfer
     ? transaction.amount < 0
       ? TransactionTypeEnum.EXPENSE
@@ -272,7 +272,7 @@ export const TransactionItem = ({
           accessibilityLabel={t("screens.home.upcoming.a11y.confirm")}
           accessibilityRole="button"
         >
-          <IconSymbol name="check" size={18} color={theme.colors.onError} />
+          <IconSvg name="check" size={18} color={theme.colors.onError} />
         </Pressable>
       )}
     </View>

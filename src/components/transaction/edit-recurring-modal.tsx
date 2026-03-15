@@ -24,7 +24,7 @@ import {
 } from "react-native-unistyles"
 
 import { ActivityIndicatorMinty } from "~/components/ui/activity-indicator-minty"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import type RecurringTransactionModel from "~/database/models/recurring-transaction"
 import type TransactionModel from "~/database/models/transaction"
 import { updateRecurringRuleTemplate } from "~/database/services/recurring-transaction-service"
@@ -200,7 +200,7 @@ export function EditRecurringModal({
               {
                 maxWidth: maxCardWidth,
                 backgroundColor: theme.colors.surface,
-                borderRadius: theme.colors.radius ?? 16,
+                borderRadius: theme.radius ?? 16,
               },
             ]}
             pointerEvents="box-none"
@@ -214,7 +214,7 @@ export function EditRecurringModal({
                   },
                 ]}
               >
-                <IconSymbol
+                <IconSvg
                   name="pencil"
                   size={24}
                   color={
@@ -272,7 +272,7 @@ export function EditRecurringModal({
 const styles = UnistylesSheet.create((theme) => ({
   backdrop: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.4)",
+    backgroundColor: theme.colors.shadow,
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 24,

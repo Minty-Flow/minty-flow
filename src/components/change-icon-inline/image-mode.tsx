@@ -3,7 +3,7 @@ import { ScrollView, View } from "react-native"
 
 import { DynamicIcon } from "~/components/dynamic-icon"
 import { Button } from "~/components/ui/button"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import type { MintyColorScheme } from "~/styles/theme/types"
@@ -39,7 +39,7 @@ export function ImageMode({
           {t("components.iconPicker.imageMode")}
         </Text>
         <Pressable style={styles.pasteOption} onPress={onPaste}>
-          <IconSymbol name="clipboard" size={20} style={styles.optionIcon} />
+          <IconSvg name="clipboard" size={20} />
           <Text style={styles.optionText}>
             {t("components.iconPicker.pasteImage")}
           </Text>
@@ -58,8 +58,8 @@ export function ImageMode({
                 colorScheme={colorScheme}
               />
             ) : (
-              <IconSymbol
-                name="image"
+              <IconSvg
+                name="photo"
                 size={48}
                 style={styles.previewPlaceholderIcon}
               />
@@ -67,11 +67,7 @@ export function ImageMode({
           </Pressable>
         </View>
         <Pressable style={styles.pickOption} onPress={onPick}>
-          <IconSymbol
-            name="image-multiple"
-            size={20}
-            style={styles.optionIcon}
-          />
+          <IconSvg name="library-photo" size={20} />
           <Text style={styles.optionText}>
             {t("components.iconPicker.pickImage")}
           </Text>

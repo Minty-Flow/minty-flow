@@ -10,7 +10,7 @@ import { PrivacyEyeControl } from "~/components/privacy-eye-control"
 import { SummarySection } from "~/components/summary-card"
 import { TransactionFilterHeader } from "~/components/transaction/transaction-filter-header"
 import { TransactionSectionList } from "~/components/transaction/transaction-section-list"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
@@ -112,7 +112,7 @@ function HomeScreenInner({
           {image ? (
             <DynamicIcon icon={image} variant="raw" size={48} />
           ) : (
-            <IconSymbol name="account" size={24} />
+            <IconSvg name="user" size={24} />
           )}
           <Text variant="large" style={styles.greetingText}>
             {t("profile.greeting")}, {profileName}!
@@ -174,12 +174,12 @@ const EnhancedHomeScreen = withObservables(
     })
     return {
       transactionsFull: observeTransactionModelsFull(queryFilters, [
-        observeAccountModels(false),
+        observeAccountModels(),
         observeCategoriesByType(TransactionTypeEnum.EXPENSE),
         observeCategoriesByType(TransactionTypeEnum.INCOME),
         observeCategoriesByType(TransactionTypeEnum.TRANSFER),
       ]).pipe(startWith([] as TransactionWithRelations[])),
-      accounts: observeAccounts(false).pipe(startWith([] as Account[])),
+      accounts: observeAccounts().pipe(startWith([] as Account[])),
       categoriesExpense: observeCategoriesByType(
         TransactionTypeEnum.EXPENSE,
       ).pipe(startWith([] as Category[])),
@@ -227,7 +227,7 @@ const styles = StyleSheet.create((theme) => ({
   },
   header: {
     marginHorizontal: 20,
-    marginTop: 40,
+    marginTop: 50,
     marginBottom: 10,
     flexDirection: "row",
     alignItems: "center",
@@ -237,7 +237,7 @@ const styles = StyleSheet.create((theme) => ({
     flexDirection: "row",
     alignItems: "center",
     gap: 12,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     padding: 10,
   },
   greetingText: {

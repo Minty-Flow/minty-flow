@@ -2,13 +2,13 @@ import { useTranslation } from "react-i18next"
 import { StyleSheet } from "react-native-unistyles"
 
 import { ChevronIcon } from "~/components/ui/chevron-icon"
-import { IconSymbol, type IconSymbolName } from "~/components/ui/icon-symbol"
+import { IconSvg, type IconSvgName } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
 
 interface ActionItemProps {
-  icon: IconSymbolName
+  icon: IconSvgName
   title: string
   description?: string
   onPress: () => void
@@ -35,7 +35,7 @@ export function ActionItem({
     >
       <View style={styles.actionItemLeft}>
         <View style={styles.iconContainer}>
-          <IconSymbol name={icon} size={24} />
+          <IconSvg name={icon} size={24} />
         </View>
         <View style={styles.actionItemContent}>
           <View style={styles.titleRow}>
@@ -102,7 +102,7 @@ const styles = StyleSheet.create((theme) => ({
     backgroundColor: theme.colors.secondary,
     paddingHorizontal: 8,
     paddingVertical: 2,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
   },
   badgeText: {
     fontSize: 10,

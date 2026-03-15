@@ -9,7 +9,7 @@ import { WebView, type WebViewMessageEvent } from "react-native-webview"
 
 import { ActivityIndicatorMinty } from "~/components/ui/activity-indicator-minty"
 import { Button } from "~/components/ui/button"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
@@ -297,7 +297,7 @@ function LocationPickerContent({
             hitSlop={8}
             style={styles.fabMyLocation}
           >
-            <IconSymbol name="crosshairs-gps" size={24} />
+            <IconSvg name="current-location" size={24} />
           </Pressable>
         </View>
       )}

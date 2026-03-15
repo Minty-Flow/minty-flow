@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next"
 
 import { ChevronIcon } from "~/components/ui/chevron-icon"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
@@ -30,7 +30,7 @@ export function ModeSelectorList({
         onPress={onIconPress}
       >
         <View style={styles.itemLeft}>
-          <IconSymbol name="shape" size={24} />
+          <IconSvg name="category" size={24} />
           <Text variant="large" style={styles.itemTitle}>
             {t("components.iconPicker.iconMode")}
           </Text>
@@ -49,7 +49,7 @@ export function ModeSelectorList({
         onPress={onEmojiLetterPress}
       >
         <View style={styles.itemLeft}>
-          <IconSymbol name="tag" size={24} />
+          <IconSvg name="tag" size={24} />
           <Text variant="large" style={styles.itemTitle}>
             {t("components.iconPicker.emojiLetter")}
           </Text>
@@ -68,7 +68,7 @@ export function ModeSelectorList({
         onPress={onImagePress}
       >
         <View style={styles.itemLeft}>
-          <IconSymbol name="image" size={24} />
+          <IconSvg name="photo" size={24} />
           <Text variant="large" style={styles.itemTitle}>
             {t("components.iconPicker.imageMode")}
           </Text>

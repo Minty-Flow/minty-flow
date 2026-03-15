@@ -53,11 +53,10 @@ export function useAccountForm({
       type: account?.type || AccountTypeEnum.CHECKING,
       balance: account?.balance || 0,
       currencyCode: account?.currencyCode || "USD",
-      icon: account?.icon || "wallet-bifold-outline",
+      icon: account?.icon || "wallet",
       colorSchemeName: account?.colorSchemeName || undefined,
       isPrimary: account?.isPrimary || false,
       excludeFromBalance: account?.excludeFromBalance || false,
-      isArchived: account?.isArchived || false,
     },
   })
 
@@ -91,7 +90,6 @@ export function useAccountForm({
           colorSchemeName: data.colorSchemeName,
           isPrimary: false,
           excludeFromBalance: data.excludeFromBalance,
-          isArchived: data.isArchived,
         })
 
         allowNavigation()
@@ -112,9 +110,8 @@ export function useAccountForm({
           currencyCode: data.currencyCode,
           icon: data.icon,
           colorSchemeName: data.colorSchemeName,
-          isPrimary: data.isArchived ? false : data.isPrimary,
+          isPrimary: data.isPrimary,
           excludeFromBalance: data.excludeFromBalance,
-          isArchived: data.isArchived,
         })
 
         allowNavigation()

@@ -17,7 +17,6 @@ export const modelToAccount = (model: AccountModel): Account => {
     currencyCode: model.currencyCode,
     excludeFromBalance: model.excludeFromBalance,
     isPrimary: model.isPrimary,
-    isArchived: model.isArchived,
     createdAt: model.createdAt,
     updatedAt: model.updatedAt,
     sortOrder: model.sortOrder,

@@ -166,7 +166,7 @@ export const TooltipProvider = ({ children }: { children: ReactNode }) => {
       backgroundColor: t.colors.secondary,
       paddingHorizontal: 12,
       paddingVertical: 6,
-      borderRadius: t.colors.radius,
+      borderRadius: t.radius,
       shadowColor: t.colors.shadow,
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.2,

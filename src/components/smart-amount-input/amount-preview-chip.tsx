@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next"
 
 import { ChevronIcon } from "../ui/chevron-icon"
-import { IconSymbol } from "../ui/icon-symbol"
+import { IconSvg } from "../ui/icon-svg"
 import { Pressable } from "../ui/pressable"
 import { Text } from "../ui/text"
 import { View } from "../ui/view"
@@ -47,7 +47,7 @@ export const AmountPreviewChips = ({
             "components.transactionForm.amountInput.applyResultHint",
           )}
         >
-          <IconSymbol
+          <IconSvg
             name="equal"
             size={18}
             style={smartInputStyles.previewIconLeft}

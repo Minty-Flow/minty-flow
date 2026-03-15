@@ -49,15 +49,9 @@ const findAccount = async (id: string): Promise<AccountModel | null> => {
 /**
  * Observe all accounts reactively
  */
-export const observeAccountModels = (
-  includeArchived = false,
-): Observable<AccountModel[]> => {
+export const observeAccountModels = (): Observable<AccountModel[]> => {
   const accounts = getAccountCollection()
-  let query = accounts.query(Q.sortBy("sort_order", Q.asc))
-
-  if (!includeArchived) {
-    query = query.extend(Q.where("is_archived", false))
-  }
+  const query = accounts.query(Q.sortBy("sort_order", Q.asc))
 
   // Observe specific columns that can change when editing
   // This makes the query reactive to column changes, not just record additions/deletions
@@ -68,7 +62,6 @@ export const observeAccountModels = (
     "currency_code",
     "icon",
     "color_scheme_name",
-    "is_archived",
     "is_primary",
     "exclude_from_balance",
     "sort_order",
@@ -77,15 +70,9 @@ export const observeAccountModels = (
 /**
  * Observe all accounts reactively
  */
-export const observeAccounts = (
-  includeArchived = false,
-): Observable<Account[]> => {
+export const observeAccounts = (): Observable<Account[]> => {
   const accounts = getAccountCollection()
-  let query = accounts.query(Q.sortBy("sort_order", Q.asc))
-
-  if (!includeArchived) {
-    query = query.extend(Q.where("is_archived", false))
-  }
+  const query = accounts.query(Q.sortBy("sort_order", Q.asc))
 
   // Observe specific columns that can change when editing
   // This makes the query reactive to column changes, not just record additions/deletions
@@ -97,7 +84,6 @@ export const observeAccounts = (
       "currency_code",
       "icon",
       "color_scheme_name",
-      "is_archived",
       "is_primary",
       "exclude_from_balance",
       "sort_order",
@@ -126,7 +112,6 @@ const observeAccountDetailsById = (id: string): Observable<Account> => {
       "currency_code",
       "icon",
       "color_scheme_name",
-      "is_archived",
       "is_primary",
       "exclude_from_balance",
       "sort_order",
@@ -225,11 +210,10 @@ export interface AccountWithMonthTotals extends Account {
  * When excludeFromTotals is false, transfer amounts are included (credits → in, debits → out).
  */
 export const observeAccountsWithMonthTotals = (
-  includeArchived = false,
   excludeFromTotals = true,
 ): Observable<AccountWithMonthTotals[]> => {
   const { fromDate, toDate } = getCurrentMonthRange()
-  const accounts$ = observeAccountModels(includeArchived)
+  const accounts$ = observeAccountModels()
   const transactions$ = observeTransactionModels({
     fromDate,
     toDate,
@@ -344,7 +328,6 @@ const applyAccountUpdates = (
   if (updates.icon !== undefined) a.icon = updates.icon ?? null
   if (updates.colorSchemeName !== undefined)
     a.colorSchemeName = updates.colorSchemeName ?? null
-  if (updates.isArchived !== undefined) a.isArchived = updates.isArchived
   if (updates.isPrimary !== undefined) a.isPrimary = updates.isPrimary
   if (updates.excludeFromBalance !== undefined)
     a.excludeFromBalance = updates.excludeFromBalance

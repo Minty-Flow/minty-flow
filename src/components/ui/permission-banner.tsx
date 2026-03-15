@@ -1,20 +1,20 @@
 import type { PressableProps } from "react-native"
 import { StyleSheet } from "react-native-unistyles"
 
-import { IconSymbol, type IconSymbolName } from "~/components/ui/icon-symbol"
+import { IconSvg, type IconSvgName } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
 
 interface PermissionBannerProps extends PressableProps {
   message: string
-  icon?: IconSymbolName
+  icon?: IconSvgName
   showBanner: boolean
 }
 
 export function PermissionBanner({
   message,
-  icon = "alert",
+  icon = "alert-triangle",
   onPress,
   showBanner,
   ...props
@@ -24,12 +24,12 @@ export function PermissionBanner({
   return (
     <Pressable onPress={onPress} style={styles.container} {...props}>
       <View style={styles.iconWrap}>
-        <IconSymbol name={icon} outline size={20} style={styles.icon} />
+        <IconSvg name={icon} size={20} color={styles.icon.color} />
       </View>
       <Text variant="default" style={styles.text} numberOfLines={2}>
         {message}
       </Text>
-      <IconSymbol name="open-in-new" size={20} style={styles.openInNew} />
+      <IconSvg name="external-link" size={20} style={styles.openInNew} />
     </Pressable>
   )
 }
@@ -43,7 +43,7 @@ const styles = StyleSheet.create((theme) => ({
     marginVertical: 10,
     paddingVertical: 20,
     paddingHorizontal: 15,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     backgroundColor: `${theme.colors.error}18`, // ~10% opacity tint
     borderWidth: 1,
     borderColor: `${theme.colors.error}40`,

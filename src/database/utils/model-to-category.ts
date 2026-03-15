@@ -14,7 +14,6 @@ export const modelToCategory = (model: CategoryModel): Category => {
     colorSchemeName: model.colorSchemeName,
     colorScheme: model.colorScheme, // Computed getter from model
     transactionCount: model.transactionCount,
-    isArchived: model.isArchived,
     createdAt: model.createdAt,
     updatedAt: model.updatedAt,
   }

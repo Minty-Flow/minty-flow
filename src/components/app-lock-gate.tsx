@@ -7,7 +7,7 @@ import Animated, {
 } from "react-native-reanimated"
 import { StyleSheet } from "react-native-unistyles"
 
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { useAppLockStore } from "~/stores/app-lock.store"
 
@@ -41,10 +41,7 @@ export function AppLockGate() {
           disabled={isAuthenticating}
           style={styles.lockButton}
         >
-          <IconSymbol
-            name={isAuthenticating ? "lock-open" : "lock"}
-            size={40}
-          />
+          <IconSvg name={isAuthenticating ? "lock-open" : "lock"} size={40} />
         </Pressable>
       </BlurView>
     </Animated.View>

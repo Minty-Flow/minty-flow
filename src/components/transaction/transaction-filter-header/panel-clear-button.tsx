@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next"
 
 import { Button } from "~/components/ui/button"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Text } from "~/components/ui/text"
 
 import { filterHeaderStyles } from "./filter-header.styles"
@@ -26,7 +26,7 @@ export function PanelClearButton({
       disabled={disabled}
       style={filterHeaderStyles.clearHit}
     >
-      {hideIcon ? null : <IconSymbol name="close-circle" size={18} />}
+      {hideIcon ? null : <IconSvg name="x" size={18} />}
       <Text style={filterHeaderStyles.clearText}>
         {t("common.actions.clear")}
       </Text>

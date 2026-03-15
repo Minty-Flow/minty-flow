@@ -7,7 +7,6 @@ const addCategoriesSchema = z.object({
   icon: z.string().nullable().optional(),
   colorSchemeName: z.string().nullable().optional(),
   type: z.enum(TransactionTypeEnum),
-  isArchived: z.boolean().default(false),
 })
 
 const updateCategoriesSchema = addCategoriesSchema

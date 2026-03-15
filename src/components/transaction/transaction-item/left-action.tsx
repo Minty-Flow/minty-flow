@@ -5,7 +5,7 @@ import Animated, {
 } from "react-native-reanimated"
 import { StyleSheet } from "react-native-unistyles"
 
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { View } from "~/components/ui/view"
 
@@ -42,7 +42,7 @@ export const LeftAction = ({
         accessibilityLabel={accessibilityLabel}
       >
         <Animated.View style={iconStyle}>
-          <IconSymbol
+          <IconSvg
             name="restore"
             size={24}
             color={leftActionStyles.restoreIcon.color}

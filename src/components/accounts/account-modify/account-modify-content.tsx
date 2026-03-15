@@ -155,7 +155,6 @@ export function AccountModifyContent({
             control={control}
             isAddMode={isAddMode}
             formIsPrimary={formIsPrimary}
-            setValue={setValue}
           />
 
           {!isAddMode && <Separator />}

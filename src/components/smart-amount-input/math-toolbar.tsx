@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next"
 import Animated, { FadeInDown } from "react-native-reanimated"
 
-import { IconSymbol } from "../ui/icon-symbol"
+import { IconSvg } from "../ui/icon-svg"
 import { Pressable } from "../ui/pressable"
 import { Text } from "../ui/text"
 import { View } from "../ui/view"
@@ -60,7 +60,7 @@ export const MathToolbar = ({
             "components.transactionForm.amountInput.backspace",
           )}
         >
-          <IconSymbol
+          <IconSvg
             name="backspace"
             size={24}
             color={smartInputStyles.onSurface.color}
@@ -84,7 +84,7 @@ export const MathToolbar = ({
           accessibilityState={{ disabled: !!previewError }}
         >
           {isInMathOperation ? (
-            <IconSymbol
+            <IconSvg
               name="equal"
               size={24}
               color={smartInputStyles.onPrimary.color}

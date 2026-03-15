@@ -15,7 +15,7 @@ import Animated, {
 } from "react-native-reanimated"
 import { StyleSheet, useUnistyles } from "react-native-unistyles"
 
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { View } from "~/components/ui/view"
 import { logger } from "~/utils/logger"
 
@@ -127,7 +127,7 @@ function ReorderableRow<T>({
               isFirst && styles.buttonDisabled,
             ]}
           >
-            <IconSymbol name="arrow-up" size={18} color={iconColor} />
+            <IconSvg name="arrow-up" size={18} color={iconColor} />
           </AnimatedPressable>
 
           <AnimatedPressable
@@ -139,7 +139,7 @@ function ReorderableRow<T>({
               isLast && styles.buttonDisabled,
             ]}
           >
-            <IconSymbol name="arrow-down" size={18} color={iconColor} />
+            <IconSvg name="arrow-down" size={18} color={iconColor} />
           </AnimatedPressable>
         </AnimatedView>
       )}
@@ -204,7 +204,7 @@ const styles = StyleSheet.create((theme) => ({
   },
   buttonContainer: {
     backgroundColor: theme.colors.primary,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     padding: 4,
     alignItems: "center",
     justifyContent: "center",

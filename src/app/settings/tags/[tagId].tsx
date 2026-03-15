@@ -11,6 +11,7 @@ import { DeleteSection } from "~/components/tag/delete-section"
 import { FormTagFields } from "~/components/tag/form-tag-fields"
 import { FormTagModals } from "~/components/tag/form-tag-modals"
 import { TypeTabs } from "~/components/tag/type-tabs"
+import type { IconSvgName } from "~/components/ui/icon-svg"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
 import { ScrollIntoViewProvider } from "~/contexts/scroll-into-view-context"
@@ -68,8 +69,8 @@ const EditTagScreenInner = ({ tagId, tagModel, tag }: EditTagScreenProps) => {
   const formColorSchemeName = watch("colorSchemeName")
   const formType = watch("type")
 
-  const iconBasedType = (type?: TagKindType) => {
-    if (type === TagKindEnum.CONTACT) return "account"
+  const iconBasedType = (type?: TagKindType): IconSvgName => {
+    if (type === TagKindEnum.CONTACT) return "address-book"
     if (type === TagKindEnum.LOCATION) return "map"
     return "tag"
   }

@@ -7,7 +7,7 @@ import { View } from "~/components/ui/view"
 import type { TranslationKey } from "~/i18n/config"
 import { type TransactionType, TransactionTypeEnum } from "~/types/transactions"
 
-import { IconSymbol, type IconSymbolName } from "../ui/icon-symbol"
+import { IconSvg, type IconSvgName } from "../ui/icon-svg"
 
 interface TransactionTypeSelectorProps {
   value: TransactionType
@@ -16,19 +16,19 @@ interface TransactionTypeSelectorProps {
 
 const TYPE_CONFIG: Record<
   TransactionType,
-  { labelKey: TranslationKey; icon: IconSymbolName }
+  { labelKey: TranslationKey; icon: IconSvgName }
 > = {
   [TransactionTypeEnum.EXPENSE]: {
     labelKey: "common.transaction.types.expense",
-    icon: "chevron-double-up",
+    icon: "chevrons-up",
   },
   [TransactionTypeEnum.INCOME]: {
     labelKey: "common.transaction.types.income",
-    icon: "chevron-double-down",
+    icon: "chevrons-down",
   },
   [TransactionTypeEnum.TRANSFER]: {
     labelKey: "common.transaction.types.transfer",
-    icon: "swap-horizontal",
+    icon: "transfer",
   },
 }
 
@@ -54,9 +54,9 @@ export const TransactionTypeSelector = ({
             onPress={() => onChange(type)}
             style={[styles.segment, isSelected && styles.active]}
           >
-            <IconSymbol
+            <IconSvg
               name={config.icon}
-              style={isSelected && styles.activeText}
+              color={isSelected ? styles.activeText.color : undefined}
             />
             <Text
               style={[styles.segmentLabel, isSelected && styles.activeText]}
@@ -76,7 +76,7 @@ const styles = StyleSheet.create((theme) => ({
     alignItems: "stretch",
     gap: 8,
     padding: 4,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     backgroundColor: theme.colors.secondary,
   },
   segment: {
@@ -87,7 +87,7 @@ const styles = StyleSheet.create((theme) => ({
     gap: 6,
     paddingVertical: 12,
     paddingHorizontal: 14,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
   },
 
   segmentLabel: {

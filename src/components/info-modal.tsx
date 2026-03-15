@@ -13,7 +13,7 @@ import {
 import { StyleSheet } from "react-native-unistyles"
 
 import { Button } from "~/components/ui/button"
-import { IconSymbol, type IconSymbolName } from "~/components/ui/icon-symbol"
+import { IconSvg, type IconSvgName } from "~/components/ui/icon-svg"
 import { Text } from "~/components/ui/text"
 
 import { Pressable } from "./ui/pressable"
@@ -30,7 +30,7 @@ interface InfoModalProps {
   /** Label for the OK button. Default "OK". */
   okLabel?: string
   /** Optional icon name shown above the title (e.g. "information"). */
-  icon?: IconSymbolName
+  icon?: IconSvgName
 }
 
 export function InfoModal({
@@ -39,7 +39,7 @@ export function InfoModal({
   title,
   description,
   okLabel,
-  icon,
+  icon = "info-circle",
 }: InfoModalProps) {
   const { t } = useTranslation()
   const resolvedOkLabel = okLabel ?? t("common.actions.ok")
@@ -72,11 +72,7 @@ export function InfoModal({
           >
             {icon ? (
               <View style={styles.iconRow}>
-                <IconSymbol
-                  name={icon}
-                  size={40}
-                  color={styles.iconColor.color}
-                />
+                <IconSvg name={icon} size={40} color={styles.iconColor.color} />
               </View>
             ) : null}
 
@@ -105,7 +101,7 @@ export function InfoModal({
 const styles = StyleSheet.create((theme) => ({
   backdrop: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.4)",
+    backgroundColor: theme.colors.shadow,
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 24,
@@ -116,7 +112,7 @@ const styles = StyleSheet.create((theme) => ({
     paddingVertical: 24,
     gap: 16,
     backgroundColor: theme.colors.surface,
-    borderRadius: theme.colors.radius ?? 16,
+    borderRadius: theme.radius ?? 16,
   },
   iconRow: {
     alignItems: "center",

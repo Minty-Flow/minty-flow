@@ -3,7 +3,7 @@ import { ScrollView, TextInput, View } from "react-native"
 import { useUnistyles } from "react-native-unistyles"
 
 import { Chip } from "~/components/ui/chips"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import type { SearchMatchType } from "~/types/transaction-filters"
@@ -55,7 +55,7 @@ export function SearchPanel({
         ))}
       </ScrollView>
       <View style={filterHeaderStyles.searchRow}>
-        <IconSymbol name="magnify" size={20} />
+        <IconSvg name="search" size={20} />
         <TextInput
           value={value}
           onChangeText={onChange}
@@ -71,7 +71,7 @@ export function SearchPanel({
         />
         {value.length > 0 ? (
           <Pressable onPress={onClear} style={filterHeaderStyles.clearHit}>
-            <IconSymbol name="close-circle" size={20} />
+            <IconSvg name="x" size={20} />
           </Pressable>
         ) : null}
       </View>
@@ -88,7 +88,7 @@ export function SearchPanel({
           {t("components.filters.includeNotes")}
         </Text>
         {includeNotes ? (
-          <IconSymbol name="check" size={20} color={theme.colors.primary} />
+          <IconSvg name="check" size={20} color={theme.colors.primary} />
         ) : null}
       </Pressable>
       <View style={filterHeaderStyles.panelHeader}>

@@ -27,7 +27,7 @@ export const TypeTabs = ({ value, onValueChange }: TypeTabsProps) => {
         {
           value: TagKindEnum.CONTACT,
           label: t("screens.settings.tags.form.tabs.contact"),
-          icon: "account",
+          icon: "address-book",
         },
       ]}
       activeValue={value}

@@ -9,7 +9,7 @@ import { WebView } from "react-native-webview"
 
 import { DynamicIcon } from "~/components/dynamic-icon"
 import { ActivityIndicatorMinty } from "~/components/ui/activity-indicator-minty"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
@@ -100,7 +100,7 @@ export function FormLocationPicker({
 
         {/* "Tap to edit" hint bar pinned to bottom */}
         <View style={styles.hintBar} pointerEvents="none">
-          <IconSymbol name="information" size={14} style={styles.hintIcon} />
+          <IconSvg name="info-circle" size={14} style={styles.hintIcon} />
           <Text style={styles.hintText}>
             {t("components.locationPicker.tapToEdit")}
           </Text>
@@ -115,7 +115,7 @@ export function FormLocationPicker({
             accessibilityRole="button"
             accessibilityLabel={t("components.locationPicker.removeLocation")}
           >
-            <IconSymbol name="close" size={14} style={styles.clearIcon} />
+            <IconSvg name="x" size={14} color={styles.clearIcon.color} />
           </Pressable>
         </View>
       </View>
@@ -136,7 +136,7 @@ export function FormLocationPicker({
           style={[styles.addBtn, { backgroundColor: theme.colors.surface }]}
         >
           <DynamicIcon
-            icon="map-marker"
+            icon="map-pin"
             size={18}
             color={theme.colors.primary}
             variant="badge"
@@ -155,7 +155,7 @@ const styles = UnistylesSheet.create((theme) => ({
   card: {
     marginHorizontal: H_PAD,
     height: CARD_HEIGHT,
-    borderRadius: theme.colors.radius ?? 16,
+    borderRadius: theme.radius ?? 16,
     overflow: "hidden",
   },
   webview: {
@@ -172,7 +172,7 @@ const styles = UnistylesSheet.create((theme) => ({
     gap: 6,
     paddingVertical: 8,
     paddingHorizontal: 12,
-    backgroundColor: "rgba(0,0,0,0.45)",
+    backgroundColor: theme.colors.shadow,
   },
   hintIcon: {
     color: "white",
@@ -192,7 +192,7 @@ const styles = UnistylesSheet.create((theme) => ({
     width: 28,
     height: 28,
     borderRadius: 14,
-    backgroundColor: "rgba(0,0,0,0.4)",
+    backgroundColor: theme.colors.surface,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -204,7 +204,7 @@ const styles = UnistylesSheet.create((theme) => ({
   placeholder: {
     marginHorizontal: H_PAD,
     height: CARD_HEIGHT,
-    borderRadius: theme.colors.radius ?? 16,
+    borderRadius: theme.radius ?? 16,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -215,7 +215,7 @@ const styles = UnistylesSheet.create((theme) => ({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 100,
-    shadowColor: "#000",
+    shadowColor: theme.colors.shadow,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.15,
     shadowRadius: 8,

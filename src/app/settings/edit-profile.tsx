@@ -8,7 +8,7 @@ import { StyleSheet } from "react-native-unistyles"
 
 import { KeyboardStickyViewMinty } from "~/components/keyboard-sticky-view-minty"
 import { Button } from "~/components/ui/button"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Input } from "~/components/ui/input"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
@@ -85,7 +85,7 @@ export default function EditProfileScreen() {
               )}
             </View>
             <View style={styles.cameraIconContainer}>
-              <IconSymbol name="camera" size={20} />
+              <IconSvg name="camera" size={20} />
             </View>
           </Pressable>
           {localImageUri && (
@@ -145,12 +145,12 @@ const styles = StyleSheet.create((theme) => ({
     padding: 10,
     alignItems: "flex-start",
     justifyContent: "flex-start",
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
   },
   avatar: {
     width: 128,
     height: 128,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     backgroundColor: theme.colors.primary,
     alignItems: "center",
     justifyContent: "center",
@@ -174,7 +174,7 @@ const styles = StyleSheet.create((theme) => ({
     right: 0,
     width: 36,
     height: 36,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     backgroundColor: theme.colors.secondary,
     alignItems: "center",
     justifyContent: "center",

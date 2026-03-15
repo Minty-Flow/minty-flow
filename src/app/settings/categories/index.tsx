@@ -14,10 +14,12 @@ export default function CategoriesIndexScreen() {
   }>()
   const { t } = useTranslation()
 
+  // Assuming activeTab and searchQuery would be defined elsewhere if needed for CategoryList
+  // For now, let's pass params.type as the type prop and an empty string for searchQuery
+  // and directly pass the extraListProps as individual props to CategoryList
   return (
     <CategoryScreenContent
       subtitle={t("components.categories.subtitle")}
-      includeArchived={false}
       initialType={params.type}
       extraListProps={{
         createdCategory: params.createdCategory,

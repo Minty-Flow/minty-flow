@@ -41,7 +41,7 @@ export const transactionFormStyles = StyleSheet.create((theme) => ({
     paddingVertical: 24,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: theme.colors.radius ?? 16,
+    borderRadius: theme.radius ?? 16,
     backgroundColor: theme.colors.secondary,
   },
   balanceValue: {
@@ -110,7 +110,7 @@ export const transactionFormStyles = StyleSheet.create((theme) => ({
     letterSpacing: 0.5,
   },
   clearButton: {
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     paddingVertical: SMALL_GAP,
     paddingHorizontal: SECTION_GAP,
   },
@@ -130,7 +130,7 @@ export const transactionFormStyles = StyleSheet.create((theme) => ({
     gap: ELEMENT_GAP,
     paddingVertical: TRIGGER_PAD,
     paddingHorizontal: TRIGGER_PAD,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     marginHorizontal: H_PAD,
     borderWidth: 2,
     borderColor: theme.colors.secondary,
@@ -147,7 +147,7 @@ export const transactionFormStyles = StyleSheet.create((theme) => ({
     gap: ELEMENT_GAP,
     paddingVertical: TRIGGER_PAD + 4,
     paddingHorizontal: H_PAD,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     borderWidth: 2,
     borderColor: theme.colors.secondary,
     borderStyle: "dashed",
@@ -249,15 +249,13 @@ export const transactionFormStyles = StyleSheet.create((theme) => ({
   inlineAccountPicker: {
     marginTop: FORM_GAP,
     marginHorizontal: H_PAD,
-    padding: CARD_PAD,
-    borderRadius: theme.colors.radius,
-    backgroundColor: theme.colors.secondary,
     maxHeight: 280,
+    borderRadius: theme.radius,
+    overflow: "hidden",
   },
   inlinePickerRowSelected: {
-    backgroundColor: theme.colors.surface,
-    borderWidth: 1,
-    borderColor: theme.colors.primary,
+    backgroundColor: `${theme.colors.primary}15`,
+    borderRadius: theme.radius,
   },
   accountPickerRow: {
     marginTop: FORM_GAP,
@@ -266,7 +264,7 @@ export const transactionFormStyles = StyleSheet.create((theme) => ({
     gap: ELEMENT_GAP,
     paddingVertical: TRIGGER_PAD,
     paddingHorizontal: TRIGGER_PAD,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
   },
   accountPickerRowAdd: {
     marginTop: FORM_GAP,
@@ -275,7 +273,7 @@ export const transactionFormStyles = StyleSheet.create((theme) => ({
     gap: ELEMENT_GAP,
     paddingVertical: TRIGGER_PAD,
     paddingHorizontal: TRIGGER_PAD,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     borderWidth: 2,
     borderStyle: "dashed",
     borderColor: theme.colors.secondary,
@@ -311,7 +309,7 @@ export const transactionFormStyles = StyleSheet.create((theme) => ({
     height: 180,
   },
   pickerListContent: {
-    paddingRight: CARD_PAD,
+    // paddingRight: CARD_PAD,
   },
   categoryScrollContent: {
     paddingHorizontal: H_PAD,
@@ -360,12 +358,16 @@ export const transactionFormStyles = StyleSheet.create((theme) => ({
     gap: SECTION_GAP,
     paddingVertical: TRIGGER_PAD,
     paddingHorizontal: TRIGGER_PAD,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     borderWidth: 2,
+    borderColor: "transparent",
   },
   tagChip: {
     backgroundColor: theme.colors.secondary,
     borderColor: theme.colors.primary,
+  },
+  tagPickerChip: {
+    backgroundColor: theme.colors.secondary,
   },
   tagChipText: {
     fontSize: 15,
@@ -389,37 +391,23 @@ export const transactionFormStyles = StyleSheet.create((theme) => ({
   },
   inlineTagPicker: {
     marginTop: FORM_GAP,
-    padding: CARD_PAD,
     marginHorizontal: H_PAD,
-    borderRadius: 12,
-    backgroundColor: theme.colors.secondary,
+    borderRadius: theme.radius,
+    overflow: "hidden",
     maxHeight: 400,
-    gap: ROW_GAP,
   },
   tagSearchInput: {
     marginBottom: SECTION_GAP,
   },
-  tagPickerList: {
-    height: 180,
-  },
-  tagPickerRow: {
-    gap: ROW_GAP,
-    marginTop: FORM_GAP,
+  tagPickerChipGrid: {
     flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: TRIGGER_PAD,
-    paddingHorizontal: TRIGGER_PAD,
-    borderRadius: theme.colors.radius,
-    backgroundColor: theme.colors.secondary,
-    borderWidth: 2,
-    borderColor: theme.colors.secondary,
+    flexWrap: "wrap",
+    gap: SECTION_GAP,
   },
-  tagPickerRowText: {
-    fontSize: 15,
-    fontWeight: "500",
-    color: theme.colors.onSurface,
-    flex: 1,
-    minWidth: 0,
+  tagPickerEmptyText: {
+    fontSize: 14,
+    color: theme.colors.customColors.semi,
+    paddingVertical: SECTION_GAP,
   },
   createTagRow: {
     flexDirection: "row",
@@ -428,7 +416,7 @@ export const transactionFormStyles = StyleSheet.create((theme) => ({
     paddingVertical: ROW_PADDING_V,
     paddingHorizontal: SECTION_GAP,
     marginTop: FORM_GAP,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
   },
   createTagRowText: {
     fontSize: 15,
@@ -490,7 +478,7 @@ export const transactionFormStyles = StyleSheet.create((theme) => ({
     backgroundColor: theme.colors.secondary,
     paddingHorizontal: ROW_PADDING_V,
     paddingVertical: SMALL_GAP,
-    borderRadius: theme.colors.radius ?? 12,
+    borderRadius: theme.radius,
   },
   comingSoonBadgeText: {
     fontSize: 11,
@@ -536,7 +524,7 @@ export const transactionFormStyles = StyleSheet.create((theme) => ({
   recurringToggleButton: {
     paddingVertical: ROW_PADDING_V,
     paddingHorizontal: BUTTON_PAD_H,
-    borderRadius: theme.colors.radius ?? 12,
+    borderRadius: theme.radius,
     backgroundColor: theme.colors.secondary,
     borderWidth: 2,
     borderColor: "transparent",
@@ -556,7 +544,7 @@ export const transactionFormStyles = StyleSheet.create((theme) => ({
   endsOnPickerContainer: {
     marginTop: FORM_GAP,
     backgroundColor: theme.colors.secondary,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     overflow: "hidden",
     marginHorizontal: H_PAD,
   },
@@ -587,7 +575,7 @@ export const transactionFormStyles = StyleSheet.create((theme) => ({
   occurrencePresetButton: {
     paddingVertical: ROW_PADDING_V,
     paddingHorizontal: BUTTON_PAD_H,
-    borderRadius: theme.colors.radius ?? 12,
+    borderRadius: theme.radius,
     backgroundColor: theme.colors.surface,
     borderWidth: 2,
     borderColor: "transparent",
@@ -630,7 +618,7 @@ export const transactionFormStyles = StyleSheet.create((theme) => ({
     marginTop: FORM_GAP,
     minWidth: 0,
     padding: CARD_PAD,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     overflow: "hidden",
     backgroundColor: theme.colors.secondary,
   },
@@ -644,7 +632,7 @@ export const transactionFormStyles = StyleSheet.create((theme) => ({
     marginTop: FORM_GAP,
     marginHorizontal: H_PAD,
     backgroundColor: theme.colors.secondary,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     overflow: "hidden",
   },
   addFilesOptionRow: {
@@ -705,7 +693,7 @@ export const transactionFormStyles = StyleSheet.create((theme) => ({
     marginHorizontal: H_PAD,
     marginTop: SMALL_GAP,
     padding: CARD_PAD,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     borderWidth: 1,
     minHeight: 96,
     textAlignVertical: "top",
@@ -713,11 +701,10 @@ export const transactionFormStyles = StyleSheet.create((theme) => ({
   },
   datePickerOverlay: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.4)",
   },
   datePickerModal: {
-    borderTopLeftRadius: theme.colors.radius,
-    borderTopRightRadius: theme.colors.radius,
+    borderTopLeftRadius: theme.radius,
+    borderTopRightRadius: theme.radius,
     paddingBottom: 34,
   },
   datePickerBody: {

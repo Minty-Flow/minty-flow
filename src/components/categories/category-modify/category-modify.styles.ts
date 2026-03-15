@@ -29,8 +29,6 @@ export const categoryModifyStyles = StyleSheet.create((theme) => ({
     gap: 10,
     paddingHorizontal: 20,
   },
-  settingsList: {},
-  switchesSection: {},
   switchRow: {
     flexDirection: "row",
     justifyContent: "space-between",

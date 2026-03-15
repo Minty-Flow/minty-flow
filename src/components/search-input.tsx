@@ -3,7 +3,7 @@ import { View, type ViewStyle } from "react-native"
 import { StyleSheet, useUnistyles } from "react-native-unistyles"
 
 import { Button } from "~/components/ui/button"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Input, type InputProps } from "~/components/ui/input"
 
 interface SearchInputProps extends InputProps {
@@ -26,8 +26,8 @@ export const SearchInput = ({
     placeholder ?? t("components.searchInput.placeholder")
   return (
     <View style={[styles.container, containerStyle]}>
-      <IconSymbol
-        name="magnify"
+      <IconSvg
+        name="search"
         size={20}
         style={styles.searchIcon}
         color={theme.colors.onSecondary}
@@ -48,12 +48,7 @@ export const SearchInput = ({
           onPress={onClear}
           style={styles.clearButton}
         >
-          <IconSymbol
-            name="close"
-            size={20}
-            style={styles.clearIcon}
-            color={theme.colors.onSecondary}
-          />
+          <IconSvg name="x" size={20} color={theme.colors.onSecondary} />
         </Button>
       )}
     </View>
@@ -65,7 +60,7 @@ const styles = StyleSheet.create((theme) => ({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: theme.colors.secondary,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     paddingHorizontal: 12,
     gap: 8,
   },

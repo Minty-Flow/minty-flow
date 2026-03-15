@@ -12,7 +12,7 @@ import { useUnistyles } from "react-native-unistyles"
 import { DynamicIcon } from "~/components/dynamic-icon"
 import { Money } from "~/components/money"
 import { ChevronIcon } from "~/components/ui/chevron-icon"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Input } from "~/components/ui/input"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
@@ -112,7 +112,7 @@ export function FormToAccountPicker({
         {selectedToAccount ? (
           <>
             <DynamicIcon
-              icon={selectedToAccount.icon || "wallet-bifold"}
+              icon={selectedToAccount.icon || "wallet"}
               size={24}
               colorScheme={getThemeStrict(selectedToAccount.colorSchemeName)}
               variant="badge"
@@ -140,7 +140,7 @@ export function FormToAccountPicker({
         ) : (
           <>
             <DynamicIcon
-              icon="wallet-bifold"
+              icon="wallet"
               size={24}
               color={theme.colors.primary}
               variant="badge"
@@ -152,8 +152,8 @@ export function FormToAccountPicker({
             >
               {t("screens.accounts.a11y.selectTo")}
             </Text>
-            <IconSymbol
-              name={toAccountPickerOpen ? "close" : "chevron-down"}
+            <IconSvg
+              name={toAccountPickerOpen ? "x" : "chevron-down"}
               size={20}
               style={transactionFormStyles.chevronIcon}
             />
@@ -193,7 +193,7 @@ export function FormToAccountPicker({
                 }}
               >
                 <DynamicIcon
-                  icon={account.icon || "wallet-bifold"}
+                  icon={account.icon || "wallet"}
                   size={24}
                   colorScheme={getThemeStrict(account.colorSchemeName)}
                   variant="badge"
@@ -234,9 +234,7 @@ export function FormToAccountPicker({
                 <DynamicIcon
                   icon="plus"
                   size={24}
-                  colorScheme={
-                    theme?.colors as import("~/styles/theme/types").MintyColorScheme
-                  }
+                  colorScheme={theme?.colors}
                   variant="badge"
                 />
                 <Text

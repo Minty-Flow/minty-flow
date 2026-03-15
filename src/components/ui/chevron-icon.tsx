@@ -1,8 +1,8 @@
-import type { OpaqueColorValue, StyleProp, TextStyle } from "react-native"
+import type { OpaqueColorValue, StyleProp, ViewStyle } from "react-native"
 
 import { useLanguageStore } from "~/stores/language.store"
 
-import { type IconSize, IconSymbol } from "./icon-symbol"
+import { type IconSize, IconSvg } from "./icon-svg"
 
 type ChevronDirection = "trailing" | "leading" | "up" | "down"
 
@@ -16,7 +16,7 @@ interface ChevronIconProps {
   direction: ChevronDirection
   size?: IconSize
   color?: string | OpaqueColorValue
-  style?: StyleProp<TextStyle>
+  style?: StyleProp<Omit<ViewStyle, "color">>
 }
 
 export function ChevronIcon({
@@ -40,5 +40,5 @@ export function ChevronIcon({
           ? "chevron-up"
           : "chevron-down"
 
-  return <IconSymbol name={name} size={size} color={color} style={style} />
+  return <IconSvg name={name} size={size} color={color} style={style} />
 }

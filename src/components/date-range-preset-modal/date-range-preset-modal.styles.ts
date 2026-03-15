@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native-unistyles"
 export const dateRangePresetModalStyles = StyleSheet.create((theme) => {
   const muted = theme.colors.customColors?.semi ?? theme.colors.onSurface
   const primary = theme.colors.primary
-  const radius = theme.colors.radius
+  const radius = theme.radius
   const borderColor = `${muted}40`
 
   return {

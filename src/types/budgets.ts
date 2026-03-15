@@ -6,7 +6,18 @@
  * The WatermelonDB model implements these types, not the other way around.
  */
 
-export type BudgetPeriod = "daily" | "weekly" | "monthly" | "yearly" | "custom"
+import type { MintyColorScheme } from "~/styles/theme/types"
+
+export const BudgetPeriodEnum = {
+  DAILY: "daily",
+  WEEKLY: "weekly",
+  MONTHLY: "monthly",
+  YEARLY: "yearly",
+  CUSTOM: "custom",
+} as const
+
+export type BudgetPeriod =
+  (typeof BudgetPeriodEnum)[keyof typeof BudgetPeriodEnum]
 
 /**
  * Budget domain type for UI/API usage.
@@ -14,39 +25,34 @@ export type BudgetPeriod = "daily" | "weekly" | "monthly" | "yearly" | "custom"
  * This is the single source of truth for the Budget shape.
  * The WatermelonDB model implements this interface, ensuring
  * the persistence layer conforms to the domain model.
+ *
+ * Spending is computed at query time from linked transactions —
+ * spent_amount is not stored in the database.
+ *
+ * accountIds is a derived field populated from the budget_accounts
+ * join table by the service layer.
+ *
+ * Icon can be:
+ * - MaterialCommunityIcons name
+ * - Single emoji
+ * - Single letter
+ * - (Future) Image URL or path
  */
 export interface Budget {
   id: string
   name: string
   amount: number
-  spentAmount: number
   currencyCode: string
   period: BudgetPeriod
   startDate: Date
   endDate: Date | null
-  categoryId: string | null
-  alertThreshold: number | null // Percentage (e.g., 80 for 80%)
+  alertThreshold: number | null
   isActive: boolean
-  isArchived: boolean
+  icon: string | null
+  colorSchemeName: string | null
+  colorScheme: MintyColorScheme | null // Computed from colorSchemeName via registry
+  accountIds: string[] // Derived from budget_accounts join table by service
+  categoryIds: string[] // Derived from budget_categories join table by service
   createdAt: Date
   updatedAt: Date
-  // Computed properties (from model getters)
-  remainingAmount: number
-  spentPercentage: number
-  isAboveAlertThreshold: boolean
-  isExceeded: boolean
-  isCurrentlyActive: boolean
 }
-
-// TODO: Redo with zod
-// interface BudgetFormData {
-//   name: string
-//   amount: number
-//   currencyCode: string
-//   period: BudgetPeriod
-//   startDate: Date
-//   endDate?: Date
-//   categoryId?: string
-//   alertThreshold?: number
-//   isActive?: boolean
-// }

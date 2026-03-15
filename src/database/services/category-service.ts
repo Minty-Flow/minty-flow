@@ -1,5 +1,6 @@
 import { Q } from "@nozbe/watermelondb"
 import type { Observable } from "@nozbe/watermelondb/utils/rx"
+import { from } from "rxjs"
 import { filter, map } from "rxjs/operators"
 
 import type {
@@ -48,17 +49,10 @@ const findCategory = async (id: string): Promise<CategoryModel | null> => {
  */
 export const observeCategoriesByType = (
   type: TransactionType,
-  includeArchived = false,
 ): Observable<Category[]> => {
   const categories = getCategoryCollection()
-  let query = categories.query(Q.where("type", type), Q.sortBy("name", Q.asc))
+  const query = categories.query(Q.where("type", type), Q.sortBy("name", Q.asc))
 
-  if (!includeArchived) {
-    query = query.extend(Q.where("is_archived", false))
-  }
-
-  // Observe specific columns that can change when editing
-  // This makes the query reactive to column changes, not just record additions/deletions
   return query
     .observeWithColumns([
       "name",
@@ -66,24 +60,12 @@ export const observeCategoriesByType = (
       "type",
       "color_scheme_name",
       "transaction_count",
-      "is_archived",
     ])
     .pipe(
       map((results) => {
         return results.map(modelToCategory) // convert to immutable plain object here
       }),
     )
-}
-
-/**
- * Observe count of archived categories by type
- */
-export const observeArchivedCategoryCountByType = (
-  type: TransactionType,
-): Observable<number> => {
-  return getCategoryCollection()
-    .query(Q.where("type", type), Q.where("is_archived", true))
-    .observeCount()
 }
 
 /**
@@ -108,7 +90,6 @@ export const observeCategoryDetailsById = (
       "type",
       "color_scheme_name",
       "transaction_count",
-      "is_archived",
     ])
     .pipe(
       filter((results) => results.length > 0),
@@ -131,7 +112,6 @@ export const createCategory = async (
       category.type = data.type
       category.icon = data.icon ?? null
       category.transactionCount = 0
-      category.isArchived = false
       category.createdAt = new Date()
       category.updatedAt = new Date()
       category.setColorScheme(data.colorSchemeName ?? null)
@@ -152,7 +132,6 @@ export const updateCategory = async (
       if (updates.icon !== undefined) c.icon = updates.icon ?? null
       if (updates.colorSchemeName !== undefined)
         c.setColorScheme(updates.colorSchemeName ?? null)
-      if (updates.isArchived !== undefined) c.isArchived = updates.isArchived
       c.updatedAt = new Date()
     })
   })
@@ -211,4 +190,17 @@ const recalculateCategoryTransactionCount = async (
   }
 
   return count
+}
+
+/**
+ * Observe names for a list of category IDs.
+ */
+export const observeCategoryNamesByIds = (
+  ids: string[],
+): Observable<string[]> => {
+  if (ids.length === 0) return from([[]])
+  return getCategoryCollection()
+    .query(Q.where("id", Q.oneOf(ids)))
+    .observeWithColumns(["name"])
+    .pipe(map((rows) => rows.map((r) => r.name)))
 }

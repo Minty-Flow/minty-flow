@@ -40,7 +40,6 @@ export interface Account {
   icon: string | null
   colorSchemeName: string | null
   colorScheme: MintyColorScheme | null // Computed from colorSchemeName via registry
-  isArchived: boolean
   isPrimary: boolean
   excludeFromBalance: boolean
   createdAt: Date
@@ -56,7 +55,7 @@ export interface Account {
 //   id: string
 //   name: string
 //   type: string
-//   icon: IconSymbolName
+//   icon: IconSvgName
 //   iconColor: string
 //   balance: number
 //   currency: string

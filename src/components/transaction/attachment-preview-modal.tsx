@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next"
 import { Modal } from "react-native"
 import { StyleSheet } from "react-native-unistyles"
 
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import type { TransactionAttachment } from "~/types/transactions"
 
@@ -59,7 +59,7 @@ export function AttachmentPreviewModal({
           onPress={onClose}
           accessibilityLabel={t("components.transactionForm.a11y.closePreview")}
         >
-          <IconSymbol name="close" size={28} color="#fff" />
+          <IconSvg name="x" size={28} color="#fff" />
         </Pressable>
         {attachment && (
           <Image

@@ -274,7 +274,7 @@ const styles = StyleSheet.create((theme) => ({
   togglePill: {
     paddingHorizontal: 16,
     paddingVertical: 8,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     minWidth: 56,
     alignItems: "center",
     justifyContent: "center",

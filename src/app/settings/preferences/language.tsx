@@ -6,7 +6,7 @@ import RNRestart from "react-native-restart"
 import { StyleSheet, useUnistyles } from "react-native-unistyles"
 
 import { ConfirmModal } from "~/components/confirm-modal"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
@@ -104,7 +104,7 @@ export default function LanguageOptionsScreen() {
                     <Text style={styles.rowLabel}>{option.label}</Text>
                   </View>
                   {isSelected ? (
-                    <IconSymbol
+                    <IconSvg
                       name="check"
                       size={20}
                       color={theme.colors.primary}

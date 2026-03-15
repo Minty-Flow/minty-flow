@@ -4,7 +4,7 @@ import { StyleSheet, useUnistyles } from "react-native-unistyles"
 
 import { TransactionItem } from "~/components/transaction/transaction-item"
 import { Button } from "~/components/ui/button"
-import { IconSymbol, type IconSymbolName } from "~/components/ui/icon-symbol"
+import { IconSvg, type IconSvgName } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Switch } from "~/components/ui/switch"
 import { Text } from "~/components/ui/text"
@@ -20,7 +20,7 @@ import { useTransactionItemAppearanceStore } from "~/stores/transaction-item-app
 const MOCK_ACCOUNT = {
   name: "PayPal",
   currencyCode: "USD",
-  icon: "wallet-bifold",
+  icon: "wallet",
   colorScheme: null,
 } as unknown as AccountModel
 
@@ -85,7 +85,7 @@ function LeadingIconOption({
   onPress,
 }: {
   label: string
-  icon: IconSymbolName
+  icon: IconSvgName
   selected: boolean
   onPress: () => void
 }) {
@@ -98,10 +98,10 @@ function LeadingIconOption({
       onPress={onPress}
       accessibilityState={{ checked: selected }}
     >
-      <IconSymbol name={icon} size={18} color={iconColor} />
+      <IconSvg name={icon} size={18} color={iconColor} />
       <Text style={styles.leadingOptionLabel}>{label}</Text>
       {selected && (
-        <IconSymbol name="check" size={14} color={theme.colors.onPrimary} />
+        <IconSvg name="check" size={14} color={theme.colors.onPrimary} />
       )}
     </Button>
   )
@@ -270,7 +270,7 @@ export default function TransactionAppearanceScreen() {
             label={t(
               "screens.settings.preferences.appearance.transactionStyle.options.category",
             )}
-            icon="shape"
+            icon="category"
             selected={leadingIcon === "category"}
             onPress={() => setLeadingIcon("category")}
           />
@@ -278,7 +278,7 @@ export default function TransactionAppearanceScreen() {
             label={t(
               "screens.settings.preferences.appearance.transactionStyle.options.account",
             )}
-            icon="wallet-bifold"
+            icon="wallet"
             selected={leadingIcon === "account"}
             onPress={() => setLeadingIcon("account")}
           />
@@ -287,8 +287,8 @@ export default function TransactionAppearanceScreen() {
 
       {/* ── Info note ────────────────────────────────────────────────── */}
       <View native style={styles.infoRow}>
-        <IconSymbol
-          name="information"
+        <IconSvg
+          name="info-circle"
           size={14}
           color={theme.colors.customColors.semi}
         />

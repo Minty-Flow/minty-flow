@@ -14,6 +14,7 @@ const IGNORE: Set<string> = new Set([
   "build",
   "android",
   "ios",
+  "tabler-icons",
 ]);
 
 const MAX_DEPTH = 8; // safety valve

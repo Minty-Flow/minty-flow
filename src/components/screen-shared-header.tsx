@@ -1,7 +1,7 @@
 import type { NativeStackHeaderProps } from "@react-navigation/native-stack"
 import { StyleSheet } from "react-native-unistyles"
 
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { useLanguageStore } from "~/stores/language.store"
 
 import { Button } from "./ui/button"
@@ -32,7 +32,10 @@ export const ScreenSharedHeader = ({
             }}
             // style={styles.backButton}
           >
-            <IconSymbol name={isRTL ? "arrow-right" : "arrow-left"} size={24} />
+            <IconSvg
+              name={isRTL ? "arrow-narrow-right" : "arrow-narrow-left"}
+              size={24}
+            />
           </Button>
         </Tooltip>
       )}

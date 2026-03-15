@@ -7,7 +7,8 @@ import { StyleSheet } from "react-native-unistyles"
 
 import { SearchInput } from "~/components/search-input"
 import { TagCard } from "~/components/tags/tag-card"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { EmptyState } from "~/components/ui/empty-state"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
@@ -53,20 +54,21 @@ const TagsScreenInner = ({ tags }: TagsScreenInnerProps) => {
         showsVerticalScrollIndicator={false}
       >
         <Pressable style={styles.newTagButton} onPress={handleAddTag}>
-          <IconSymbol name="plus" size={24} />
+          <IconSvg name="plus" size={24} />
           <Text variant="default" style={styles.newTagText}>
             {t("screens.settings.tags.newTag")}
           </Text>
         </Pressable>
 
         {filteredModels.length === 0 ? (
-          <View style={styles.emptyState}>
-            <Text variant="muted">
-              {searchQuery.trim()
+          <EmptyState
+            icon={searchQuery.trim() ? "search" : "tags"}
+            title={
+              searchQuery.trim()
                 ? t("screens.settings.tags.empty.noResults")
-                : t("screens.settings.tags.empty.noTags")}
-            </Text>
-          </View>
+                : t("screens.settings.tags.empty.noTags")
+            }
+          />
         ) : (
           <View style={styles.list}>
             {filteredModels.map((tag) => (
@@ -115,10 +117,5 @@ const styles = StyleSheet.create((theme) => ({
     fontSize: 16,
     fontWeight: "500",
     color: theme.colors.onSurface,
-  },
-  emptyState: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 40,
   },
 }))

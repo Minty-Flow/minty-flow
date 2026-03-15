@@ -1,19 +1,19 @@
 import { StyleSheet } from "react-native-unistyles"
 
-import type { IconSymbolName } from "~/components/ui/icon-symbol"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import type { IconSvgName } from "~/components/ui/icon-svg"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
 
 type AlertBannerProps = {
   text: string
-  icon?: IconSymbolName
+  icon?: IconSvgName
 }
 
-export function InfoBanner({ text, icon = "information" }: AlertBannerProps) {
+export function InfoBanner({ text, icon = "info-circle" }: AlertBannerProps) {
   return (
     <View style={styles.container}>
-      <IconSymbol name={icon} size={20} style={styles.icon} />
+      <IconSvg name={icon} size={20} color={styles.icon.color} />
       <Text style={styles.text}>{text}</Text>
     </View>
   )

@@ -11,8 +11,8 @@ import Animated, {
 import { StyleSheet } from "react-native-unistyles"
 import { scheduleOnRN, scheduleOnUI } from "react-native-worklets"
 
-import type { IconSymbolName } from "~/components/ui/icon-symbol"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import type { IconSvgName } from "~/components/ui/icon-svg"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { type Toast, useToastStore } from "~/stores/toast.store"
 
 import { Pressable } from "./pressable"
@@ -87,46 +87,35 @@ const ToastItem = ({ toast, onHide }: ToastItemProps) => {
     }
   }
 
-  const getIconName = (): IconSymbolName => {
+  const getIconName = (): IconSvgName => {
     switch (toast.type) {
       case "success":
-        return "check-circle"
+        return "check"
       case "error":
         return "alert-circle"
       case "warn":
-        return "alert"
+        return "alert-triangle"
       case "info":
-        return "information"
+        return "info-circle"
       default:
         return "bell"
     }
   }
 
-  const getIconColorStyle = () => {
+  const getIconColor = () => {
     switch (toast.type) {
       case "success":
-        return toastItemStyles.iconSuccess
+        return toastItemStyles.iconSuccess.color
       case "error":
-        return toastItemStyles.iconError
+        return toastItemStyles.iconError.color
       case "warn":
-        return toastItemStyles.iconWarn
+        return toastItemStyles.iconWarn.color
       case "info":
-        return toastItemStyles.iconInfo
+        return toastItemStyles.iconInfo.color
       default:
-        return toastItemStyles.iconDefault
+        return toastItemStyles.iconDefault.color
     }
   }
-
-  const getIconColor = () => {
-    const style = getIconColorStyle()
-    // Extract color from style object
-    // react-native-unistyles styles should expose the color property
-    if (style && typeof style === "object" && "color" in style) {
-      return (style as { color: string }).color
-    }
-    return undefined
-  }
-
   const getProgressBarColorStyle = () => {
     switch (toast.type) {
       case "success":
@@ -198,12 +187,7 @@ const ToastItem = ({ toast, onHide }: ToastItemProps) => {
       onLayout={handleLayout}
     >
       <View native style={toastStyles.content}>
-        <IconSymbol
-          name={getIconName()}
-          size={24}
-          style={getIconColorStyle()}
-          color={getIconColor()}
-        />
+        <IconSvg name={getIconName()} size={24} color={getIconColor()} />
         <View native style={toastStyles.textContainer}>
           {toast.title && <Text style={toastStyles.text1}>{toast.title}</Text>}
           {toast.description && (
@@ -216,10 +200,9 @@ const ToastItem = ({ toast, onHide }: ToastItemProps) => {
             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
             style={toastStyles.closeButton}
           >
-            <IconSymbol
-              name="close"
+            <IconSvg
+              name="x"
               size={20}
-              style={toastItemStyles.closeIcon}
               color={
                 toastItemStyles.closeIcon &&
                 typeof toastItemStyles.closeIcon === "object" &&
@@ -364,7 +347,7 @@ const toastStyles = StyleSheet.create((theme) => ({
   container: {
     width: "100%",
     maxWidth: 400,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     padding: 16,
     flexDirection: "row",
     alignItems: "center",
@@ -415,13 +398,13 @@ const toastStyles = StyleSheet.create((theme) => ({
     right: 0,
     height: 4,
     backgroundColor: "rgba(0,0,0,0.1)",
-    borderBottomLeftRadius: theme.colors.radius,
-    borderBottomRightRadius: theme.colors.radius,
+    borderBottomLeftRadius: theme.radius,
+    borderBottomRightRadius: theme.radius,
     overflow: "hidden",
   },
   progressBar: {
     height: "100%",
-    borderBottomLeftRadius: theme.colors.radius,
-    borderBottomRightRadius: theme.colors.radius,
+    borderBottomLeftRadius: theme.radius,
+    borderBottomRightRadius: theme.radius,
   },
 }))

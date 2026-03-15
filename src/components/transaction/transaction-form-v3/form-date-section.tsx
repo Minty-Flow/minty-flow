@@ -66,10 +66,7 @@ export function FormDateSection({
           <ChevronIcon
             direction="trailing"
             size={20}
-            style={[
-              transactionFormStyles.chevronIcon,
-              { color: theme.colors.primary },
-            ]}
+            style={transactionFormStyles.chevronIcon}
           />
         </Pressable>
       </View>

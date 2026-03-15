@@ -13,7 +13,6 @@ import { CategoryList } from "./category-list"
 
 interface CategoryScreenContentProps {
   subtitle: string
-  includeArchived: boolean
   initialType?: TransactionType
   searchPlaceholder?: string
   extraListProps?: {
@@ -25,7 +24,6 @@ interface CategoryScreenContentProps {
 
 export function CategoryScreenContent({
   subtitle,
-  includeArchived,
   initialType,
   searchPlaceholder,
   extraListProps,
@@ -64,10 +62,12 @@ export function CategoryScreenContent({
           {
             value: TransactionTypeEnum.EXPENSE,
             label: t("components.categories.types.expense"),
+            icon: "chevrons-up",
           },
           {
             value: TransactionTypeEnum.INCOME,
             label: t("components.categories.types.income"),
+            icon: "chevrons-down",
           },
         ]}
         activeValue={activeTab}
@@ -88,7 +88,6 @@ export function CategoryScreenContent({
       {/* Category List */}
       <CategoryList
         type={activeTab}
-        includeArchived={includeArchived}
         searchQuery={searchQuery}
         {...extraListProps}
       />

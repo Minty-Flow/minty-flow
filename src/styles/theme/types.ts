@@ -15,12 +15,10 @@ export interface MintyCustomColors {
 }
 
 /**
- * Core color scheme structure
+ * Pure color tokens — every field is a color value or color-derived string.
+ * Extended by MintyColorScheme which adds non-color metadata.
  */
-export interface MintyColorScheme {
-  name: string // Unique theme identifier
-  iconName?: string // iOS app icon variant name
-  isDark: boolean // Light/dark mode flag
+export interface MintyThemeColors {
   surface: string // Page/screen background
   onSurface: string // Primary text, icons on surface
   primary: string // Accent (buttons, active states, highlights)
@@ -33,21 +31,23 @@ export interface MintyColorScheme {
   rippleColor: string // Ripple/highlight = onSurface at 8.6%
   shadow: string // Shadow color
   boxShadow: string // Box shadow for web
+}
+
+/**
+ * Core color scheme structure — raw source data for each theme.
+ * Extends MintyThemeColors with non-color metadata used by the registry.
+ */
+export interface MintyColorScheme extends MintyThemeColors {
+  name: string // Unique theme identifier
+  iconName?: string // iOS app icon variant name
+  isDark: boolean // Light/dark mode flag
   radius: number // Border radius (8px)
 }
 
 /**
- * Derived colors computed by ThemeFactory from MintyColorScheme
- * Used by bottom nav, FAB, cards, bottom sheet, text selection
+ * Derived color tokens computed by ThemeFactory.
  */
 export interface MintyDerivedColors {
-  navbarBackground: string // = secondary
-  navbarActiveIcon: string // = primary (light) | onSurface (dark)
-  navbarInactiveIcon: string // = navbarActiveIcon at 50% opacity
-  fabBackground: string // = primary
-  fabForeground: string // = onPrimary
-  cardBackground: string // = secondary
-  bottomSheetBackground: string // = surface
   textSelection: string // = primary 37.5% (dark) | secondary 62.5% (light)
 }
 
@@ -61,10 +61,14 @@ export interface ThemeGroup {
 }
 
 /**
- * Unistyles theme structure
- * colors = full MintyColorScheme + Minty-derived tokens (name/isDark included for compatibility)
+ * Unistyles theme structure.
+ * - colors: only color tokens (MintyThemeColors + MintyDerivedColors)
+ * - non-color metadata (name, iconName, radius) lives at the top level alongside isDark
  */
 export interface UnistylesTheme {
-  colors: MintyColorScheme & MintyDerivedColors
+  colors: MintyThemeColors
   isDark: boolean
+  name: string
+  iconName?: string
+  radius: number
 }

@@ -1,10 +1,11 @@
 import { Model } from "@nozbe/watermelondb"
 import { date, field } from "@nozbe/watermelondb/decorators"
 
-import type { Goal as GoalType } from "../../types/goals"
+import { getThemeStrict } from "~/styles/theme/registry"
+import type { Goal } from "~/types/goals"
 
 /**
- * Goal model representing financial goals.
+ * Goal model representing financial savings targets.
  *
  * Implements the Goal domain type, ensuring the persistence layer
  * conforms to the business logic contract.
@@ -13,9 +14,16 @@ import type { Goal as GoalType } from "../../types/goals"
  * - Column names use snake_case
  * - Boolean fields start with is_
  * - Date fields end with _at and use number type (Unix timestamps)
+ *
+ * accountIds is NOT stored directly on this model — it is derived from the
+ * goal_accounts join table by the service layer and passed in at mapping time.
  */
-export default class GoalModel extends Model implements GoalType {
+export default class GoalModel extends Model implements Goal {
   static table = "goals"
+
+  static associations = {
+    goal_accounts: { type: "has_many", foreignKey: "goal_id" },
+  } as const
 
   @field("name") name!: string
   @field("description") description!: string | null
@@ -24,26 +32,29 @@ export default class GoalModel extends Model implements GoalType {
   @field("currency_code") currencyCode!: string
   @date("target_date") targetDate!: Date | null
   @field("icon") icon!: string | null
-  @field("color") color!: string | null
+  @field("color_scheme_name") colorSchemeName!: string | null
   @field("is_completed") isCompleted!: boolean
   @field("is_archived") isArchived!: boolean
   @date("created_at") createdAt!: Date
   @date("updated_at") updatedAt!: Date
 
   /**
-   * Gets the progress percentage (0-100).
-   * This computed property satisfies the domain type's progressPercentage requirement.
+   * Satisfies the Goal interface contract.
+   * Populated externally by the service layer from the goal_accounts join table.
    */
-  get progressPercentage(): number {
-    if (this.targetAmount === 0) return 0
-    return Math.min(100, (this.currentAmount / this.targetAmount) * 100)
+  accountIds: string[] = []
+
+  /**
+   * Gets the color scheme object from the theme registry.
+   */
+  get colorScheme() {
+    return getThemeStrict(this.colorSchemeName)
   }
 
   /**
-   * Gets the remaining amount to reach the goal.
-   * This computed property satisfies the domain type's remainingAmount requirement.
+   * Sets the color scheme by name.
    */
-  get remainingAmount(): number {
-    return Math.max(0, this.targetAmount - this.currentAmount)
+  setColorScheme(schemeName: string | null) {
+    this.colorSchemeName = schemeName
   }
 }

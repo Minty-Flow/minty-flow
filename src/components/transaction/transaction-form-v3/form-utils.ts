@@ -46,8 +46,7 @@ export function getDefaultValues(
   transactionType: TransactionType,
   initialTagIds: string[] = [],
 ): TransactionFormValues {
-  const defaultAccountId =
-    accounts.find((a) => a.isPrimary && !a.isArchived)?.id ?? ""
+  const defaultAccountId = accounts.find((a) => a.isPrimary)?.id ?? ""
 
   if (!transaction) {
     return {

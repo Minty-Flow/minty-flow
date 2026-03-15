@@ -8,7 +8,6 @@ import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
 import { getThemeStrict } from "~/styles/theme/registry"
-import type { MintyColorScheme } from "~/styles/theme/types"
 import type { Category } from "~/types/categories"
 
 import {
@@ -83,7 +82,7 @@ export function FormCategoryPicker({
               <DynamicIcon
                 icon="plus"
                 size={32}
-                colorScheme={theme?.colors as MintyColorScheme}
+                colorScheme={theme?.colors}
                 variant="badge"
               />
               <Text
@@ -128,7 +127,7 @@ export function FormCategoryPicker({
                   accessibilityState={{ selected: isSelected }}
                 >
                   <DynamicIcon
-                    icon={category.icon || "shape"}
+                    icon={category.icon || "category"}
                     size={32}
                     colorScheme={getThemeStrict(category.colorSchemeName)}
                     variant="badge"

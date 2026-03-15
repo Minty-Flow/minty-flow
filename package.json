@@ -15,7 +15,9 @@
     "android:usb": "node ./scripts/run-android-usb.mts",
     "structure": "node ./scripts/generate-structure.mts",
     "unused-styles": "node ./scripts/find-unused-styles.mts",
-    "check-i18n-keys": "node ./scripts/check-missing-i18n-keys.mts"
+    "check-i18n-keys": "node ./scripts/check-missing-i18n-keys.mts",
+    "build:icons:filled": "svgr --out-dir src/components/icons/filled src/assets/tabler-icons/filled ",
+    "build:icons:outline": "svgr --out-dir src/components/icons/outline src/assets/tabler-icons/outline"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
@@ -23,6 +25,7 @@
     "@nozbe/watermelondb": "^0.28.0",
     "@react-native-community/datetimepicker": "8.6.0",
     "@react-navigation/native": "^7.1.8",
+    "@shopify/react-native-skia": "^2.5.1",
     "date-fns": "^4.1.0",
     "expo": "^55.0.4",
     "expo-blur": "~55.0.8",
@@ -68,11 +71,13 @@
     "react-native-restart": "^0.0.27",
     "react-native-safe-area-context": "~5.6.0",
     "react-native-screens": "~4.23.0",
+    "react-native-svg": "^15.15.3",
     "react-native-unistyles": "^3.0.20",
     "react-native-web": "~0.21.0",
     "react-native-webview": "13.16.0",
     "react-native-worklets": "0.7.2",
     "rrule": "^2.8.1",
+    "victory-native": "^41.20.2",
     "zod": "^4.2.1",
     "zustand": "^5.0.9"
   },
@@ -81,6 +86,7 @@
     "@biomejs/biome": "^2.3.14",
     "@nozbe/simdjson": "^3.9.4",
     "@react-native-community/cli": "latest",
+    "@svgr/cli": "^8.1.0",
     "@types/react": "~19.2.14",
     "husky": "^9.1.7",
     "typescript": "~5.9.2"

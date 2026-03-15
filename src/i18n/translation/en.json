@@ -198,19 +198,114 @@
       "title": "Statistics",
       "description": "Your financial overview",
       "reorderHint": "Use arrows to reorder",
+      "moreOptions": "More options",
       "periodSelector": {
         "month": "Month",
         "year": "Year",
         "custom": "Custom"
       },
-      "charts": {
+      "currency": {
+        "sectionHeader": "{{currency}}"
+      },
+      "hero": {
+        "totalExpense": "Total Expense",
+        "totalIncome": "Total Income",
+        "netFlow": "Net Flow",
+        "transactionCount": "{{count}} txn",
+        "onPaceFor": "On pace for ~{{amount}}"
+      },
+      "averages": {
+        "title": "Daily Averages",
+        "expense": "Avg. Expense",
+        "income": "Avg. Income",
+        "net": "Avg. Net"
+      },
+      "chart": {
+        "dailyTrend": "Daily Trend",
+        "periodComparison": "Period Comparison",
+        "noPreviousData": "No previous data",
+        "spendingByCategory": "Spending by Category",
         "incomeVsExpense": "Income vs Expense",
         "categoryBreakdown": "By Category",
-        "netWorth": "Net Worth Over Time"
+        "netWorth": "Net Worth Over Time",
+        "prevPeriod": "Previous",
+        "expenseForecastTitle": "Expense forecast for {{month}}",
+        "expenseTotalTitle": "{{month}} total expense"
+      },
+      "pieToggle": {
+        "expenses": "Expenses",
+        "income": "Income",
+        "noData": "No data for this view"
       },
       "emptyState": {
         "title": "No data for this period",
-        "description": "Add transactions to see your stats"
+        "description": "Add transactions to see your stats",
+        "allPending": "All transactions are pending",
+        "allTransfers": "All transactions are transfers",
+        "noTransactionsEver": "No transactions yet",
+        "addFirst": "Add your first transaction"
+      },
+      "savingsRate": {
+        "title": "Savings Rate",
+        "noIncome": "No income this period",
+        "negative": "Spending more than earning",
+        "savedPrefix": "Saved",
+        "savedOf": "of",
+        "savedSuffix": "income"
+      },
+      "pendingNotice": "{{count}} pending transactions excluded from stats",
+      "uncategorized": {
+        "title": "{{count}} uncategorized",
+        "description": "Some transactions have no category assigned",
+        "categorizeNow": "Categorize now"
+      },
+      "topCategory": {
+        "subtitle": "Top spending category"
+      },
+      "topTransactions": {
+        "title": "Top Expenses"
+      },
+      "accountBreakdown": {
+        "title": "By Account",
+        "spent": "Spent",
+        "earned": "Earned"
+      },
+      "tagBreakdown": {
+        "title": "By Tag",
+        "transactions": "{{count}} transactions"
+      },
+      "categoryDeltas": {
+        "title": "Category Changes",
+        "increased": "Increased",
+        "decreased": "Decreased",
+        "none": "None"
+      },
+      "subtypeBreakdown": {
+        "title": "Expense Breakdown",
+        "fixed": "Recurring",
+        "variable": "One-time"
+      },
+      "balanceChart": {
+        "title": "Balance Over Time",
+        "opening": "Opening",
+        "closing": "Closing"
+      },
+      "dayOfWeek": {
+        "title": "Spending by Day of Week"
+      },
+      "calendarHeatmap": {
+        "title": "Spending Heatmap"
+      },
+      "delta": {
+        "notAvailable": "N/A"
+      },
+      "dateRange": {
+        "thisMonth": "This month"
+      },
+      "charts": {
+        "categoryBreakdown": "category breakdown",
+        "incomeVsExpense": "Income Vs Expense",
+        "netWorth": "net work"
       }
     },
     "settings": {
@@ -431,14 +526,107 @@
       "goals": {
         "title": "Goals",
         "description": "Set and track your financial goals",
-        "body": "Set and track your financial goals. Monitor your progress and stay motivated to achieve your financial objectives.",
-        "empty": "No goals set yet"
+        "body": "Set savings targets and track progress",
+        "empty": "No goals yet. Create one to start saving.",
+        "addNew": "New Goal",
+        "archivedButton": "Archived",
+        "archiveSuccess": "Goal archived",
+        "unarchiveSuccess": "Goal restored",
+        "archived": {
+          "title": "Archived Goals",
+          "empty": "No archived goals"
+        },
+        "card": {
+          "saved": "Saved",
+          "of": "of",
+          "remaining": "remaining",
+          "targetDate": "Target",
+          "completed": "Completed",
+          "daysLeft": "{{count}} days left",
+          "overdue": "Overdue by {{count}} days",
+          "noDeadline": "No deadline"
+        },
+        "form": {
+          "title": {
+            "create": "New Goal",
+            "edit": "Edit Goal"
+          },
+          "nameLabel": "Goal Name",
+          "namePlaceholder": "e.g. Vacation Fund",
+          "descriptionLabel": "Description",
+          "descriptionPlaceholder": "Optional note about this goal",
+          "targetAmountLabel": "Target Amount",
+          "targetDateLabel": "Target Date",
+          "currencyLabel": "Currency",
+          "accountsLabel": "Funding Accounts",
+          "accountsPlaceholder": "Select accounts",
+          "deleteLabel": "Delete Goal",
+          "archiveLabel": "Archive Goal",
+          "unarchiveLabel": "Restore Goal",
+          "loadingText": "Loading goal...",
+          "archiveModal": {
+            "archiveTitle": "Archive this goal?",
+            "archiveConfirm": "Archive",
+            "unarchiveTitle": "Restore this goal?",
+            "unarchiveConfirm": "Restore"
+          },
+          "toast": {
+            "notFound": "Goal not found.",
+            "createFailed": "Failed to create goal.",
+            "updateFailed": "Failed to update goal.",
+            "deleteFailed": "Failed to delete goal.",
+            "accountsCleared": "Accounts cleared — they don't match the new currency."
+          }
+        }
       },
       "budgets": {
         "title": "Budgets",
         "description": "Create and manage your budgets",
-        "body": "Create and manage your budgets. Set spending limits for different categories and track your progress throughout the month.",
-        "empty": "No budgets created yet"
+        "body": "Track your spending limits",
+        "empty": "No budgets yet. Create one to start tracking.",
+        "addNew": "New Budget",
+        "periods": {
+          "daily": "Daily",
+          "weekly": "Weekly",
+          "monthly": "Monthly",
+          "yearly": "Yearly",
+          "custom": "Custom"
+        },
+        "card": {
+          "spent": "Spent",
+          "of": "of",
+          "remaining": "remaining",
+          "noCategory": "All Categories",
+          "overBudget": "Over budget",
+          "alertThresholdReached": "Alert threshold reached"
+        },
+        "form": {
+          "title": {
+            "create": "New Budget",
+            "edit": "Edit Budget"
+          },
+          "nameLabel": "Budget Name",
+          "namePlaceholder": "e.g. Groceries",
+          "amountLabel": "Limit",
+          "periodLabel": "Period",
+          "categoryLabel": "Categories",
+          "categoryPlaceholder": "All Categories",
+          "currencyLabel": "Currency",
+          "accountsLabel": "Accounts",
+          "accountsPlaceholder": "Select accounts",
+          "alertThresholdLabel": "Alert at (%)",
+          "startDateLabel": "Start Date",
+          "endDateLabel": "End Date",
+          "deleteLabel": "Delete Budget",
+          "loadingText": "Loading budget...",
+          "toast": {
+            "notFound": "Budget not found.",
+            "createFailed": "Failed to create budget.",
+            "updateFailed": "Failed to update budget.",
+            "deleteFailed": "Failed to delete budget.",
+            "accountsCleared": "Accounts cleared — they don't match the new currency."
+          }
+        }
       },
       "loans": {
         "title": "Loans",
@@ -621,7 +809,7 @@
         "toAccount": "To Account",
         "tags": "Tags",
         "clear": "Clear",
-        "addCategories": "Add categories",
+        "addCategories": "categories",
         "now": "Now",
         "pending": "Pending",
         "tapToEditNotes": "Tap to edit notes",
@@ -731,6 +919,8 @@
         "clearAllTags": "Clear all tags",
         "addTag": "Add tag",
         "removeTag": "Remove {{name}} tag",
+        "noTagsFound": "No tags found",
+        "allTagsSelected": "All tags selected",
         "amountInput": "Amount input"
       }
     },
@@ -782,14 +972,22 @@
           "transportation": "Transportation",
           "healthcare": "Healthcare",
           "education": "Education",
-          "shopping": "Shopping"
+          "shopping": "Shopping",
+          "dining": "Food & Dining",
+          "entertainment": "Entertainment",
+          "housing": "Housing & Utilities",
+          "fitness": "Health & Fitness"
         },
         "income": {
           "salary": "Salary",
           "freelance": "Freelance",
           "investment": "Investment",
           "business": "Business",
-          "gift": "Gift"
+          "gift": "Gift",
+          "rental": "Rental Income",
+          "dividends": "Dividends",
+          "bonus": "Bonus",
+          "sideIncome": "Side Income"
         }
       },
       "search": {
@@ -807,13 +1005,11 @@
       "form": {
         "title": {
           "create": "Create Category",
-          "edit": "Edit Category",
-          "archived": "Archived Categories"
+          "edit": "Edit Category"
         },
         "nameLabel": "Category name",
         "namePlaceholder": "Groceries, Dining out, etc.",
         "typeLabel": "Type",
-        "archiveLabel": "Archive category",
         "deleteLabel": "Permanently delete",
         "loadingText": "Loading category...",
         "deleteModal": {
@@ -882,7 +1078,8 @@
         "attachments": "Attachments",
         "pendingStatus": "Pending Status",
         "thisMonth": "This month",
-        "untitled": "Untitled"
+        "untitled": "Untitled",
+        "typeCount": "type count"
       },
       "attachmentOptions": {
         "has": "Has Attachments",
@@ -996,6 +1193,14 @@
     },
     "searchInput": {
       "placeholder": "Search..."
+    },
+    "currencyAccountSelector": {
+      "currencyLabel": "Currency",
+      "accountsLabel": "Accounts",
+      "selectAll": "Select all {{currency}} accounts",
+      "noAccountsForCurrency": "No accounts for this currency",
+      "accountsClearedTitle": "Accounts cleared",
+      "accountsClearedDescription": "Selected accounts were removed because they don't match {{currency}}."
     }
   },
   "validation": {
@@ -1063,18 +1268,35 @@
       "name": {
         "required": "Goal name is required"
       },
+      "currency": {
+        "required": "Currency is required"
+      },
+      "accounts": {
+        "required": "Please select at least one account"
+      },
       "targetAmount": {
         "required": "Target amount is required",
-        "invalid": "Enter a valid amount"
+        "invalid": "Enter a valid amount",
+        "positive": "Target amount must be greater than 0"
       }
     },
     "budget": {
       "name": {
         "required": "Budget name is required"
       },
+      "currency": {
+        "required": "Currency is required"
+      },
+      "accounts": {
+        "required": "Please select at least one account"
+      },
+      "categories": {
+        "required": "Please select at least one category"
+      },
       "amount": {
         "required": "Amount is required",
-        "invalid": "Enter a valid amount"
+        "invalid": "Enter a valid amount",
+        "positive": "Amount must be greater than 0"
       }
     }
   },

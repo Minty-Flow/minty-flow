@@ -24,7 +24,7 @@ import {
 } from "react-native-unistyles"
 
 import { ActivityIndicatorMinty } from "~/components/ui/activity-indicator-minty"
-import { IconSymbol } from "~/components/ui/icon-symbol"
+import { IconSvg } from "~/components/ui/icon-svg"
 import type RecurringTransactionModel from "~/database/models/recurring-transaction"
 import type TransactionModel from "~/database/models/transaction"
 import { disableRecurringRule } from "~/database/services/recurring-transaction-service"
@@ -226,7 +226,7 @@ export function DeleteRecurringModal({
               {
                 maxWidth: maxCardWidth,
                 backgroundColor: theme.colors.surface,
-                borderRadius: theme.colors.radius ?? 16,
+                borderRadius: theme.radius ?? 16,
               },
             ]}
             pointerEvents="box-none"
@@ -238,11 +238,7 @@ export function DeleteRecurringModal({
                   { backgroundColor: `${theme.colors.error}20` },
                 ]}
               >
-                <IconSymbol
-                  name="trash-can"
-                  size={24}
-                  color={theme.colors.error}
-                />
+                <IconSvg name="trash" size={24} color={theme.colors.error} />
               </View>
               <Text style={styles.title}>
                 {t("components.recurring.deleteModal.title")}
@@ -305,7 +301,7 @@ export function DeleteRecurringModal({
 const styles = UnistylesSheet.create((theme) => ({
   backdrop: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.4)",
+    backgroundColor: theme.colors.shadow,
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 24,

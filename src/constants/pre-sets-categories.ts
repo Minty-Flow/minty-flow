@@ -1,11 +1,13 @@
+import type { IconSvgName } from "~/components/ui/icon-svg"
 import type { TranslationKey } from "~/i18n/config"
 import type { Category } from "~/types/categories"
 
 export type CategoryPreset = Omit<
   Category,
-  "id" | "colorScheme" | "isArchived" | "name"
+  "id" | "colorScheme" | "isArchived" | "name" | "icon"
 > & {
   name: TranslationKey // translation key
+  icon: IconSvgName
 }
 
 /**
@@ -18,7 +20,7 @@ export const ExpensePresets: CategoryPreset[] = [
   {
     name: "components.categories.presets.expense.groceries",
     type: "expense",
-    icon: "basket-outline",
+    icon: "basket",
     colorSchemeName: "",
     transactionCount: 0,
     createdAt: new Date(),
@@ -27,7 +29,7 @@ export const ExpensePresets: CategoryPreset[] = [
   {
     name: "components.categories.presets.expense.transportation",
     type: "expense",
-    icon: "car-outline",
+    icon: "car",
     colorSchemeName: "",
     transactionCount: 0,
     createdAt: new Date(),
@@ -36,7 +38,7 @@ export const ExpensePresets: CategoryPreset[] = [
   {
     name: "components.categories.presets.expense.healthcare",
     type: "expense",
-    icon: "heart-outline",
+    icon: "heart",
     colorSchemeName: "",
     transactionCount: 0,
     createdAt: new Date(),
@@ -45,7 +47,7 @@ export const ExpensePresets: CategoryPreset[] = [
   {
     name: "components.categories.presets.expense.education",
     type: "expense",
-    icon: "school-outline",
+    icon: "school",
     colorSchemeName: "",
     transactionCount: 0,
     createdAt: new Date(),
@@ -54,7 +56,43 @@ export const ExpensePresets: CategoryPreset[] = [
   {
     name: "components.categories.presets.expense.shopping",
     type: "expense",
-    icon: "shopping-outline",
+    icon: "shopping-cart",
+    colorSchemeName: "",
+    transactionCount: 0,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    name: "components.categories.presets.expense.dining",
+    type: "expense",
+    icon: "pizza",
+    colorSchemeName: "",
+    transactionCount: 0,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    name: "components.categories.presets.expense.entertainment",
+    type: "expense",
+    icon: "headphones",
+    colorSchemeName: "",
+    transactionCount: 0,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    name: "components.categories.presets.expense.housing",
+    type: "expense",
+    icon: "building",
+    colorSchemeName: "",
+    transactionCount: 0,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    name: "components.categories.presets.expense.fitness",
+    type: "expense",
+    icon: "activity",
     colorSchemeName: "",
     transactionCount: 0,
     createdAt: new Date(),
@@ -81,7 +119,7 @@ export const IncomePresets: CategoryPreset[] = [
   {
     name: "components.categories.presets.income.freelance",
     type: "income",
-    icon: "briefcase-outline",
+    icon: "briefcase",
     colorSchemeName: "",
     transactionCount: 0,
     createdAt: new Date(),
@@ -99,7 +137,7 @@ export const IncomePresets: CategoryPreset[] = [
   {
     name: "components.categories.presets.income.business",
     type: "income",
-    icon: "office-building-outline",
+    icon: "building-bank",
     colorSchemeName: "",
     transactionCount: 0,
     createdAt: new Date(),
@@ -108,7 +146,43 @@ export const IncomePresets: CategoryPreset[] = [
   {
     name: "components.categories.presets.income.gift",
     type: "income",
-    icon: "gift-outline",
+    icon: "gift",
+    colorSchemeName: "",
+    transactionCount: 0,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    name: "components.categories.presets.income.rental",
+    type: "income",
+    icon: "home-share",
+    colorSchemeName: "",
+    transactionCount: 0,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    name: "components.categories.presets.income.dividends",
+    type: "income",
+    icon: "coin-pound",
+    colorSchemeName: "",
+    transactionCount: 0,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    name: "components.categories.presets.income.bonus",
+    type: "income",
+    icon: "star",
+    colorSchemeName: "",
+    transactionCount: 0,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    name: "components.categories.presets.income.sideIncome",
+    type: "income",
+    icon: "affiliate",
     colorSchemeName: "",
     transactionCount: 0,
     createdAt: new Date(),

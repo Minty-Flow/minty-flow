@@ -13,8 +13,8 @@ import { MonthYearPicker } from "~/components/month-year-picker"
 import { TransactionFilterHeader } from "~/components/transaction/transaction-filter-header"
 import { TransactionItem } from "~/components/transaction/transaction-item"
 import { Button } from "~/components/ui/button"
-import { IconSymbol } from "~/components/ui/icon-symbol"
-import { Text } from "~/components/ui/text"
+import { EmptyState } from "~/components/ui/empty-state"
+import { IconSvg } from "~/components/ui/icon-svg"
 import { View } from "~/components/ui/view"
 import { getMonthRange } from "~/database/services/account-service"
 import { observeCategoriesByType } from "~/database/services/category-service"
@@ -91,17 +91,14 @@ function TrashScreenInner({
             onPress={() => setShowSwipeInfo(true)}
             accessibilityLabel={t("screens.settings.trash.a11y.infoButton")}
           >
-            <IconSymbol name="information" size={20} />
+            <IconSvg name="info-circle" size={20} />
           </Button>
           <Button
             variant={"ghost"}
             size="icon"
             onPress={() => setShowFilters((v) => !v)}
           >
-            <IconSymbol
-              name={showFilters ? "filter-variant-remove" : "filter-variant"}
-              size={20}
-            />
+            <IconSvg name={showFilters ? "filter-off" : "filter"} size={20} />
           </Button>
         </View>
       ),
@@ -226,11 +223,10 @@ function TrashScreenInner({
           transactionsFull.length === 0 && styles.contentEmpty,
         ]}
         ListEmptyComponent={
-          <View style={styles.placeholder}>
-            <Text variant="small" style={styles.placeholderText}>
-              {t("screens.settings.trash.empty.noTransactions")}
-            </Text>
-          </View>
+          <EmptyState
+            icon="trash-off"
+            title={t("screens.settings.trash.empty.noTransactions")}
+          />
         }
         data={transactionsFull}
         keyExtractor={keyExtractor}
@@ -245,14 +241,13 @@ function TrashScreenInner({
         confirmLabel={t("common.actions.delete")}
         cancelLabel={t("common.actions.cancel")}
         variant="destructive"
-        icon="trash-can"
+        icon="trash"
       />
       <InfoModal
         visible={showSwipeInfo}
         onRequestClose={() => setShowSwipeInfo(false)}
         title={t("screens.settings.trash.swipeInfo.title")}
         description={t("screens.settings.trash.swipeInfo.description")}
-        icon="information"
       />
     </View>
   )
@@ -340,15 +335,5 @@ const styles = StyleSheet.create((theme) => ({
   },
   contentEmpty: {
     flexGrow: 1,
-  },
-  placeholder: {
-    paddingVertical: 48,
-    paddingHorizontal: 24,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  placeholderText: {
-    color: theme.colors.onSecondary,
-    textAlign: "center",
   },
 }))

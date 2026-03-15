@@ -210,7 +210,102 @@
       },
       "emptyState": {
         "title": "لا توجد بيانات لهذه الفترة",
-        "description": "أضف معاملات لرؤية إحصائياتك"
+        "description": "أضف معاملات لرؤية إحصائياتك",
+        "addFirst": "أضف معاملتك الأولى",
+        "allPending": "جميع المعاملات معلقة",
+        "allTransfers": "جميع المعاملات هي التحويلات",
+        "noTransactionsEver": "لا توجد معاملات حتى الآن"
+      },
+      "accountBreakdown": {
+        "title": "عن طريق الحساب",
+        "spent": "المصروف",
+        "earned": "الدخل"
+      },
+      "averages": {
+        "expense": "متوسط \nحساب",
+        "income": "متوسط \nدخل",
+        "net": "متوسط \nشبكة",
+        "title": "المتوسطات اليومية"
+      },
+      "balanceChart": {
+        "closing": "إغلاق",
+        "opening": "افتتاح",
+        "title": "التوازن مع مرور الوقت"
+      },
+      "calendarHeatmap": {
+        "title": "خريطة الحرارة للإنفاق"
+      },
+      "categoryDeltas": {
+        "decreased": "انخفضت",
+        "increased": "زيادة",
+        "none": "لا أحد",
+        "title": "تغييرات الفئة"
+      },
+      "chart": {
+        "categoryBreakdown": "حسب الفئة",
+        "dailyTrend": "الاتجاه اليومي",
+        "incomeVsExpense": "الدخل مقابل النفقات",
+        "netWorth": "صافي القيمة مع مرور الوقت",
+        "noPreviousData": "لا توجد بيانات سابقة",
+        "periodComparison": "مقارنة الفترة",
+        "spendingByCategory": "الإنفاق حسب الفئة",
+        "prevPeriod": "السابق",
+        "expenseForecastTitle": "توقعات المصروفات لـ {{month}}",
+        "expenseTotalTitle": "إجمالي مصروفات {{month}}"
+      },
+      "currency": {
+        "sectionHeader": "{{عملة}}"
+      },
+      "dateRange": {
+        "thisMonth": "هذا الشهر"
+      },
+      "dayOfWeek": {
+        "title": "الإنفاق حسب يوم الأسبوع"
+      },
+      "delta": {
+        "notAvailable": "لا يوجد"
+      },
+      "hero": {
+        "netFlow": "صافي التدفق",
+        "totalExpense": "إجمالي النفقات",
+        "totalIncome": "إجمالي الدخل",
+        "transactionCount": "{{count}} معاملة",
+        "onPaceFor": "في مسار ~{{amount}}"
+      },
+      "moreOptions": "المزيد من الخيارات",
+      "pendingNotice": "{{count}} المعاملات المعلقة مستبعدة من الإحصائيات",
+      "pieToggle": {
+        "expenses": "نفقات",
+        "income": "دخل",
+        "noData": "لا توجد بيانات لهذا العرض"
+      },
+      "savingsRate": {
+        "negative": "الإنفاق أكثر من الكسب",
+        "noIncome": "لا دخل هذه الفترة",
+        "savedOf": "ل",
+        "savedPrefix": "أنقذ",
+        "savedSuffix": "دخل",
+        "title": "معدل الادخار"
+      },
+      "subtypeBreakdown": {
+        "fixed": "يتكرر",
+        "title": "توزيع النفقات",
+        "variable": "لمرة واحدة"
+      },
+      "tagBreakdown": {
+        "title": "بواسطة العلامة",
+        "transactions": "{{عدد}} من المعاملات"
+      },
+      "topCategory": {
+        "subtitle": "فئة الإنفاق الأعلى"
+      },
+      "topTransactions": {
+        "title": "أعلى النفقات"
+      },
+      "uncategorized": {
+        "categorizeNow": "تصنيف الآن",
+        "description": "بعض المعاملات ليس لها فئة معينة",
+        "title": "{{عدد}} غير مصنف"
       }
     },
     "settings": {
@@ -431,14 +526,107 @@
       "goals": {
         "title": "الأهداف",
         "description": "تحديد وتتبع أهدافك المالية",
-        "body": "حدّد أهدافك المالية وتابع تقدمك. راقب مسيرتك وحافظ على دوافعك لتحقيق أهدافك.",
-        "empty": "لا توجد أهداف بعد"
+        "body": "حدد أهداف الادخار وتتبع التقدم",
+        "empty": "لا توجد أهداف بعد. أنشئ واحدة للبدء.",
+        "addNew": "هدف جديد",
+        "archivedButton": "المؤرشفة",
+        "archiveSuccess": "تم أرشفة الهدف",
+        "unarchiveSuccess": "تمت استعادة الهدف",
+        "archived": {
+          "title": "الأهداف المؤرشفة",
+          "empty": "لا توجد أهداف مؤرشفة"
+        },
+        "card": {
+          "saved": "تم الادخار",
+          "of": "من",
+          "remaining": "متبقي",
+          "targetDate": "الهدف",
+          "completed": "مكتمل",
+          "daysLeft": "{{count}} أيام متبقية",
+          "overdue": "متأخر بـ {{count}} أيام",
+          "noDeadline": "بلا موعد"
+        },
+        "form": {
+          "title": {
+            "create": "هدف جديد",
+            "edit": "تعديل الهدف"
+          },
+          "nameLabel": "اسم الهدف",
+          "namePlaceholder": "مثال: صندوق الإجازة",
+          "descriptionLabel": "الوصف",
+          "descriptionPlaceholder": "ملاحظة اختيارية",
+          "targetAmountLabel": "المبلغ المستهدف",
+          "targetDateLabel": "تاريخ الهدف",
+          "currencyLabel": "العملة",
+          "accountsLabel": "حسابات التمويل",
+          "accountsPlaceholder": "اختر الحسابات",
+          "deleteLabel": "حذف الهدف",
+          "archiveLabel": "أرشفة الهدف",
+          "unarchiveLabel": "استعادة الهدف",
+          "loadingText": "جاري تحميل الهدف...",
+          "archiveModal": {
+            "archiveTitle": "أرشفة هذا الهدف؟",
+            "archiveConfirm": "أرشفة",
+            "unarchiveTitle": "استعادة هذا الهدف؟",
+            "unarchiveConfirm": "استعادة"
+          },
+          "toast": {
+            "notFound": "الهدف غير موجود.",
+            "createFailed": "فشل إنشاء الهدف.",
+            "updateFailed": "فشل تحديث الهدف.",
+            "deleteFailed": "فشل حذف الهدف.",
+            "accountsCleared": "تم مسح الحسابات — لا تتطابق مع العملة الجديدة."
+          }
+        }
       },
       "budgets": {
         "title": "الميزانيات",
         "description": "إنشاء وإدارة ميزانياتك",
-        "body": "أنشئ ميزانياتك وأدرها. حدّد حدوداً للإنفاق لفئات مختلفة وتابع تقدمك طوال الشهر.",
-        "empty": "لا توجد ميزانيات بعد"
+        "body": "تتبع حدود إنفاقك",
+        "empty": "لا توجد ميزانيات بعد. أنشئ واحدة للبدء.",
+        "addNew": "ميزانية جديدة",
+        "periods": {
+          "daily": "يومي",
+          "weekly": "أسبوعي",
+          "monthly": "شهري",
+          "yearly": "سنوي",
+          "custom": "مخصص"
+        },
+        "card": {
+          "spent": "تم الإنفاق",
+          "of": "من",
+          "remaining": "متبقي",
+          "noCategory": "جميع الفئات",
+          "overBudget": "تجاوز الميزانية",
+          "alertThresholdReached": "تم بلوغ حد التنبيه"
+        },
+        "form": {
+          "title": {
+            "create": "ميزانية جديدة",
+            "edit": "تعديل الميزانية"
+          },
+          "nameLabel": "اسم الميزانية",
+          "namePlaceholder": "مثال: البقالة",
+          "amountLabel": "الحد",
+          "periodLabel": "الفترة",
+          "categoryLabel": "فئات",
+          "categoryPlaceholder": "جميع الفئات",
+          "currencyLabel": "العملة",
+          "accountsLabel": "الحسابات",
+          "accountsPlaceholder": "اختر الحسابات",
+          "alertThresholdLabel": "تنبيه عند (%)",
+          "startDateLabel": "تاريخ البداية",
+          "endDateLabel": "تاريخ النهاية",
+          "deleteLabel": "حذف الميزانية",
+          "loadingText": "جاري تحميل الميزانية...",
+          "toast": {
+            "notFound": "الميزانية غير موجودة.",
+            "createFailed": "فشل إنشاء الميزانية.",
+            "updateFailed": "فشل تحديث الميزانية.",
+            "deleteFailed": "فشل حذف الميزانية.",
+            "accountsCleared": "تم مسح الحسابات — لا تتطابق مع العملة الجديدة."
+          }
+        }
       },
       "loans": {
         "title": "القروض",
@@ -618,7 +806,7 @@
         "conversionRate": "السعر",
         "category": "الفئة",
         "clear": "مسح",
-        "addCategories": "إضافة فئات",
+        "addCategories": "فئات",
         "now": "الآن",
         "pending": "معلقة",
         "tapToEditNotes": "اضغط لتعديل الملاحظات",
@@ -731,6 +919,8 @@
         "clearAllTags": "مسح جميع الوسوم",
         "addTag": "إضافة وسم",
         "removeTag": "إزالة وسم {{name}}",
+        "noTagsFound": "لم يتم العثور على وسوم",
+        "allTagsSelected": "تم تحديد جميع الوسوم",
         "amountInput": "إدخال المبلغ"
       }
     },
@@ -782,14 +972,22 @@
           "groceries": "بقالة",
           "healthcare": "الرعاية الصحية",
           "shopping": "التسوق",
-          "transportation": "مواصلات"
+          "transportation": "مواصلات",
+          "dining": "طعام ومطاعم",
+          "entertainment": "ترفيه",
+          "housing": "سكن وخدمات",
+          "fitness": "صحة ورياضة"
         },
         "income": {
           "business": "عمل",
           "freelance": "مستقل",
           "gift": "هدية",
           "investment": "استثمار",
-          "salary": "مرتب"
+          "salary": "مرتب",
+          "rental": "دخل الإيجار",
+          "dividends": "أرباح الأسهم",
+          "bonus": "مكافأة",
+          "sideIncome": "دخل إضافي"
         }
       },
       "search": {
@@ -807,13 +1005,11 @@
       "form": {
         "title": {
           "create": "إنشاء فئة",
-          "edit": "تعديل الفئة",
-          "archived": "الفئات المؤرشفة"
+          "edit": "تعديل الفئة"
         },
         "nameLabel": "اسم الفئة",
         "namePlaceholder": "بقالة، مطاعم، إلخ.",
         "typeLabel": "النوع",
-        "archiveLabel": "أرشفة الفئة",
         "deleteLabel": "حذف نهائي",
         "loadingText": "جارٍ تحميل الفئة...",
         "deleteModal": {
@@ -882,7 +1078,8 @@
         "attachments": "المرفقات",
         "pendingStatus": "حالة المعلقة",
         "thisMonth": "هذا الشهر",
-        "untitled": "بدون عنوان"
+        "untitled": "بدون عنوان",
+        "typeCount": "عدد النوع"
       },
       "attachmentOptions": {
         "has": "بها مرفقات",
@@ -996,6 +1193,14 @@
     },
     "searchInput": {
       "placeholder": "بحث..."
+    },
+    "currencyAccountSelector": {
+      "currencyLabel": "العملة",
+      "accountsLabel": "الحسابات",
+      "selectAll": "اختر جميع حسابات {{currency}}",
+      "noAccountsForCurrency": "لا توجد حسابات لهذه العملة",
+      "accountsClearedTitle": "تم مسح الحسابات",
+      "accountsClearedDescription": "تم إزالة الحسابات المحددة لأنها لا تتطابق مع {{currency}}."
     }
   },
   "validation": {
@@ -1063,18 +1268,35 @@
       "name": {
         "required": "اسم الهدف مطلوب"
       },
+      "currency": {
+        "required": "العملة مطلوبة"
+      },
+      "accounts": {
+        "required": "يرجى اختيار حساب واحد على الأقل"
+      },
       "targetAmount": {
         "required": "المبلغ المستهدف مطلوب",
-        "invalid": "أدخل مبلغاً صحيحاً"
+        "invalid": "أدخل مبلغاً صحيحاً",
+        "positive": "يجب أن يكون المبلغ المستهدف أكبر من صفر"
       }
     },
     "budget": {
       "name": {
         "required": "اسم الميزانية مطلوب"
       },
+      "currency": {
+        "required": "العملة مطلوبة"
+      },
+      "accounts": {
+        "required": "يرجى اختيار حساب واحد على الأقل"
+      },
+      "categories": {
+        "required": "يرجى اختيار فئة واحدة على الأقل"
+      },
       "amount": {
         "required": "المبلغ مطلوب",
-        "invalid": "أدخل مبلغاً صحيحاً"
+        "invalid": "أدخل مبلغاً صحيحاً",
+        "positive": "يجب أن يكون المبلغ أكبر من صفر"
       }
     }
   },

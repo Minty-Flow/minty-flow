@@ -10,7 +10,7 @@ import Animated, {
 import { StyleSheet, useUnistyles } from "react-native-unistyles"
 import { scheduleOnRN } from "react-native-worklets"
 
-import { IconSymbol, type IconSymbolName } from "~/components/ui/icon-symbol"
+import { IconSvg, type IconSvgName } from "~/components/ui/icon-svg"
 import { InfoBanner } from "~/components/ui/info-banner"
 import { View } from "~/components/ui/view"
 import { FAB_BUTTON_SIZE, FAB_BUTTON_STYLE } from "~/constants/fab-button"
@@ -38,7 +38,7 @@ function getSlotPositions(containerWidth: number): SlotPos[] {
 }
 
 interface ButtonConfig {
-  icon: IconSymbolName
+  icon: IconSvgName
   color: string
   iconColor: string
 }
@@ -131,7 +131,7 @@ function DraggableButton({
           animatedStyle,
         ]}
       >
-        <IconSymbol name={config.icon} size={24} color={config.iconColor} />
+        <IconSvg name={config.icon} size={24} color={config.iconColor} />
       </Animated.View>
     </GestureDetector>
   )
@@ -150,17 +150,17 @@ export default function ButtonPlacementScreen() {
 
   const buttonConfigs: Record<FabButtonType, ButtonConfig> = {
     income: {
-      icon: "chevron-double-down",
+      icon: "chevrons-down",
       color: theme.colors.customColors.income,
       iconColor: theme.colors.onError,
     },
     expense: {
-      icon: "chevron-double-up",
+      icon: "chevrons-up",
       color: theme.colors.customColors.expense,
       iconColor: theme.colors.onError,
     },
     transfer: {
-      icon: "swap-horizontal",
+      icon: "transfer",
       color: theme.colors.secondary,
       iconColor: theme.colors.onSecondary,
     },
@@ -272,6 +272,7 @@ const styles = StyleSheet.create((theme) => ({
 
   button: {
     ...FAB_BUTTON_STYLE,
+    shadowColor: theme.colors.shadow,
   },
 
   footerRow: {
