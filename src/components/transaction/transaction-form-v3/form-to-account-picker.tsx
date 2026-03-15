@@ -234,9 +234,7 @@ export function FormToAccountPicker({
                 <DynamicIcon
                   icon="plus"
                   size={24}
-                  colorScheme={
-                    theme?.colors as import("~/styles/theme/types").MintyColorScheme
-                  }
+                  colorScheme={theme?.colors}
                   variant="badge"
                 />
                 <Text

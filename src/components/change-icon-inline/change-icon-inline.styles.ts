@@ -8,7 +8,7 @@ export const changeIconInlineStyles = StyleSheet.create((theme) => ({
     gap: 20,
   },
   iconBox: {
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     backgroundColor: theme.colors.secondary,
     alignItems: "center",
     justifyContent: "center",
@@ -20,7 +20,7 @@ export const changeIconInlineStyles = StyleSheet.create((theme) => ({
     marginTop: 0,
   },
   listWrapper: {
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     overflow: "hidden",
     backgroundColor: theme.colors.secondary,
   },

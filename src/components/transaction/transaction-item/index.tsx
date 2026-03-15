@@ -82,7 +82,7 @@ export const TransactionItem = ({
         ? Math.abs(transaction.amount) * conversionRate
         : transaction.amount / conversionRate
       : null
-  const icon = isTransfer ? "swap-horizontal" : category?.icon
+  const icon = isTransfer ? "transfer" : category?.icon
   const amountTone = isTransfer
     ? transaction.amount < 0
       ? TransactionTypeEnum.EXPENSE

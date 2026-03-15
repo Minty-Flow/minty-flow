@@ -135,7 +135,7 @@ export const BudgetCard = withObservables(
 const styles = StyleSheet.create((t) => ({
   card: {
     backgroundColor: t.colors.secondary,
-    borderRadius: t.colors.radius,
+    borderRadius: t.radius,
     padding: 16,
     marginBottom: 12,
     gap: 12,
@@ -175,7 +175,7 @@ const styles = StyleSheet.create((t) => ({
   },
   periodBadge: {
     backgroundColor: t.colors.surface,
-    borderRadius: t.colors.radius,
+    borderRadius: t.radius,
     paddingHorizontal: 8,
     paddingVertical: 4,
   },

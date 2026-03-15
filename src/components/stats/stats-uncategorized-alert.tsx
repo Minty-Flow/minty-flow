@@ -55,7 +55,7 @@ const styles = StyleSheet.create((theme) => ({
     gap: 10,
     padding: 12,
     marginHorizontal: 16,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     backgroundColor: `${theme.colors.customColors.expense}18`,
   },
   content: {

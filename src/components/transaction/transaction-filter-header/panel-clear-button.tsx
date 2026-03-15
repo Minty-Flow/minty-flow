@@ -26,7 +26,7 @@ export function PanelClearButton({
       disabled={disabled}
       style={filterHeaderStyles.clearHit}
     >
-      {hideIcon ? null : <IconSvg name="circle-x" size={18} />}
+      {hideIcon ? null : <IconSvg name="x" size={18} />}
       <Text style={filterHeaderStyles.clearText}>
         {t("common.actions.clear")}
       </Text>

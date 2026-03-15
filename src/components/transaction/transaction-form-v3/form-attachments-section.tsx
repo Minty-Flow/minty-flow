@@ -162,7 +162,7 @@ export function FormAttachmentsSection({
               onPress={onSelectFromFiles}
             >
               <DynamicIcon
-                icon="file-document"
+                icon="files"
                 size={20}
                 color={theme.colors.primary}
                 variant="badge"
@@ -206,7 +206,7 @@ export function FormAttachmentsSection({
               onPress={onSelectMultipleMedia}
             >
               <DynamicIcon
-                icon="image-multiple"
+                icon="library-photo"
                 size={20}
                 color={theme.colors.primary}
                 variant="badge"
@@ -231,7 +231,7 @@ export function FormAttachmentsSection({
               onPress={onSelectSinglePhoto}
             >
               <DynamicIcon
-                icon="image"
+                icon="photo"
                 size={20}
                 color={theme.colors.primary}
                 variant="badge"

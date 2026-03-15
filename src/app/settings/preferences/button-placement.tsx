@@ -10,7 +10,7 @@ import Animated, {
 import { StyleSheet, useUnistyles } from "react-native-unistyles"
 import { scheduleOnRN } from "react-native-worklets"
 
-import { IconSvg, type IconSymbolName } from "~/components/ui/icon-svg"
+import { IconSvg, type IconSvgName } from "~/components/ui/icon-svg"
 import { InfoBanner } from "~/components/ui/info-banner"
 import { View } from "~/components/ui/view"
 import { FAB_BUTTON_SIZE, FAB_BUTTON_STYLE } from "~/constants/fab-button"
@@ -38,7 +38,7 @@ function getSlotPositions(containerWidth: number): SlotPos[] {
 }
 
 interface ButtonConfig {
-  icon: IconSymbolName
+  icon: IconSvgName
   color: string
   iconColor: string
 }
@@ -272,6 +272,7 @@ const styles = StyleSheet.create((theme) => ({
 
   button: {
     ...FAB_BUTTON_STYLE,
+    shadowColor: theme.colors.shadow,
   },
 
   footerRow: {

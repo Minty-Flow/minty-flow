@@ -160,7 +160,7 @@ export function CurrencySelectorModal({
           disabled={!editable}
         >
           <View style={triggerStyles.triggerLeft}>
-            <IconSvg name="currency-dollar" size={24} />
+            <IconSvg name="currency" size={24} />
             <Text variant="default" style={triggerStyles.triggerLabel}>
               {t("components.selectors.currency.triggerLabel")}
             </Text>

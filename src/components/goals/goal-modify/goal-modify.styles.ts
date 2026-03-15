@@ -46,7 +46,7 @@ export const goalModifyStyles = StyleSheet.create((theme) => ({
     justifyContent: "space-between",
     paddingVertical: 20,
     paddingHorizontal: 20,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     backgroundColor: theme.colors.secondary,
   },
   targetDateText: {
@@ -123,7 +123,6 @@ export const goalModifyStyles = StyleSheet.create((theme) => ({
   // Date picker modal styles
   datePickerOverlay: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.4)",
   },
   datePickerModal: {
     borderTopLeftRadius: 16,

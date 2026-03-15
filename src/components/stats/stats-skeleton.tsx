@@ -111,7 +111,7 @@ const styles = StyleSheet.create((theme) => ({
   },
   shimmer: {
     backgroundColor: theme.colors.secondary,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     borderCurve: "continuous",
   },
 }))

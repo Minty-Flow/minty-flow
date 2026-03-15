@@ -90,7 +90,7 @@ const styles = StyleSheet.create((theme) => ({
   card: {
     flex: 1,
     backgroundColor: theme.colors.secondary,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     padding: 12,
     gap: 4,
     borderCurve: "continuous",

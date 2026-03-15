@@ -62,10 +62,12 @@ export function CategoryScreenContent({
           {
             value: TransactionTypeEnum.EXPENSE,
             label: t("components.categories.types.expense"),
+            icon: "chevrons-up",
           },
           {
             value: TransactionTypeEnum.INCOME,
             label: t("components.categories.types.income"),
+            icon: "chevrons-down",
           },
         ]}
         activeValue={activeTab}

@@ -63,7 +63,7 @@ const CurrencyPanelRow = memo(function CurrencyPanelRow({
         </Text>
       </View>
       {isSelected && (
-        <IconSvg name="circle-check" size={20} color={theme.colors.primary} />
+        <IconSvg name="check" size={20} color={theme.colors.primary} />
       )}
     </Pressable>
   )
@@ -103,7 +103,7 @@ const AccountRow = memo(function AccountRow({
         </View>
       </View>
       <IconSvg
-        name={isSelected ? "circle-check" : "circle"}
+        name={isSelected ? "check" : "circle"}
         size={22}
         color={isSelected ? theme.colors.primary : theme.colors.onSecondary}
       />
@@ -256,7 +256,7 @@ export function CurrencyAccountSelector({
           accessibilityState={{ expanded: currencyPanelOpen }}
         >
           <View style={triggerStyles.triggerLeft}>
-            <IconSvg name="currency-dollar" size={24} />
+            <IconSvg name="currency" size={24} />
             {selectedCurrency ? (
               <Text style={triggerStyles.triggerLabel}>{selectedCurrency}</Text>
             ) : (
@@ -523,7 +523,7 @@ const styles = StyleSheet.create((t) => ({
     marginHorizontal: 12,
     marginBottom: 8,
     backgroundColor: t.colors.secondary,
-    borderRadius: t.colors.radius,
+    borderRadius: t.radius,
     overflow: "hidden",
     maxHeight: 260,
   },

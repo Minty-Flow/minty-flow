@@ -55,7 +55,7 @@ export interface Account {
 //   id: string
 //   name: string
 //   type: string
-//   icon: IconSymbolName
+//   icon: IconSvgName
 //   iconColor: string
 //   balance: number
 //   currency: string

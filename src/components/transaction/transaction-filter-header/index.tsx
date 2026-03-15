@@ -11,7 +11,7 @@ import { useUnistyles } from "react-native-unistyles"
 
 import { DateRangePresetModal } from "~/components/date-range-preset-modal"
 import { Chip } from "~/components/ui/chips"
-import { IconSvg, type IconSymbolName } from "~/components/ui/icon-svg"
+import { IconSvg, type IconSvgName } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import type {
@@ -303,7 +303,7 @@ export function TransactionFilterHeader({
 
   const pills: {
     key: FilterPanelKey | "date"
-    icon: IconSymbolName
+    icon: IconSvgName
     label: string
     active: boolean
   }[] = [
@@ -342,7 +342,7 @@ export function TransactionFilterHeader({
     },
     {
       key: "type",
-      icon: "switch-horizontal",
+      icon: "arrows-diff",
       label: typeLabel,
       active: isTypeActive,
     },
@@ -354,7 +354,7 @@ export function TransactionFilterHeader({
     },
     {
       key: "currency",
-      icon: "currency-dollar",
+      icon: "currency",
       label: currencyLabel,
       active: isCurrencyActive,
     },
@@ -382,7 +382,7 @@ export function TransactionFilterHeader({
             style={[filterHeaderStyles.clearAllPill, { borderColor }]}
             onPress={handleClearAll}
           >
-            <IconSvg name="circle-x" size={18} />
+            <IconSvg name="x" size={18} />
             <Text
               variant="default"
               style={[

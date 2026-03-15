@@ -60,7 +60,7 @@ const styles = StyleSheet.create((theme) => ({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: theme.colors.secondary,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     paddingHorizontal: 12,
     gap: 8,
   },

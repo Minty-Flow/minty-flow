@@ -5,17 +5,17 @@ import { StyleSheet } from "react-native-unistyles"
 import {
   type IconSize,
   IconSvg,
-  type IconSymbolName,
+  type IconSvgName,
 } from "~/components/ui/icon-svg"
 import { View } from "~/components/ui/view"
-import type { MintyColorScheme } from "~/styles/theme/types"
+import type { MintyThemeColors } from "~/styles/theme/types"
 import { isImageUrl } from "~/utils/is-image-url"
 import { isSingleEmojiOrLetter } from "~/utils/is-single-emoji-or-letter"
 
 interface DynamicIconProps {
   icon?: string | null
   size?: IconSize
-  colorScheme?: MintyColorScheme | null
+  colorScheme?: MintyThemeColors | null
   color?: string
   variant?: "badge" | "raw"
 }
@@ -112,7 +112,7 @@ export function DynamicIcon({
 
   // ---------- IconSvg ----------
   if (isRaw) {
-    return <IconSvg name={icon as IconSymbolName} size={size} color={color} />
+    return <IconSvg name={icon as IconSvgName} size={size} color={color} />
   }
 
   return (
@@ -123,7 +123,7 @@ export function DynamicIcon({
         bgColor && { backgroundColor: bgColor },
       ]}
     >
-      <IconSvg name={icon as IconSymbolName} size={size} color={color} />
+      <IconSvg name={icon as IconSvgName} size={size} color={color} />
     </View>
   )
 }
@@ -133,7 +133,7 @@ const styles = StyleSheet.create((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: theme.colors.secondary,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
   },
   emojiText: {
     fontWeight: "600",
@@ -143,13 +143,13 @@ const styles = StyleSheet.create((theme) => ({
   iconContainer: {
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     backgroundColor: theme.colors.secondary,
   },
   imageContainer: {
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     overflow: "hidden",
     backgroundColor: theme.colors.secondary,
     padding: 8,
@@ -157,6 +157,6 @@ const styles = StyleSheet.create((theme) => ({
   image: {
     width: "100%",
     height: "100%",
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
   },
 }))

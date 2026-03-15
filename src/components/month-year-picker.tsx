@@ -205,7 +205,7 @@ const styles = StyleSheet.create((theme) => {
       backgroundColor: theme.colors.secondary,
       paddingVertical: 10,
       paddingHorizontal: 24,
-      borderRadius: theme.colors.radius,
+      borderRadius: theme.radius,
       flex: 1,
       alignItems: "center",
       justifyContent: "center",
@@ -221,7 +221,7 @@ const styles = StyleSheet.create((theme) => {
       marginHorizontal: 20,
       marginVertical: 8,
       // backgroundColor: theme.colors.secondary,
-      // borderRadius: theme.colors.radius,
+      // borderRadius: theme.radius,
       overflow: "hidden",
     },
 
@@ -242,7 +242,7 @@ const styles = StyleSheet.create((theme) => {
       fontSize: 18,
       fontWeight: "600",
       minWidth: 72,
-      borderRadius: theme.colors.radius,
+      borderRadius: theme.radius,
       backgroundColor: theme.colors.surface,
     },
 
@@ -255,7 +255,7 @@ const styles = StyleSheet.create((theme) => {
     monthCell: {
       width: "30%",
       paddingVertical: 10,
-      borderRadius: theme.colors.radius,
+      borderRadius: theme.radius,
       alignItems: "center",
     },
 

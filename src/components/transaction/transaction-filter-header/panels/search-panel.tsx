@@ -71,7 +71,7 @@ export function SearchPanel({
         />
         {value.length > 0 ? (
           <Pressable onPress={onClear} style={filterHeaderStyles.clearHit}>
-            <IconSvg name="circle-x" size={20} />
+            <IconSvg name="x" size={20} />
           </Pressable>
         ) : null}
       </View>

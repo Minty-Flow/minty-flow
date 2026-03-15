@@ -13,7 +13,7 @@ import Animated, {
 import { StyleSheet, useUnistyles } from "react-native-unistyles"
 
 import { Button } from "~/components/ui/button"
-import { IconSvg, type IconSymbolName } from "~/components/ui/icon-svg"
+import { IconSvg, type IconSvgName } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Tooltip } from "~/components/ui/tooltip"
 import { View } from "~/components/ui/view"
@@ -36,7 +36,7 @@ type TabConfig = {
 }
 
 type FABOption = {
-  icon: IconSymbolName
+  icon: IconSvgName
   color: string
   iconColor: string
   label: string
@@ -383,6 +383,7 @@ const styles = StyleSheet.create((t) => ({
   },
   fabOption: {
     ...FAB_BUTTON_STYLE,
+    shadowColor: t.colors.shadow,
     pointerEvents: "auto",
   },
 
@@ -393,7 +394,7 @@ const styles = StyleSheet.create((t) => ({
     justifyContent: "space-evenly",
     height: 54,
     width: "90%",
-    borderRadius: t.colors.radius,
+    borderRadius: t.radius,
     marginBottom: 8,
     pointerEvents: "auto",
     overflow: "visible",
@@ -405,7 +406,7 @@ const styles = StyleSheet.create((t) => ({
   },
 
   centerButton: {
-    borderRadius: t.colors.radius,
+    borderRadius: t.radius,
     alignItems: "center",
     justifyContent: "center",
     width: 44,

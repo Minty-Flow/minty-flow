@@ -1,13 +1,13 @@
 import { StyleSheet } from "react-native-unistyles"
 
-import { IconSvg, type IconSymbolName } from "./ui/icon-svg"
+import { IconSvg, type IconSvgName } from "./ui/icon-svg"
 import { Pressable } from "./ui/pressable"
 import { Switch } from "./ui/switch"
 import { Text } from "./ui/text"
 import { View } from "./ui/view"
 
 interface ToggleItemProps {
-  icon: IconSymbolName
+  icon: IconSvgName
   title: string
   description?: string
   value: boolean

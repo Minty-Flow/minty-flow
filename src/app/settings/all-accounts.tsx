@@ -83,7 +83,7 @@ const styles = StyleSheet.create((theme) => ({
     gap: 12,
     paddingVertical: 20,
     backgroundColor: theme.colors.secondary,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
   },
   newAccountText: {
     fontSize: 16,

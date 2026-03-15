@@ -393,7 +393,7 @@ const styles = StyleSheet.create((theme) => ({
   segment: {
     paddingHorizontal: 10,
     paddingVertical: 4,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
   },
   segmentActive: {
     backgroundColor: theme.colors.primary,

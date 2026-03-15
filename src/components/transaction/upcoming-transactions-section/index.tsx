@@ -188,7 +188,7 @@ export function UpcomingTransactionsSection({
         confirmLabel={t("screens.home.upcoming.confirmAll.button")}
         cancelLabel={t("common.actions.cancel")}
         variant="default"
-        icon="circle-check"
+        icon="check"
       />
 
       {recurringToDelete && recurringRule && (

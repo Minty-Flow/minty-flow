@@ -1,4 +1,4 @@
-import type { IconSymbolName } from "~/components/ui/icon-svg"
+import type { IconSvgName } from "~/components/ui/icon-svg"
 
 const IMAGE_EXTENSIONS = new Set([
   "png",
@@ -63,7 +63,7 @@ export function getFileExtension(nameOrUri: string): string {
  * Uses the same logic as the design tip (FileImage, FileSpreadsheet, etc.)
  * mapped to MaterialCommunityIcons names.
  */
-export function getFileIconForExtension(ext: string): IconSymbolName {
+export function getFileIconForExtension(ext: string): IconSvgName {
   switch (ext) {
     case "png":
     case "jpg":

@@ -175,7 +175,7 @@ const CategoryDetailsScreenInner = ({
       <View style={styles.headerCard}>
         <View style={styles.headerTopRow}>
           <DynamicIcon
-            icon={category.icon || "shapes"}
+            icon={category.icon || "category"}
             size={32}
             variant="badge"
             colorScheme={colorScheme}
@@ -260,7 +260,7 @@ const styles = StyleSheet.create((theme) => ({
   // ── Header Card ──────────────────────────────────────────────
   headerCard: {
     backgroundColor: theme.colors.secondary,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     marginHorizontal: 20,
     marginTop: 8,
     padding: 20,
@@ -298,7 +298,7 @@ const styles = StyleSheet.create((theme) => ({
   summaryPillCard: {
     flex: 1,
     backgroundColor: theme.colors.secondary,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     paddingVertical: 10,
     paddingHorizontal: 10,
     alignItems: "center",

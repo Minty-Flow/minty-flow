@@ -5,7 +5,7 @@ import { StyleSheet } from "react-native-unistyles"
 
 import { ActionItem } from "~/components/action-item"
 import { ToggleItem } from "~/components/toggle-item"
-import type { IconSymbolName } from "~/components/ui/icon-svg"
+import type { IconSvgName } from "~/components/ui/icon-svg"
 import { InfoBanner } from "~/components/ui/info-banner"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
@@ -15,14 +15,14 @@ import { useAndroidSoundStore } from "~/stores/android-sound.store"
 interface PreferenceItem {
   titleKey: TranslationKey
   route: Href
-  icon: IconSymbolName
+  icon: IconSvgName
 }
 
 const appearanceItems: PreferenceItem[] = [
   {
     titleKey: "screens.settings.preferences.appearance.theme.title",
     route: "/settings/preferences/theme",
-    icon: "palette",
+    icon: "color-swatch",
   },
   {
     titleKey: "screens.settings.preferences.appearance.moneyFormatting.title",

@@ -67,7 +67,7 @@ export function StatHeroCard({
 const styles = StyleSheet.create((theme) => ({
   card: {
     backgroundColor: theme.colors.secondary,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     padding: 16,
     minWidth: 160,
     gap: 8,

@@ -13,7 +13,7 @@ import {
 import type { MintyColorScheme } from "~/styles/theme/types"
 
 import { DynamicIcon } from "../dynamic-icon"
-import { IconSvg, type IconSymbolName } from "../ui/icon-svg"
+import { IconSvg, type IconSvgName } from "../ui/icon-svg"
 
 interface IconSelectionModalProps {
   visible: boolean
@@ -48,7 +48,7 @@ const IconItem = memo(
         ]}
         onPress={() => onPress(iconName)}
       >
-        <IconSvg name={iconName as IconSymbolName} size={28} color={color} />
+        <IconSvg name={iconName as IconSvgName} size={28} color={color} />
       </Pressable>
     )
   },
@@ -321,7 +321,7 @@ const styles = StyleSheet.create((theme) => ({
     marginHorizontal: 20,
     paddingHorizontal: 12,
     paddingVertical: 10,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     borderWidth: 1,
     borderColor: theme.colors.onSurface,
     backgroundColor: theme.colors.surface,
@@ -364,7 +364,7 @@ const styles = StyleSheet.create((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     margin: 4,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     maxWidth: 56,
   },
   footer: {

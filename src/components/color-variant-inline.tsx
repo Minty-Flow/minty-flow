@@ -289,7 +289,7 @@ const styles = StyleSheet.create((theme) => ({
     paddingTop: 8,
     gap: 24,
     backgroundColor: `${theme.colors.onSurface}10`,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     padding: 20,
   },
   header: {

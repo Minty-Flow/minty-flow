@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next"
 import { Alert, ScrollView } from "react-native"
 import { StyleSheet } from "react-native-unistyles"
 
-import type { IconSymbolName } from "~/components/ui/icon-svg"
+import type { IconSvgName } from "~/components/ui/icon-svg"
 import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Switch } from "~/components/ui/switch"
@@ -16,7 +16,7 @@ import { useMoneyFormattingStore } from "~/stores/money-formatting.store"
 interface PrivacySetting {
   id: string
   label: string
-  icon: IconSymbolName
+  icon: IconSvgName
   value: boolean
   onValueChange: (value: boolean) => void
   disabled?: boolean

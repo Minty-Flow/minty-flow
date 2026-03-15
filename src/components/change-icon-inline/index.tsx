@@ -59,7 +59,7 @@ export function ChangeIconInline({
     rippleColor: theme.colors.rippleColor,
     shadow: theme.colors.shadow,
     boxShadow: theme.colors.boxShadow,
-    radius: theme.colors.radius,
+    radius: theme.radius,
   }
 
   const handleToggle = () => {

@@ -38,7 +38,7 @@ const styles = StyleSheet.create((theme) => ({
   container: {
     marginHorizontal: 16,
     backgroundColor: theme.colors.secondary,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     padding: 16,
     gap: 12,
     borderCurve: "continuous",

@@ -1,14 +1,14 @@
 import type { PressableProps } from "react-native"
 import { StyleSheet } from "react-native-unistyles"
 
-import { IconSvg, type IconSymbolName } from "~/components/ui/icon-svg"
+import { IconSvg, type IconSvgName } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
 
 interface PermissionBannerProps extends PressableProps {
   message: string
-  icon?: IconSymbolName
+  icon?: IconSvgName
   showBanner: boolean
 }
 
@@ -43,7 +43,7 @@ const styles = StyleSheet.create((theme) => ({
     marginVertical: 10,
     paddingVertical: 20,
     paddingHorizontal: 15,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     backgroundColor: `${theme.colors.error}18`, // ~10% opacity tint
     borderWidth: 1,
     borderColor: `${theme.colors.error}40`,

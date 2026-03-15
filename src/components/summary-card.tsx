@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next"
 import { StyleSheet, useUnistyles } from "react-native-unistyles"
 
 import { Money } from "~/components/money"
-import { IconSvg, type IconSymbolName } from "~/components/ui/icon-svg"
+import { IconSvg, type IconSvgName } from "~/components/ui/icon-svg"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
 import type { TransactionWithRelations } from "~/database/services/transaction-service"
@@ -113,7 +113,7 @@ const Card = ({
 }: CardProps) => {
   const { theme } = useUnistyles()
   const isIncome = type === TransactionTypeEnum.INCOME
-  const icon: IconSymbolName = isIncome ? "arrow-down-left" : "arrow-up-right"
+  const icon: IconSvgName = isIncome ? "arrow-down-left" : "arrow-up-right"
   const colorStyle = isIncome ? styles.incomeText : styles.expenseText
 
   // Sum by currency (from account), then add extra (e.g. transfer amounts when not excluded)
@@ -199,7 +199,7 @@ const styles = StyleSheet.create((theme) => ({
   },
   card: {
     flex: 1,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     padding: 12,
     borderWidth: 1,
     borderColor: theme.colors.customColors.semi,
@@ -219,7 +219,7 @@ const styles = StyleSheet.create((theme) => ({
   iconContainer: {
     width: 20,
     height: 20,
-    borderRadius: theme.colors.radius / 2,
+    borderRadius: theme.radius / 2,
     alignItems: "center",
     justifyContent: "center",
   },

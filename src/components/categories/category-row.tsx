@@ -67,7 +67,7 @@ const styles = StyleSheet.create((theme) => ({
     justifyContent: "space-between",
     paddingRight: 20,
     backgroundColor: theme.colors.secondary,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     marginHorizontal: 20,
   },
   rowContent: {

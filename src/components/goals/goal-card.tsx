@@ -74,7 +74,7 @@ function GoalCardInner({ goal, onPress, currentAmount }: GoalCardProps) {
           {isCompleted ? (
             <View style={styles.completedBadge}>
               <IconSvg
-                name="circle-check"
+                name="check"
                 size={14}
                 color={theme.colors.customColors.income}
               />
@@ -135,7 +135,7 @@ export const GoalCard = withObservables(
 const styles = StyleSheet.create((t) => ({
   card: {
     backgroundColor: t.colors.surface,
-    borderRadius: t.colors.radius,
+    borderRadius: t.radius,
     borderWidth: 1,
     borderColor: t.colors.customColors.semi,
     padding: 14,
@@ -169,7 +169,7 @@ const styles = StyleSheet.create((t) => ({
     backgroundColor: `${t.colors.customColors.income}20`,
     paddingHorizontal: 8,
     paddingVertical: 4,
-    borderRadius: t.colors.radius,
+    borderRadius: t.radius,
   },
   completedText: {
     fontSize: 11,
@@ -180,7 +180,7 @@ const styles = StyleSheet.create((t) => ({
     backgroundColor: t.colors.secondary,
     paddingHorizontal: 8,
     paddingVertical: 4,
-    borderRadius: t.colors.radius,
+    borderRadius: t.radius,
   },
   dateChipText: {
     fontSize: 11,

@@ -790,7 +790,7 @@
         "conversionRate": "السعر",
         "category": "الفئة",
         "clear": "مسح",
-        "addCategories": "إضافة فئات",
+        "addCategories": "فئات",
         "now": "الآن",
         "pending": "معلقة",
         "tapToEditNotes": "اضغط لتعديل الملاحظات",
@@ -903,6 +903,8 @@
         "clearAllTags": "مسح جميع الوسوم",
         "addTag": "إضافة وسم",
         "removeTag": "إزالة وسم {{name}}",
+        "noTagsFound": "لم يتم العثور على وسوم",
+        "allTagsSelected": "تم تحديد جميع الوسوم",
         "amountInput": "إدخال المبلغ"
       }
     },
@@ -954,14 +956,22 @@
           "groceries": "بقالة",
           "healthcare": "الرعاية الصحية",
           "shopping": "التسوق",
-          "transportation": "مواصلات"
+          "transportation": "مواصلات",
+          "dining": "طعام ومطاعم",
+          "entertainment": "ترفيه",
+          "housing": "سكن وخدمات",
+          "fitness": "صحة ورياضة"
         },
         "income": {
           "business": "عمل",
           "freelance": "مستقل",
           "gift": "هدية",
           "investment": "استثمار",
-          "salary": "مرتب"
+          "salary": "مرتب",
+          "rental": "دخل الإيجار",
+          "dividends": "أرباح الأسهم",
+          "bonus": "مكافأة",
+          "sideIncome": "دخل إضافي"
         }
       },
       "search": {
@@ -1242,18 +1252,35 @@
       "name": {
         "required": "اسم الهدف مطلوب"
       },
+      "currency": {
+        "required": "العملة مطلوبة"
+      },
+      "accounts": {
+        "required": "يرجى اختيار حساب واحد على الأقل"
+      },
       "targetAmount": {
         "required": "المبلغ المستهدف مطلوب",
-        "invalid": "أدخل مبلغاً صحيحاً"
+        "invalid": "أدخل مبلغاً صحيحاً",
+        "positive": "يجب أن يكون المبلغ المستهدف أكبر من صفر"
       }
     },
     "budget": {
       "name": {
         "required": "اسم الميزانية مطلوب"
       },
+      "currency": {
+        "required": "العملة مطلوبة"
+      },
+      "accounts": {
+        "required": "يرجى اختيار حساب واحد على الأقل"
+      },
+      "categories": {
+        "required": "يرجى اختيار فئة واحدة على الأقل"
+      },
       "amount": {
         "required": "المبلغ مطلوب",
-        "invalid": "أدخل مبلغاً صحيحاً"
+        "invalid": "أدخل مبلغاً صحيحاً",
+        "positive": "يجب أن يكون المبلغ أكبر من صفر"
       }
     }
   },

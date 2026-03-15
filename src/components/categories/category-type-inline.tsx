@@ -76,7 +76,7 @@ export function CategoryTypeInline({
         disabled={!editable}
       >
         <View style={styles.triggerLeft}>
-          <IconSvg name="category" size={24} />
+          <IconSvg name="arrows-diff" size={24} />
           <Text variant="default" style={styles.triggerLabel}>
             {t("components.categories.form.typeLabel")}
           </Text>
@@ -180,7 +180,7 @@ const styles = StyleSheet.create((theme) => ({
     justifyContent: "space-between",
     paddingVertical: 14,
     paddingHorizontal: 16,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     backgroundColor: `${theme.colors.onSurface}10`,
     borderWidth: 1,
     borderColor: "transparent",

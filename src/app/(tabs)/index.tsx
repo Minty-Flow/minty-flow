@@ -237,7 +237,7 @@ const styles = StyleSheet.create((theme) => ({
     flexDirection: "row",
     alignItems: "center",
     gap: 12,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     padding: 10,
   },
   greetingText: {

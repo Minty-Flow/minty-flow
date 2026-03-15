@@ -34,7 +34,7 @@ export const TagCard = ({ tag }: TagCardProps) => {
         ]}
       >
         <DynamicIcon
-          icon={tag.icon || "tag-outline"}
+          icon={tag.icon || "tag"}
           size={24}
           colorScheme={colorScheme}
         />

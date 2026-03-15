@@ -180,7 +180,7 @@ const styles = StyleSheet.create((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: theme.colors.secondary,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
   },
   placeholderText: {
     fontSize: 14,
@@ -239,7 +239,7 @@ const styles = StyleSheet.create((theme) => ({
     backgroundColor: theme.colors.secondary,
     paddingHorizontal: 8,
     paddingVertical: 2,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
   },
   badgeText: {
     fontSize: 10,

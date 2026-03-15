@@ -5,7 +5,7 @@ import { StyleSheet } from "react-native-unistyles"
 
 import { ActionItem } from "~/components/action-item"
 import { ProfileSection } from "~/components/profile/profile-section"
-import type { IconSymbolName } from "~/components/ui/icon-svg"
+import type { IconSvgName } from "~/components/ui/icon-svg"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
 import type { TranslationKey } from "~/i18n/config"
@@ -13,7 +13,7 @@ import type { TranslationKey } from "~/i18n/config"
 interface SettingsItem {
   titleKey: TranslationKey
   route: Href
-  icon: IconSymbolName
+  icon: IconSvgName
   soon?: boolean
 }
 
@@ -26,12 +26,12 @@ const moneyManagementItems: SettingsItem[] = [
   {
     titleKey: "screens.settings.loans.title",
     route: "/settings/loans",
-    icon: "affiliate",
+    icon: "scale",
   },
   {
     titleKey: "components.categories.title",
     route: "/settings/categories",
-    icon: "category",
+    icon: "category-2",
   },
   {
     titleKey: "screens.settings.tags.title",

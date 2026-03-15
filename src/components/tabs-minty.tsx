@@ -1,14 +1,14 @@
 import { Pressable, type StyleProp, type ViewStyle } from "react-native"
 import { StyleSheet } from "react-native-unistyles"
 
-import { IconSvg, type IconSymbolName } from "./ui/icon-svg"
+import { IconSvg, type IconSvgName } from "./ui/icon-svg"
 import { Text } from "./ui/text"
 import { View } from "./ui/view"
 
 type TabMintyItem<T> = {
   value: T
   label: string
-  icon?: IconSymbolName
+  icon?: IconSvgName
 }
 
 type TabsMintyProps<T> = {
@@ -84,7 +84,7 @@ const styles = StyleSheet.create((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 10,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     backgroundColor: theme.colors.secondary,
     gap: 6,
   },
@@ -95,7 +95,7 @@ const styles = StyleSheet.create((theme) => ({
   segmentedContainer: {
     flexDirection: "row",
     backgroundColor: theme.colors.secondary,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     padding: 4,
     gap: 4,
     margin: 20,
@@ -106,7 +106,7 @@ const styles = StyleSheet.create((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 10,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     gap: 6,
   },
   segmentedTabActive: {

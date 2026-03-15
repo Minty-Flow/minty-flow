@@ -240,7 +240,7 @@ const styles = StyleSheet.create((theme) => ({
   },
   timeCard: {
     backgroundColor: theme.colors.boxShadow,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     paddingVertical: 30,
     alignItems: "center",
     justifyContent: "center",

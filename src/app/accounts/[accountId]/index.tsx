@@ -267,7 +267,7 @@ const styles = StyleSheet.create((theme) => ({
   // ── Header Card ──────────────────────────────────────────────
   headerCard: {
     backgroundColor: theme.colors.secondary,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     marginHorizontal: 20,
     marginTop: 8,
     padding: 20,
@@ -351,7 +351,7 @@ const styles = StyleSheet.create((theme) => ({
   summaryPillCard: {
     flex: 1,
     backgroundColor: theme.colors.secondary,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     paddingVertical: 10,
     paddingHorizontal: 10,
     alignItems: "center",
@@ -366,7 +366,7 @@ const styles = StyleSheet.create((theme) => ({
     alignItems: "center",
     justifyContent: "space-between",
     backgroundColor: theme.colors.secondary,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     marginHorizontal: 20,
     marginTop: 5,
     marginBottom: 5,

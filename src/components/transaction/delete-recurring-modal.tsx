@@ -226,7 +226,7 @@ export function DeleteRecurringModal({
               {
                 maxWidth: maxCardWidth,
                 backgroundColor: theme.colors.surface,
-                borderRadius: theme.colors.radius ?? 16,
+                borderRadius: theme.radius ?? 16,
               },
             ]}
             pointerEvents="box-none"
@@ -301,7 +301,7 @@ export function DeleteRecurringModal({
 const styles = UnistylesSheet.create((theme) => ({
   backdrop: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.4)",
+    backgroundColor: theme.colors.shadow,
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 24,

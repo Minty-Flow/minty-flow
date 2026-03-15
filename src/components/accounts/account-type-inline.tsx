@@ -51,8 +51,10 @@ export function AccountTypeInline({
     setExpanded(false)
   }
 
-  const displayLabel =
-    accountTypesList.find((t) => t.type === selectedType)?.label ?? selectedType
+  const displayLabel = (() => {
+    const found = accountTypesList.find((item) => item.type === selectedType)
+    return found ? t(found.label) : selectedType
+  })()
 
   return (
     <View ref={wrapperRef} style={styles.wrapper}>
@@ -62,7 +64,7 @@ export function AccountTypeInline({
         disabled={!editable}
       >
         <View style={styles.triggerLeft}>
-          <IconSvg name="category" size={24} />
+          <IconSvg name="building-bank" size={24} />
           <Text variant="default" style={styles.triggerLabel}>
             {t("screens.accounts.form.typeLabel")}
           </Text>
@@ -83,25 +85,25 @@ export function AccountTypeInline({
 
       {editable && expanded && (
         <View style={styles.panel}>
-          {accountTypesList.map((t) => (
+          {accountTypesList.map((item) => (
             <Pressable
-              key={t.type}
+              key={item.type}
               style={[
                 styles.option,
-                selectedType === t.type && styles.optionActive,
+                selectedType === item.type && styles.optionActive,
               ]}
-              onPress={() => handleSelect(t.type)}
+              onPress={() => handleSelect(item.type)}
             >
               <Text
                 variant="default"
                 style={[
                   styles.optionText,
-                  selectedType === t.type && styles.optionTextActive,
+                  selectedType === item.type && styles.optionTextActive,
                 ]}
               >
-                {t.label}
+                {t(item.label)}
               </Text>
-              {selectedType === t.type && (
+              {selectedType === item.type && (
                 <IconSvg
                   name="check"
                   size={20}
@@ -163,7 +165,7 @@ const styles = StyleSheet.create((theme) => ({
     justifyContent: "space-between",
     paddingVertical: 14,
     paddingHorizontal: 16,
-    borderRadius: theme.colors.radius ?? 12,
+    borderRadius: theme.radius ?? 12,
     backgroundColor: `${theme.colors.onSurface}10`,
     borderWidth: 1,
     borderColor: "transparent",

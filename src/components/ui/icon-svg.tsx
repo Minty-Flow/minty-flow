@@ -27,7 +27,6 @@ const ICON_MAP = {
   "chevrons-up": OutlineIcons.ChevronsUp,
   transfer: OutlineIcons.Transfer,
   x: FilledIcons.X,
-  "circle-x": FilledIcons.CircleX,
   search: OutlineIcons.Search,
   "arrows-up-down": OutlineIcons.ArrowsUpDown,
   "arrows-left-right": OutlineIcons.ArrowsLeftRight,
@@ -38,7 +37,6 @@ const ICON_MAP = {
   "alert-triangle": FilledIcons.AlertTriangle,
   "alert-circle": FilledIcons.AlertCircle,
   check: FilledIcons.Check,
-  "circle-check": FilledIcons.CircleCheck,
   checks: OutlineIcons.Checks,
   "info-circle": FilledIcons.InfoCircle,
   "shield-exclamation": OutlineIcons.ShieldExclamation,
@@ -46,7 +44,8 @@ const ICON_MAP = {
   // Shapes & Layout
   circle: FilledIcons.Circle,
   "circle-dot": FilledIcons.CircleDot,
-  category: FilledIcons.Category,
+  category: OutlineIcons.Category,
+  "category-2": OutlineIcons.Category2,
   "category-plus": OutlineIcons.CategoryPlus,
   triangle: FilledIcons.Triangle,
   "chart-bar": OutlineIcons.ChartBar,
@@ -57,6 +56,10 @@ const ICON_MAP = {
   "page-break": OutlineIcons.PageBreak,
   "list-details": FilledIcons.ListDetails,
 
+  // Food & Drink
+  pizza: FilledIcons.Pizza,
+  headphones: FilledIcons.Headphones,
+
   // Media & Visual
   camera: FilledIcons.Camera,
   photo: FilledIcons.Photo,
@@ -64,6 +67,7 @@ const ICON_MAP = {
 
   // File types
   file: FilledIcons.File,
+  files: FilledIcons.Files,
   "file-description": FilledIcons.FileDescription,
   "file-type-jpg": OutlineIcons.FileTypeJpg,
   video: FilledIcons.Video,
@@ -93,9 +97,11 @@ const ICON_MAP = {
   "circle-plus": FilledIcons.CirclePlus,
 
   // Finance & Commerce
+  briefcase: FilledIcons.Briefcase,
   wallet: OutlineIcons.Wallet,
   "credit-card": FilledIcons.CreditCard,
   "currency-dollar": OutlineIcons.CurrencyDollar,
+  currency: OutlineIcons.Currency,
   "cash-banknote": FilledIcons.CashBanknote,
   "pig-money": OutlineIcons.PigMoney,
   pig: FilledIcons.Pig,
@@ -180,9 +186,12 @@ const ICON_MAP = {
   "alert-square-rounded": OutlineIcons.AlertSquareRounded,
   "address-book": OutlineIcons.AddressBook,
   "switch-horizontal": OutlineIcons.SwitchHorizontal,
+  "arrows-diff": OutlineIcons.ArrowsDiff,
+  "home-share": OutlineIcons.HomeShare,
+  scale: OutlineIcons.Scale,
 } as const satisfies Record<string, FC<SvgProps>>
 
-export type IconSymbolName = keyof typeof ICON_MAP
+export type IconSvgName = keyof typeof ICON_MAP
 
 export type IconSize =
   | 12
@@ -226,7 +235,7 @@ export type IconSize =
   | 26
 
 type IconSymbolProps = Omit<SvgProps, "width" | "height"> & {
-  name: IconSymbolName
+  name: IconSvgName
   size?: IconSize
   color?: string | OpaqueColorValue
   style?: StyleProp<ViewStyle>

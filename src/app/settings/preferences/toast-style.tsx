@@ -366,7 +366,7 @@ const styles = StyleSheet.create((theme) => ({
     paddingHorizontal: 20,
   },
   resetButton: {
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     paddingVertical: 2,
   },
   resetButtonText: {

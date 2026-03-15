@@ -16,8 +16,8 @@ function hexWithAlpha(hex: string, alpha255: number): string {
 }
 
 /**
- * Theme factory for converting MintyColorScheme to Unistyles theme
- * Derives: navbar, FAB, card, bottom sheet, ripple, text selection
+ * Theme factory for converting MintyColorScheme to Unistyles theme.
+ * Separates pure color tokens (→ colors) from metadata (→ top level).
  */
 export class ThemeFactory {
   mintyColorScheme: MintyColorScheme
@@ -27,24 +27,19 @@ export class ThemeFactory {
   }
 
   /**
-   * Get colors for Unistyles (base + Minty-derived tokens)
+   * Build the colors object — only color tokens, no metadata.
    */
   get colors(): UnistylesTheme["colors"] {
     const s = this.mintyColorScheme
-    const isDark = s.isDark
-    // Bottom nav active: dark = onSurface, light = primary
-    const navbarActiveIcon = isDark ? s.onSurface : s.primary
-    const navbarInactiveIcon = hexWithAlpha(navbarActiveIcon, 0x80) // 50%
+    // const isDark = s.isDark
+
     const rippleColor = hexWithAlpha(s.onSurface, 0x16) // 8.6%
-    const textSelection = isDark
-      ? hexWithAlpha(s.primary, 0x60) // 37.5%
-      : hexWithAlpha(s.secondary, 0xa0) // 62.5%
+    // const textSelection = isDark
+    //   ? hexWithAlpha(s.primary, 0x60) // 37.5%
+    //   : hexWithAlpha(s.secondary, 0xa0) // 62.5%
 
     return {
-      // Base scheme (so theme.colors is castable to MintyColorScheme where needed)
-      name: s.name,
-      iconName: s.iconName,
-      isDark: s.isDark,
+      // MintyThemeColors
       primary: s.primary,
       onPrimary: s.onPrimary,
       secondary: s.secondary,
@@ -57,54 +52,34 @@ export class ThemeFactory {
       rippleColor,
       shadow: s.shadow,
       boxShadow: s.boxShadow,
-      radius: s.radius,
-      // Minty derived (ThemeFactory rules)
-      navbarBackground: s.secondary,
-      navbarActiveIcon,
-      navbarInactiveIcon,
-      fabBackground: s.primary,
-      fabForeground: s.onPrimary,
-      cardBackground: s.secondary,
-      bottomSheetBackground: s.surface,
-      textSelection,
+      // MintyDerivedColors
+      // textSelection,
     }
   }
 
-  /**
-   * Get custom Minty colors
-   */
-  get customColors(): MintyColorScheme["customColors"] {
-    return this.mintyColorScheme.customColors
-  }
-
-  /**
-   * Check if theme is dark
-   */
   get isDark(): boolean {
     return this.mintyColorScheme.isDark
   }
 
-  /**
-   * Get theme name
-   */
   get name(): string {
     return this.mintyColorScheme.name
   }
 
-  /**
-   * Get icon name for app icon switching
-   */
   get iconName(): string | undefined {
     return this.mintyColorScheme.iconName
   }
 
   /**
-   * Build complete Unistyles theme
+   * Build complete Unistyles theme.
+   * colors = color tokens only; metadata lives at the top level.
    */
   buildTheme(): UnistylesTheme {
     return {
       colors: this.colors,
       isDark: this.isDark,
+      name: this.name,
+      iconName: this.iconName,
+      radius: this.mintyColorScheme.radius,
     }
   }
 }

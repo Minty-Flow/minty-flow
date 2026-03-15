@@ -36,7 +36,7 @@ export const accountModifyStyles = StyleSheet.create((theme) => ({
     paddingVertical: 20,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     backgroundColor: theme.colors.secondary,
   },
   balanceValue: {

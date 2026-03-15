@@ -26,7 +26,7 @@ export function PanelDoneButton({
       disabled={disabled}
       style={filterHeaderStyles.doneHit}
     >
-      {hideIcon ? null : <IconSvg name="circle-check" size={18} />}
+      {hideIcon ? null : <IconSvg name="check" size={18} />}
       <Text style={filterHeaderStyles.doneText}>
         {t("common.actions.done")}
       </Text>

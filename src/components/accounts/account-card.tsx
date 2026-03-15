@@ -154,7 +154,7 @@ export const AccountCard = ({
 const styles = StyleSheet.create((theme) => ({
   card: {
     backgroundColor: theme.colors.secondary,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     borderWidth: 1,
     borderColor: theme.colors.secondary,
     padding: 16,
@@ -198,7 +198,7 @@ const styles = StyleSheet.create((theme) => ({
     backgroundColor: theme.colors.surface,
     paddingHorizontal: 4,
     paddingVertical: 1,
-    borderRadius: theme.colors.radius / 2,
+    borderRadius: theme.radius / 2,
   },
   primaryBadgeText: {
     fontSize: 9,

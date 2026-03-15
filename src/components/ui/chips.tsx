@@ -64,7 +64,7 @@ const chipStyles = StyleSheet.create((theme) => ({
     alignItems: "center",
     paddingHorizontal: 12,
     paddingVertical: 8,
-    borderRadius: theme.colors.radius ?? 12,
+    borderRadius: theme.radius ?? 12,
     gap: 6,
   },
   chipLabel: {

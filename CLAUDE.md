@@ -79,6 +79,33 @@ Translation keys are typed — `TranslationKey` is derived from the shape of `en
 Usage: `const { t } = useTranslation()` → `t("some.nested.key")`.
 RTL layout is driven by `useLanguageStore` — `PagerView` and `GestureHandlerRootView` are re-keyed when RTL changes.
 
+### Budgets
+
+Budgets track spending against a limit for a given period. Each budget links to accounts and categories via join tables.
+
+- Schema: `budgets`, `budget_accounts`, `budget_categories` (many-to-many joins)
+- Models: `src/database/models/budget.ts`, `budget-account.ts`, `budget-category.ts`
+- Service: `src/database/services/budget-service.ts` — full CRUD + reactive queries
+  - `observeBudgetSpent(accountIds, categoryIds, period, startDate, endDate)` computes total expense transactions within the period window reactively; filters out transfers, pending, and deleted transactions
+  - Period types: `daily | weekly | monthly | yearly | custom` (`BudgetPeriodEnum` in `src/types/budgets.ts`)
+  - `alert_threshold` (1–100%) is stored and surfaced in `BudgetCard` but no in-app alert fires yet — that is a future feature
+- Mapper: `src/database/utils/model-to-budget.ts` — takes `accountIds[]` and `categoryIds[]` as args (fetched from join tables by the service)
+- Screens: `src/app/settings/budgets/index.tsx` (list) + `src/app/settings/budgets/[budgetId]/modify.tsx` (create/edit)
+- Components: `src/components/budgets/budget-card.tsx`, `src/components/budgets/budget-modify/`
+
+### Goals
+
+Goals track savings progress toward a target amount. Each goal links to accounts via a join table; progress is computed live from linked account balances.
+
+- Schema: `goals`, `goal_accounts` (many-to-many join)
+- Models: `src/database/models/goal.ts`, `goal-account.ts`
+- Service: `src/database/services/goal-service.ts` — full CRUD + reactive queries
+  - `observeGoalProgress(accountIds)` sums the current balances of all linked accounts reactively — this is the live progress, **not** the `current_amount` DB field (that field is stale/unused)
+  - `isCompleted` flag is stored and shown in `GoalCard`; no dedicated archive/filter UI exists yet
+- Mapper: `src/database/utils/model-to-goal.ts` — takes `accountIds[]` as arg (fetched from join table by the service)
+- Screens: `src/app/settings/goals/index.tsx` (list) + `src/app/settings/goals/[goalId]/modify.tsx` (create/edit)
+- Components: `src/components/goals/goal-card.tsx`, `src/components/goals/goal-modify/`
+
 ### Forms
 
 `react-hook-form` + `zod` v4 + `@hookform/resolvers`. Form schemas live in `src/schemas/`.

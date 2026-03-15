@@ -7,7 +7,7 @@ import { View } from "~/components/ui/view"
 import type { TranslationKey } from "~/i18n/config"
 import { type TransactionType, TransactionTypeEnum } from "~/types/transactions"
 
-import { IconSvg, type IconSymbolName } from "../ui/icon-svg"
+import { IconSvg, type IconSvgName } from "../ui/icon-svg"
 
 interface TransactionTypeSelectorProps {
   value: TransactionType
@@ -16,7 +16,7 @@ interface TransactionTypeSelectorProps {
 
 const TYPE_CONFIG: Record<
   TransactionType,
-  { labelKey: TranslationKey; icon: IconSymbolName }
+  { labelKey: TranslationKey; icon: IconSvgName }
 > = {
   [TransactionTypeEnum.EXPENSE]: {
     labelKey: "common.transaction.types.expense",
@@ -76,7 +76,7 @@ const styles = StyleSheet.create((theme) => ({
     alignItems: "stretch",
     gap: 8,
     padding: 4,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     backgroundColor: theme.colors.secondary,
   },
   segment: {
@@ -87,7 +87,7 @@ const styles = StyleSheet.create((theme) => ({
     gap: 6,
     paddingVertical: 12,
     paddingHorizontal: 14,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
   },
 
   segmentLabel: {

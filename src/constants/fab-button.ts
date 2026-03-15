@@ -7,7 +7,6 @@ export const FAB_BUTTON_STYLE = {
   alignItems: "center" as const,
   justifyContent: "center" as const,
   elevation: 4,
-  shadowColor: "#000",
   shadowOffset: { width: 0, height: 2 },
   shadowOpacity: 0.25,
   shadowRadius: 3.84,

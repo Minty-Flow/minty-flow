@@ -54,10 +54,12 @@ export function FormTagsPicker({
   )
 
   const filteredTagsForPicker = useMemo(() => {
-    if (!tagSearchQuery.trim()) return tags
+    const selectedSet = new Set(tagIds ?? [])
+    const available = tags.filter((t) => !selectedSet.has(t.id))
+    if (!tagSearchQuery.trim()) return available
     const lower = tagSearchQuery.toLowerCase()
-    return tags.filter((t) => t.name.toLowerCase().includes(lower))
-  }, [tags, tagSearchQuery])
+    return available.filter((t) => t.name.toLowerCase().includes(lower))
+  }, [tags, tagIds, tagSearchQuery])
 
   const handleToggle = () => {
     setTagPickerOpen((o) => {
@@ -159,7 +161,7 @@ export function FormTagsPicker({
             </Text>
             <IconSvg
               name="x"
-              size={14}
+              size={16}
               color={transactionFormStyles.tagChipRemoveIcon.color}
             />
           </Pressable>
@@ -176,42 +178,57 @@ export function FormTagsPicker({
             style={transactionFormStyles.tagSearchInput}
           />
           <ScrollView
-            style={transactionFormStyles.tagPickerList}
-            contentContainerStyle={transactionFormStyles.pickerListContent}
             keyboardShouldPersistTaps="handled"
             nestedScrollEnabled
-            showsVerticalScrollIndicator
+            showsVerticalScrollIndicator={false}
           >
-            {filteredTagsForPicker.map((tag) => {
-              const isSelected = (tagIds ?? []).includes(tag.id)
-              return (
-                <Pressable
-                  key={tag.id}
-                  style={[
-                    transactionFormStyles.tagPickerRow,
-                    isSelected && transactionFormStyles.inlinePickerRowSelected,
-                  ]}
-                  onPress={() => {
-                    if (isSelected) removeTag(tag.id)
-                    else addTag(tag.id)
-                  }}
-                >
-                  <DynamicIcon
-                    icon={tag.icon || "tag"}
-                    size={20}
-                    colorScheme={getThemeStrict(tag.colorSchemeName)}
-                    variant="badge"
-                  />
-                  <Text
-                    variant="default"
-                    style={transactionFormStyles.tagPickerRowText}
-                    numberOfLines={1}
+            {filteredTagsForPicker.length > 0 ? (
+              <View native style={transactionFormStyles.tagPickerChipGrid}>
+                {filteredTagsForPicker.map((tag) => (
+                  <Pressable
+                    key={tag.id}
+                    style={[
+                      transactionFormStyles.tagChipBase,
+                      transactionFormStyles.tagPickerChip,
+                    ]}
+                    onPress={() => addTag(tag.id)}
+                    accessible
+                    accessibilityRole="button"
+                    accessibilityLabel={t(
+                      "components.transactionForm.a11y.addTag",
+                    )}
                   >
-                    {tag.name}
-                  </Text>
-                </Pressable>
-              )
-            })}
+                    <DynamicIcon
+                      icon={tag.icon || "tag"}
+                      size={16}
+                      colorScheme={getThemeStrict(tag.colorSchemeName)}
+                      variant="badge"
+                    />
+                    <Text
+                      variant="default"
+                      style={transactionFormStyles.tagChipText}
+                      numberOfLines={1}
+                    >
+                      {tag.name}
+                    </Text>
+                    <IconSvg
+                      name="plus"
+                      size={16}
+                      color={theme.colors.customColors.semi}
+                    />
+                  </Pressable>
+                ))}
+              </View>
+            ) : (
+              <Text
+                variant="default"
+                style={transactionFormStyles.tagPickerEmptyText}
+              >
+                {tagSearchQuery.trim()
+                  ? t("components.transactionForm.a11y.noTagsFound")
+                  : t("components.transactionForm.a11y.allTagsSelected")}
+              </Text>
+            )}
           </ScrollView>
           <Pressable
             style={transactionFormStyles.createTagRow}
@@ -223,7 +240,7 @@ export function FormTagsPicker({
               })
             }}
           >
-            <IconSvg name="tag-plus" size={20} />
+            <IconSvg name="tag-plus" size={16} />
             <Text
               variant="default"
               style={transactionFormStyles.createTagRowText}

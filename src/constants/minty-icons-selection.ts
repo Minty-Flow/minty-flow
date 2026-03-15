@@ -1,7 +1,7 @@
-import type { IconSymbolName } from "~/components/ui/icon-svg"
+import type { IconSvgName } from "~/components/ui/icon-svg"
 
 export type MintyIconData = {
-  name: IconSymbolName
+  name: IconSvgName
   keywords: string[]
 }
 
@@ -99,7 +99,7 @@ export const MINTY_SVGS: MintyIconData[] = [
   { name: "chart-dots", keywords: ["scatter", "data", "analytics"] },
   { name: "info-circle", keywords: ["info", "details", "help"] },
   { name: "alert-circle", keywords: ["warning", "alert", "attention"] },
-  { name: "circle-check", keywords: ["success", "done", "complete"] },
+  { name: "check", keywords: ["success", "done", "complete"] },
   { name: "circle-plus", keywords: ["add", "new", "create"] },
   { name: "trash", keywords: ["delete", "remove", "bin"] },
 ]

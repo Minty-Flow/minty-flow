@@ -71,7 +71,7 @@ const styles = StyleSheet.create((theme) => ({
     gap: 2,
     paddingHorizontal: 6,
     paddingVertical: 2,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
   },
   goodBg: {
     backgroundColor: `${theme.colors.customColors.income}18`,

@@ -249,8 +249,6 @@ export function CategoryModifyContent({
             />
           </View>
 
-          <Separator />
-
           {!isAddMode && <Separator />}
         </View>
 

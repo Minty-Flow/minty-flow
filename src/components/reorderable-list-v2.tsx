@@ -204,7 +204,7 @@ const styles = StyleSheet.create((theme) => ({
   },
   buttonContainer: {
     backgroundColor: theme.colors.primary,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     padding: 4,
     alignItems: "center",
     justifyContent: "center",

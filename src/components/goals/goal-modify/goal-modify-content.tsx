@@ -382,7 +382,7 @@ export function GoalModifyContent({
                     accessibilityLabel={t("common.actions.clear")}
                   >
                     <IconSvg
-                      name="circle-x"
+                      name="x"
                       size={20}
                       color={theme.colors.onSecondary}
                     />
@@ -400,8 +400,6 @@ export function GoalModifyContent({
               )}
             </View>
           </Pressable>
-
-          <Separator />
 
           {!isAddMode && <Separator />}
         </View>

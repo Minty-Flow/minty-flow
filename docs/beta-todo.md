@@ -162,22 +162,23 @@
 ### Goals
 
 
-| Item                    | Status | Notes                                                  |
-| ----------------------- | ------ | ------------------------------------------------------ |
-| Goals list              | ⬜      | Placeholder screen; DB model + full CRUD service exist |
-| Create / Edit goal form | ⬜      |                                                        |
-| Goal progress tracking  | ⬜      |                                                        |
-| Archive / complete goal | ⬜      |                                                        |
+| Item                    | Status | Notes                                                                           |
+| ----------------------- | ------ | ------------------------------------------------------------------------------- |
+| Goals list              | ✅      | Reactive list with GoalCard + edit navigation                                   |
+| Create / Edit goal form | ✅      | Full form: name, description, icon, color, currency, accounts, amount, date     |
+| Goal progress tracking  | ✅      | `observeGoalProgress()` sums linked account balances reactively                 |
+| Archive / complete goal | 🚧     | `isCompleted` flag stored + shown in card; no dedicated archive/filter UI yet   |
 
 
 ### Budgets
 
 
-| Item                         | Status | Notes                                        |
-| ---------------------------- | ------ | -------------------------------------------- |
-| Budgets list                 | ⬜      | Placeholder screen; DB model + service exist |
-| Create / Edit budget form    | ⬜      |                                              |
-| Spending progress per budget | ⬜      |                                              |
+| Item                         | Status | Notes                                                                                       |
+| ---------------------------- | ------ | ------------------------------------------------------------------------------------------- |
+| Budgets list                 | ✅      | Reactive list with BudgetCard + edit navigation                                             |
+| Create / Edit budget form    | ✅      | Full form: name, icon, color, currency, accounts, categories, period, amount, alert         |
+| Spending progress per budget | ✅      | `observeBudgetSpent()` queries expense transactions reactively; progress bar + over-budget  |
+| Alert threshold notifications | ⬜     | `alert_threshold` field collected in form but no in-app alert fires when threshold exceeded |
 
 
 ### Loans
@@ -268,14 +269,34 @@
 ## 🚀 Beta Release Priority Order
 
 1. [x] **Stats tab** — at minimum a monthly income/expense chart
-2. [x] **Goals** — DB + service ready, just needs screens
-4. [x] **Budgets** — DB + service ready, just needs screens
-5. [ ] **Loans** — DB + service ready, just needs screens
-6. [ ] **Data Management** — at minimum CSV export
-7. [ ] **Error boundary / crash screen** — no error boundary exists anywhere in the app
+2. [x] **Goals** — fully implemented (list, form, progress tracking)
+3. [x] **Budgets** — fully implemented (list, form, spending progress)
+4. [ ] **Loans** — DB + service ready, just needs screens
+5. [ ] **Data Management** — at minimum CSV export
+6. [ ] **Error boundary / crash screen** — no error boundary exists anywhere in the app
+7. [ ] **Budget alert threshold** — UI collects threshold, trigger logic not implemented
 8. [ ] **Bill Splitter** — lowest priority, needs full backend + UI
 9. [ ] Zero lint warnings (`pnpm lint`) before shipping
 
 ---
 
-*Last updated: 2026-03-04 — reminder notifications complete*
+## 🔮 Future Features
+
+| Feature | Notes |
+| ------- | ----- |
+| Budget alert threshold notifications | `alert_threshold` stored; need in-app alert when spending crosses threshold |
+| Goal archive / filter | `isCompleted` exists; add archive toggle + filter in goals list |
+| Stats tab charts | Income/expense chart, category breakdown, net worth over time |
+| Loans screen | DB model + service exist; full UI needed |
+| Bill splitter | No backend at all; needs full design + implementation |
+| Data management | CSV/JSON export + import, backup/restore, wipe all data |
+| Error boundary / crash screen | No error boundary anywhere in the app |
+| Onboarding / first-launch flow | Not started |
+| Budget duplicate/copy | Clone existing budget with same settings |
+| Category reorder | Same drag-to-reorder pattern as accounts |
+| Android back-gesture guard | Outside transaction form |
+| Empty state illustrations | Goals, Budgets, Loans screens |
+
+---
+
+*Last updated: 2026-03-15 — goals + budgets fully implemented; i18n validation keys added*

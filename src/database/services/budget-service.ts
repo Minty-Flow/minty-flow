@@ -8,7 +8,7 @@ import type {
   AddBudgetFormSchema,
   UpdateBudgetFormSchema,
 } from "~/schemas/budgets.schema"
-import type { Budget } from "~/types/budgets"
+import type { Budget, BudgetPeriod } from "~/types/budgets"
 import { BudgetPeriodEnum } from "~/types/budgets"
 
 import { database } from "../index"
@@ -32,6 +32,9 @@ const getBudgetCollection = () => database.get<BudgetModel>("budgets")
 
 const getBudgetAccountCollection = () =>
   database.get<BudgetAccountModel>("budget_accounts")
+
+const getBudgetCategoryCollection = () =>
+  database.get<BudgetCategoryModel>("budget_categories")
 
 const getTransactionCollection = () =>
   database.get<TransactionModel>("transactions")
@@ -282,84 +285,6 @@ export const destroyBudget = async (budget: BudgetModel): Promise<void> => {
   })
 }
 
-/**
- * Compute the total amount spent against a budget for the relevant period.
- *
- * Queries confirmed (non-pending, non-deleted) expense transactions that
- * belong to the linked accounts (and optionally a specific category) within
- * the period window derived from the budget's period type.
- *
- * Returns the sum of transaction amounts (always non-negative).
- */
-export const computeBudgetSpent = async (
-  //TODO: delete this if its not used at all
-  budgetId: string,
-  accountIds: string[],
-  categoryIds: string[],
-  period: string,
-  startDate: number,
-  endDate?: number | null,
-): Promise<number> => {
-  if (accountIds.length === 0) return 0
-
-  const now = new Date()
-
-  // Determine the period start boundary based on the budget's period type
-  let periodStart: Date
-  let periodEnd: Date = now
-
-  switch (period) {
-    case BudgetPeriodEnum.DAILY:
-      periodStart = startOfDay(now)
-      break
-    case BudgetPeriodEnum.WEEKLY:
-      periodStart = startOfWeek(now)
-      break
-    case BudgetPeriodEnum.MONTHLY:
-      periodStart = startOfMonth(now)
-      break
-    case BudgetPeriodEnum.YEARLY:
-      periodStart = startOfYear(now)
-      break
-    // TODO: finish this case
-    // case BudgetPeriodEnum.CUSTOM:
-    default:
-      // Custom: use the provided startDate/endDate Unix timestamps
-      periodStart = new Date(startDate)
-      if (endDate != null) {
-        periodEnd = new Date(endDate)
-      }
-      break
-  }
-
-  const periodStartTs = periodStart.getTime()
-  const periodEndTs = periodEnd.getTime()
-
-  // Build the query conditions
-  const conditions = [
-    Q.where("is_deleted", false),
-    Q.where("is_pending", false),
-    Q.where("type", "expense"),
-    Q.where("is_transfer", false),
-    Q.where("account_id", Q.oneOf(accountIds)),
-    Q.where("transaction_date", Q.gte(periodStartTs)),
-    Q.where("transaction_date", Q.lte(periodEndTs)),
-  ]
-
-  if (categoryIds.length > 0) {
-    conditions.push(Q.where("category_id", Q.oneOf(categoryIds)))
-  }
-
-  const rows = await getTransactionCollection()
-    .query(...conditions)
-    .fetch()
-
-  return rows.reduce((sum, t) => sum + t.amount, 0)
-}
-
-const getBudgetCategoryCollection = () =>
-  database.get<BudgetCategoryModel>("budget_categories")
-
 export const getCategoryIdsForBudget = async (
   budgetId: string,
 ): Promise<string[]> => {
@@ -375,7 +300,7 @@ export const getCategoryIdsForBudget = async (
 export const observeBudgetSpent = (
   accountIds: string[],
   categoryIds: string[],
-  period: string,
+  period: BudgetPeriod,
   startDate: number,
   endDate?: number | null,
 ): Observable<number> => {

@@ -11,7 +11,7 @@ import Animated, {
 import { StyleSheet } from "react-native-unistyles"
 import { scheduleOnRN, scheduleOnUI } from "react-native-worklets"
 
-import type { IconSymbolName } from "~/components/ui/icon-svg"
+import type { IconSvgName } from "~/components/ui/icon-svg"
 import { IconSvg } from "~/components/ui/icon-svg"
 import { type Toast, useToastStore } from "~/stores/toast.store"
 
@@ -87,10 +87,10 @@ const ToastItem = ({ toast, onHide }: ToastItemProps) => {
     }
   }
 
-  const getIconName = (): IconSymbolName => {
+  const getIconName = (): IconSvgName => {
     switch (toast.type) {
       case "success":
-        return "circle-check"
+        return "check"
       case "error":
         return "alert-circle"
       case "warn":
@@ -347,7 +347,7 @@ const toastStyles = StyleSheet.create((theme) => ({
   container: {
     width: "100%",
     maxWidth: 400,
-    borderRadius: theme.colors.radius,
+    borderRadius: theme.radius,
     padding: 16,
     flexDirection: "row",
     alignItems: "center",
@@ -398,13 +398,13 @@ const toastStyles = StyleSheet.create((theme) => ({
     right: 0,
     height: 4,
     backgroundColor: "rgba(0,0,0,0.1)",
-    borderBottomLeftRadius: theme.colors.radius,
-    borderBottomRightRadius: theme.colors.radius,
+    borderBottomLeftRadius: theme.radius,
+    borderBottomRightRadius: theme.radius,
     overflow: "hidden",
   },
   progressBar: {
     height: "100%",
-    borderBottomLeftRadius: theme.colors.radius,
-    borderBottomRightRadius: theme.colors.radius,
+    borderBottomLeftRadius: theme.radius,
+    borderBottomRightRadius: theme.radius,
   },
 }))

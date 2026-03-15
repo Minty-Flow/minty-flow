@@ -4,7 +4,7 @@ import { StyleSheet, useUnistyles } from "react-native-unistyles"
 
 import { TransactionItem } from "~/components/transaction/transaction-item"
 import { Button } from "~/components/ui/button"
-import { IconSvg, type IconSymbolName } from "~/components/ui/icon-svg"
+import { IconSvg, type IconSvgName } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Switch } from "~/components/ui/switch"
 import { Text } from "~/components/ui/text"
@@ -85,7 +85,7 @@ function LeadingIconOption({
   onPress,
 }: {
   label: string
-  icon: IconSymbolName
+  icon: IconSvgName
   selected: boolean
   onPress: () => void
 }) {

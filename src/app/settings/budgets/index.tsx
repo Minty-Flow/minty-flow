@@ -5,8 +5,8 @@ import { FlatList } from "react-native"
 import { StyleSheet, useUnistyles } from "react-native-unistyles"
 
 import { BudgetCard } from "~/components/budgets/budget-card"
-import { Button } from "~/components/ui/button"
 import { IconSvg } from "~/components/ui/icon-svg"
+import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
 import { observeBudgets } from "~/database/services/budget-service"
@@ -40,16 +40,6 @@ function BudgetListContentInner({ budgets }: BudgetListContentInnerProps) {
         data={budgets}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.listContent}
-        ListHeaderComponent={
-          <View style={styles.header}>
-            <Button onPress={handleAddBudget} style={styles.addButton}>
-              <IconSvg name="plus" size={20} color={theme.colors.onPrimary} />
-              <Text variant="default" style={styles.buttonText}>
-                {t("screens.settings.budgets.addNew")}
-              </Text>
-            </Button>
-          </View>
-        }
         ListEmptyComponent={
           <View style={styles.emptyState}>
             <Text variant="small" style={styles.emptyText}>
@@ -62,6 +52,14 @@ function BudgetListContentInner({ budgets }: BudgetListContentInnerProps) {
         )}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
       />
+      <Pressable
+        onPress={handleAddBudget}
+        style={styles.fab}
+        accessibilityLabel={t("screens.settings.budgets.addNew")}
+        accessibilityRole="button"
+      >
+        <IconSvg name="plus" size={24} color={theme.colors.onPrimary} />
+      </Pressable>
     </View>
   )
 }
@@ -80,30 +78,17 @@ const styles = StyleSheet.create((t) => ({
     flex: 1,
     backgroundColor: t.colors.surface,
   },
-  header: {
-    paddingBottom: 16,
-  },
-  addButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 8,
-    width: "100%",
-  },
-  buttonText: {
-    color: t.colors.onPrimary,
-    fontWeight: "600",
-  },
   listContent: {
     paddingHorizontal: 20,
-    paddingBottom: 40,
+    paddingTop: 8,
+    paddingBottom: 96,
   },
   emptyState: {
     paddingVertical: 48,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: t.colors.secondary,
-    borderRadius: t.colors.radius,
+    borderRadius: t.radius,
     marginTop: 8,
   },
   emptyText: {
@@ -113,5 +98,21 @@ const styles = StyleSheet.create((t) => ({
   },
   separator: {
     height: 0,
+  },
+  fab: {
+    position: "absolute",
+    bottom: 24,
+    right: 20,
+    width: 56,
+    height: 56,
+    borderRadius: t.radius,
+    backgroundColor: t.colors.primary,
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: t.colors.shadow,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 6,
   },
 }))

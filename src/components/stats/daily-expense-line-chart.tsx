@@ -323,7 +323,7 @@ const styles = StyleSheet.create((theme) => ({
     padding: 8,
     flexDirection: "row",
     gap: 8,
-    // shadowColor: "#000",
+    shadowColor: theme.colors.shadow,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
