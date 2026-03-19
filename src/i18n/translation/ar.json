@@ -768,9 +768,10 @@
       },
       "billSplitter": {
         "title": "تقسيم الفاتورة",
-        "description": "قسّم الفواتير مع الأصدقاء والعائلة",
-        "body": "قسّم الفواتير مع الأصدقاء والعائلة.",
-        "empty": "لا يوجد مقسّم فواتير بعد"
+        "comingSoon": {
+          "title": "قريباً",
+          "description": "نحن نعمل حالياً على تطوير ميزة تقسيم الفاتورة. انتظرونا!"
+        }
       },
       "exchangeRates": {
         "title": "أسعار الصرف",
@@ -799,8 +800,46 @@
       "dataManagement": {
         "title": "إدارة البيانات",
         "description": "نسخ بياناتك احتياطياً واستيرادها وتصديرها",
-        "placeholder": "أدوات إدارة البيانات قيد التطوير",
-        "badge": "قريباً"
+        "sections": {
+          "export": "تصدير",
+          "import": "استيراد"
+        },
+        "exportJson": "تصدير نسخة احتياطية كاملة",
+        "exportJsonDesc": "حفظ نسخة احتياطية JSON كاملة على جهازك",
+        "exportCsv": "تصدير المعاملات (CSV)",
+        "exportCsvDesc": "حفظ المعاملات غير المحذوفة كجدول بيانات",
+        "exportSaved": "تم الحفظ على الجهاز",
+        "exportSavedLocally": "تم الحفظ محلياً",
+        "exportError": "فشل التصدير. يرجى المحاولة مرة أخرى.",
+        "exportFileNotFound": "الملف الأصلي لم يعد موجوداً. يرجى التصدير مجدداً.",
+        "importJson": "استعادة من نسخة احتياطية",
+        "importJsonDesc": "استبدال جميع البيانات من ملف نسخة احتياطية JSON",
+        "importSuccess": "تمت استعادة البيانات بنجاح",
+        "importError": "فشلت الاستعادة",
+        "importValidationError": "ملف النسخة الاحتياطية غير صالح أو غير مدعوم",
+        "importConfirm": {
+          "title": "استعادة من نسخة احتياطية؟",
+          "warning": "سيؤدي هذا إلى مسح جميع البيانات الحالية نهائياً واستبدالها بالنسخة الاحتياطية المحددة.",
+          "recordSummary": "{{count}} سجل في {{tables}} جداول",
+          "confirm": "استعادة",
+          "cancel": "إلغاء"
+        },
+        "history": {
+          "title": "سجل التصدير",
+          "description": "الملفات المُصدَّرة مسبقاً",
+          "empty": "لا توجد تصديرات بعد",
+          "emptyDescription": "ستظهر الملفات المُصدَّرة هنا",
+          "typeJson": "نسخة احتياطية كاملة",
+          "typeCsv": "تصدير CSV",
+          "saveAs": "حفظ باسم",
+          "clearAll": "مسح الكل",
+          "remove": "إزالة",
+          "clearAllConfirmTitle": "مسح سجل التصدير؟",
+          "clearAllConfirmMessage": "سيتم حذف جميع سجلات التصدير وملفاتها نهائياً.",
+          "removeConfirmTitle": "إزالة التصدير؟",
+          "removeConfirmMessage": "سيتم حذف سجل التصدير هذا وملفه نهائياً.",
+          "reSaved": "تم حفظ الملف على الجهاز"
+        }
       },
       "privacy": {
         "title": "الخصوصية",
@@ -1421,11 +1460,11 @@
       "title": "كيف تريد أن تبدأ؟",
       "import": {
         "title": "استعادة من نسخة احتياطية",
-        "description": "أحضر بياناتك من نسخة احتياطية موجودة لـ Minty Flow"
+        "description": "أحضر بياناتك من نسخة احتياطية موجودة لـ {{name}}"
       },
       "fresh": {
         "title": "ابدأ من الصفر",
-        "description": "أعدّ Minty Flow للمرة الأولى"
+        "description": "أعدّ {{name}} للمرة الأولى"
       }
     },
     "accounts": {

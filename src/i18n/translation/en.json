@@ -768,9 +768,10 @@
       },
       "billSplitter": {
         "title": "Bill Splitter",
-        "description": "Split bills with friends and family",
-        "body": "Split bills with friends and family.",
-        "empty": "No bill splitter yet"
+        "comingSoon": {
+          "title": "Coming Soon",
+          "description": "We are currently developing the bill splitter feature. Stay tuned!"
+        }
       },
       "exchangeRates": {
         "title": "Exchange Rates",
@@ -799,8 +800,46 @@
       "dataManagement": {
         "title": "Data Management",
         "description": "Backup, import, and export your data",
-        "placeholder": "Data management tools in development",
-        "badge": "COMING SOON"
+        "sections": {
+          "export": "Export",
+          "import": "Import"
+        },
+        "exportJson": "Export Full Backup",
+        "exportJsonDesc": "Save a full JSON backup to your device",
+        "exportCsv": "Export Transactions (CSV)",
+        "exportCsvDesc": "Save non-deleted transactions as a spreadsheet",
+        "exportSaved": "Saved to device",
+        "exportSavedLocally": "Saved locally",
+        "exportError": "Export failed. Please try again.",
+        "exportFileNotFound": "Original file no longer exists. Please export again.",
+        "importJson": "Restore from Backup",
+        "importJsonDesc": "Replace all data from a JSON backup file",
+        "importSuccess": "Data restored successfully",
+        "importError": "Restore failed",
+        "importValidationError": "Invalid or unsupported backup file",
+        "importConfirm": {
+          "title": "Restore from Backup?",
+          "warning": "This will permanently erase all current data and replace it with the selected backup.",
+          "recordSummary": "{{count}} records across {{tables}} tables",
+          "confirm": "Restore",
+          "cancel": "Cancel"
+        },
+        "history": {
+          "title": "Export History",
+          "description": "Previously exported files",
+          "empty": "No exports yet",
+          "emptyDescription": "Exported files will appear here",
+          "typeJson": "Full Backup",
+          "typeCsv": "CSV Export",
+          "saveAs": "Save As",
+          "clearAll": "Clear All",
+          "remove": "Remove",
+          "clearAllConfirmTitle": "Clear Export History?",
+          "clearAllConfirmMessage": "All export records and their files will be permanently deleted.",
+          "removeConfirmTitle": "Remove Export?",
+          "removeConfirmMessage": "This export record and its file will be permanently deleted.",
+          "reSaved": "File saved to device"
+        }
       },
       "privacy": {
         "title": "Privacy",
@@ -1421,11 +1460,11 @@
       "title": "How would you like to begin?",
       "import": {
         "title": "Restore from backup",
-        "description": "Bring back your data from an existing Minty Flow backup"
+        "description": "Bring back your data from an existing {{name}} backup"
       },
       "fresh": {
         "title": "Begin from scratch",
-        "description": "Set up Minty Flow for the first time"
+        "description": "Set up {{name}} for the first time"
       }
     },
     "accounts": {
