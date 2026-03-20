@@ -6,8 +6,8 @@ import { ChangeIconInline } from "~/components/change-icon-inline"
 import { ColorVariantInline } from "~/components/color-variant-inline"
 import { CurrencySelectorModal } from "~/components/selector-modals/currency-selector-modal"
 import { SmartAmountInput } from "~/components/smart-amount-input"
+import { InfoBanner } from "~/components/ui/info-banner"
 import { Input } from "~/components/ui/input"
-import { Separator } from "~/components/ui/separator"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
 import { ScrollIntoViewProvider } from "~/contexts/scroll-into-view-context"
@@ -149,15 +149,15 @@ export function AccountModifyContent({
             />
           </View>
 
-          <Separator />
-
           <AccountSwitchesSection
             control={control}
             isAddMode={isAddMode}
             formIsPrimary={formIsPrimary}
           />
 
-          {!isAddMode && <Separator />}
+          {!isAddMode && !account?.isArchived && (
+            <InfoBanner text={t("screens.accounts.form.archiveBannerText")} />
+          )}
         </View>
 
         {!isAddMode && (

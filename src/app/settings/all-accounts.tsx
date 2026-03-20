@@ -9,15 +9,22 @@ import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
-import { observeAccounts } from "~/database/services/account-service"
+import {
+  observeAccounts,
+  observeArchivedAccounts,
+} from "~/database/services/account-service"
 import type { Account } from "~/types/accounts"
 import { NewEnum } from "~/types/new"
 
 interface AllAccountsScreenInnerProps {
   accounts: Account[]
+  archivedAccounts: Account[]
 }
 
-const AllAccountsScreenInner = ({ accounts }: AllAccountsScreenInnerProps) => {
+const AllAccountsScreenInner = ({
+  accounts,
+  archivedAccounts,
+}: AllAccountsScreenInnerProps) => {
   const router = useRouter()
   const { theme } = useUnistyles()
   const { t } = useTranslation()
@@ -28,8 +35,6 @@ const AllAccountsScreenInner = ({ accounts }: AllAccountsScreenInnerProps) => {
       params: { accountId: NewEnum.NEW },
     })
   }
-
-  const sortedAccounts = accounts
 
   return (
     <View style={styles.container}>
@@ -45,13 +50,29 @@ const AllAccountsScreenInner = ({ accounts }: AllAccountsScreenInnerProps) => {
           </Text>
         </Pressable>
 
-        {sortedAccounts.map((account) => (
+        {accounts.map((account) => (
           <AccountCard
             key={account.id}
             account={account}
             isReorderMode={false}
           />
         ))}
+
+        {archivedAccounts.length > 0 && (
+          <>
+            <Text variant="small" style={styles.archivedSectionLabel}>
+              {t("screens.accounts.archivedSection")}
+            </Text>
+            {archivedAccounts.map((account) => (
+              <AccountCard
+                key={account.id}
+                account={account}
+                isReorderMode={false}
+                isArchived
+              />
+            ))}
+          </>
+        )}
       </ScrollView>
     </View>
   )
@@ -59,6 +80,7 @@ const AllAccountsScreenInner = ({ accounts }: AllAccountsScreenInnerProps) => {
 
 const AllAccountsScreen = withObservables([], () => ({
   accounts: observeAccounts(),
+  archivedAccounts: observeArchivedAccounts(),
 }))
 
 export default AllAccountsScreen(AllAccountsScreenInner)
@@ -89,5 +111,12 @@ const styles = StyleSheet.create((theme) => ({
     fontSize: 16,
     fontWeight: "600",
     color: theme.colors.onSecondary,
+  },
+  archivedSectionLabel: {
+    fontSize: 11,
+    fontWeight: "600",
+    color: theme.colors.customColors.semi,
+    letterSpacing: 0.8,
+    paddingTop: 8,
   },
 }))

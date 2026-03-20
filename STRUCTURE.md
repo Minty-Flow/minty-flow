@@ -1,6 +1,6 @@
 # Project Structure
 
-Generated on: 2026-03-20T18:44:25.089Z
+Generated on: 2026-03-20T19:41:44.939Z
 
 ```
 ./
@@ -1104,7 +1104,6 @@ Generated on: 2026-03-20T18:44:25.089Z
 │   │   │   ├── model-to-tag.ts
 │   │   │   └── model-to-transfer.ts
 │   │   ├── index.ts
-│   │   ├── migrations.ts
 │   │   └── schema.ts
 │   ├── hooks/
 │   │   ├── exchange-rates-editor.reducer.ts

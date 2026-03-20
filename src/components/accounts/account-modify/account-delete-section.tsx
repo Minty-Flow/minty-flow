@@ -19,7 +19,7 @@ export function AccountDeleteSection({
 }: AccountDeleteSectionProps) {
   const { t } = useTranslation()
 
-  if (!account) return null
+  if (!account || !account.isArchived) return null
 
   return (
     <View style={accountModifyStyles.deleteSection}>

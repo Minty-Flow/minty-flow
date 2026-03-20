@@ -57,6 +57,7 @@ export function useAccountForm({
       colorSchemeName: account?.colorSchemeName || undefined,
       isPrimary: account?.isPrimary || false,
       excludeFromBalance: account?.excludeFromBalance || false,
+      isArchived: account?.isArchived || false,
     },
   })
 
@@ -90,6 +91,7 @@ export function useAccountForm({
           colorSchemeName: data.colorSchemeName,
           isPrimary: false,
           excludeFromBalance: data.excludeFromBalance,
+          isArchived: false,
         })
 
         allowNavigation()
@@ -112,6 +114,7 @@ export function useAccountForm({
           colorSchemeName: data.colorSchemeName,
           isPrimary: data.isPrimary,
           excludeFromBalance: data.excludeFromBalance,
+          isArchived: data.isArchived,
         })
 
         allowNavigation()

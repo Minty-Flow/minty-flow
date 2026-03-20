@@ -31,6 +31,7 @@ export default class AccountModel extends Model implements Account {
   @field("color_scheme_name") colorSchemeName!: string | null
   @field("is_primary") isPrimary!: boolean
   @field("exclude_from_balance") excludeFromBalance!: boolean
+  @field("is_archived") isArchived!: boolean
   @date("created_at") createdAt!: Date
   @date("updated_at") updatedAt!: Date
   @field("sort_order") sortOrder!: number | null
