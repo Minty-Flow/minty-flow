@@ -18,6 +18,7 @@ export interface AccountCardProps {
   monthOut?: number
   monthNet?: number
   isReorderMode: boolean
+  isArchived?: boolean
 }
 
 export const AccountCard = ({
@@ -26,6 +27,7 @@ export const AccountCard = ({
   monthOut = 0,
   monthNet = 0,
   isReorderMode,
+  isArchived = false,
 }: AccountCardProps) => {
   const router = useRouter()
   const { t } = useTranslation()
@@ -39,6 +41,26 @@ export const AccountCard = ({
         },
       })
     }
+  }
+
+  if (isArchived) {
+    return (
+      <Pressable style={styles.cardArchived} onPress={handleViewAccount}>
+        <DynamicIcon
+          icon={account.icon}
+          size={32}
+          variant="raw"
+          colorScheme={null}
+        />
+        <Text style={styles.archivedName}>{account.name}</Text>
+        <Money
+          value={account.balance}
+          variant="default"
+          style={styles.archivedBalance}
+          currency={account.currencyCode}
+        />
+      </Pressable>
+    )
   }
 
   return (
@@ -159,6 +181,29 @@ const styles = StyleSheet.create((theme) => ({
     borderColor: theme.colors.secondary,
     padding: 16,
     gap: 12,
+  },
+  cardArchived: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    borderRadius: theme.radius,
+    borderWidth: 1,
+    borderColor: `${theme.colors.customColors.semi}50`,
+    borderStyle: "dashed",
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    backgroundColor: theme.colors.secondary,
+  },
+  archivedName: {
+    flex: 1,
+    fontSize: 15,
+    fontWeight: "500",
+    color: theme.colors.customColors.semi,
+  },
+  archivedBalance: {
+    fontSize: 15,
+    fontWeight: "500",
+    color: theme.colors.customColors.semi,
   },
   cardHeader: {
     flexDirection: "row",

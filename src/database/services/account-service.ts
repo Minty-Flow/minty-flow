@@ -46,48 +46,59 @@ const findAccount = async (id: string): Promise<AccountModel | null> => {
   }
 }
 
+const ACCOUNT_OBSERVE_COLUMNS = [
+  "name",
+  "type",
+  "balance",
+  "currency_code",
+  "icon",
+  "color_scheme_name",
+  "is_primary",
+  "exclude_from_balance",
+  "is_archived",
+  "sort_order",
+]
+
 /**
- * Observe all accounts reactively
+ * Observe all active (non-archived) accounts reactively
  */
 export const observeAccountModels = (): Observable<AccountModel[]> => {
   const accounts = getAccountCollection()
-  const query = accounts.query(Q.sortBy("sort_order", Q.asc))
+  const query = accounts.query(
+    Q.where("is_archived", false),
+    Q.sortBy("sort_order", Q.asc),
+  )
 
-  // Observe specific columns that can change when editing
-  // This makes the query reactive to column changes, not just record additions/deletions
-  return query.observeWithColumns([
-    "name",
-    "type",
-    "balance",
-    "currency_code",
-    "icon",
-    "color_scheme_name",
-    "is_primary",
-    "exclude_from_balance",
-    "sort_order",
-  ])
+  return query.observeWithColumns(ACCOUNT_OBSERVE_COLUMNS)
 }
+
 /**
- * Observe all accounts reactively
+ * Observe all active (non-archived) accounts reactively
  */
 export const observeAccounts = (): Observable<Account[]> => {
   const accounts = getAccountCollection()
-  const query = accounts.query(Q.sortBy("sort_order", Q.asc))
+  const query = accounts.query(
+    Q.where("is_archived", false),
+    Q.sortBy("sort_order", Q.asc),
+  )
 
-  // Observe specific columns that can change when editing
-  // This makes the query reactive to column changes, not just record additions/deletions
   return query
-    .observeWithColumns([
-      "name",
-      "type",
-      "balance",
-      "currency_code",
-      "icon",
-      "color_scheme_name",
-      "is_primary",
-      "exclude_from_balance",
-      "sort_order",
-    ])
+    .observeWithColumns(ACCOUNT_OBSERVE_COLUMNS)
+    .pipe(map((accounts) => accounts.map((account) => modelToAccount(account))))
+}
+
+/**
+ * Observe all archived accounts reactively
+ */
+export const observeArchivedAccounts = (): Observable<Account[]> => {
+  const accounts = getAccountCollection()
+  const query = accounts.query(
+    Q.where("is_archived", true),
+    Q.sortBy("sort_order", Q.asc),
+  )
+
+  return query
+    .observeWithColumns(ACCOUNT_OBSERVE_COLUMNS)
     .pipe(map((accounts) => accounts.map((account) => modelToAccount(account))))
 }
 
@@ -116,17 +127,7 @@ export const observeAccountById = (id: string): Observable<AccountModel> => {
 const observeAccountDetailsById = (id: string): Observable<Account> => {
   return getAccountCollection()
     .query(Q.where("id", id))
-    .observeWithColumns([
-      "name",
-      "type",
-      "balance",
-      "currency_code",
-      "icon",
-      "color_scheme_name",
-      "is_primary",
-      "exclude_from_balance",
-      "sort_order",
-    ])
+    .observeWithColumns(ACCOUNT_OBSERVE_COLUMNS)
     .pipe(
       filter((results) => results.length > 0),
       map((results) => {
@@ -303,6 +304,7 @@ export const createAccount = async (
       account.isPrimary = data.isPrimary
       account.sortOrder = nextSortOrder
       account.excludeFromBalance = data.excludeFromBalance
+      account.isArchived = false
     })
   })
 }
@@ -342,6 +344,7 @@ const applyAccountUpdates = (
   if (updates.isPrimary !== undefined) a.isPrimary = updates.isPrimary
   if (updates.excludeFromBalance !== undefined)
     a.excludeFromBalance = updates.excludeFromBalance
+  if (updates.isArchived !== undefined) a.isArchived = updates.isArchived
   a.updatedAt = new Date()
 }
 
@@ -410,6 +413,32 @@ export const updateAccount = async (
   }
 
   return updated
+}
+
+/**
+ * Archive an account (hides it from regular views, keeps data intact).
+ */
+export const archiveAccount = async (account: AccountModel): Promise<void> => {
+  await database.write(async () => {
+    await account.update((a) => {
+      a.isArchived = true
+      a.updatedAt = new Date()
+    })
+  })
+}
+
+/**
+ * Unarchive an account (restores it to regular views).
+ */
+export const unarchiveAccount = async (
+  account: AccountModel,
+): Promise<void> => {
+  await database.write(async () => {
+    await account.update((a) => {
+      a.isArchived = false
+      a.updatedAt = new Date()
+    })
+  })
 }
 
 /**

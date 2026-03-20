@@ -27,6 +27,8 @@ export function AccountSwitchesSection({
 
   return (
     <View style={accountModifyStyles.switchesSection}>
+      <Separator />
+
       <Controller
         control={control}
         name="excludeFromBalance"
@@ -94,10 +96,44 @@ export function AccountSwitchesSection({
               >
                 {t("screens.accounts.form.primaryAccountHint")}
               </Text>
-              <Separator />
             </View>
           )}
         </View>
+      )}
+
+      {!isAddMode && <Separator />}
+
+      {!isAddMode && (
+        <>
+          <Controller
+            control={control}
+            name="isArchived"
+            render={({ field: { value, onChange } }) => (
+              <Pressable
+                style={accountModifyStyles.switchRow}
+                onPress={() => onChange(!value)}
+                accessibilityRole="switch"
+                accessibilityState={{ checked: value }}
+              >
+                <View style={accountModifyStyles.switchLeft}>
+                  <IconSvg name="archive" size={24} />
+                  <Text
+                    variant="default"
+                    style={accountModifyStyles.switchLabel}
+                  >
+                    {t("screens.accounts.form.isArchivedLabel")}
+                  </Text>
+                </View>
+
+                <View pointerEvents="none">
+                  <Switch value={value} />
+                </View>
+              </Pressable>
+            )}
+          />
+
+          <Separator />
+        </>
       )}
     </View>
   )

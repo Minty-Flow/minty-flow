@@ -16,35 +16,8 @@ export default schemaMigrations({
       toVersion: 2,
       steps: [
         addColumns({
-          table: "goals",
-          columns: [{ name: "goal_type", type: "string" }],
-        }),
-        addColumns({
-          table: "transactions",
-          columns: [
-            {
-              name: "goal_id",
-              type: "string",
-              isOptional: true,
-              isIndexed: true,
-            },
-          ],
-        }),
-      ],
-    },
-    {
-      toVersion: 3,
-      steps: [
-        addColumns({
-          table: "transactions",
-          columns: [
-            {
-              name: "budget_id",
-              type: "string",
-              isOptional: true,
-              isIndexed: true,
-            },
-          ],
+          table: "accounts",
+          columns: [{ name: "is_archived", type: "boolean" }],
         }),
       ],
     },

@@ -146,6 +146,7 @@
       "addNewAccount": "New Account",
       "totalBalance": "Total Balance",
       "countLabel": "Accounts",
+      "archivedSection": "Archived",
       "card": {
         "primary": "Primary",
         "thisMonth": "This Month",
@@ -168,6 +169,8 @@
         "primaryAccountLabel": "Primary account",
         "primaryAccountHint": "This account will be used as the default account for new transactions and other actions.",
         "archiveLabel": "Archive account",
+        "isArchivedLabel": "Archive account",
+        "archiveBannerText": "Archiving an account hides it from everywhere except in reports. You can permanently delete the account with its associated transactions after archiving it.",
         "deleteLabel": "Permanently delete account",
         "archiveWarning": "You can permanently delete the account with its transactions after you archive the account for safety measures.",
         "typeLabel": "Account type",

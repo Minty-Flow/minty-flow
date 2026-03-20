@@ -146,6 +146,7 @@
       "addNewAccount": "حساب جديد",
       "totalBalance": "الرصيد الإجمالي",
       "countLabel": "الحسابات",
+      "archivedSection": "مؤرشف",
       "card": {
         "primary": "أساسي",
         "thisMonth": "هذا الشهر",
@@ -168,6 +169,8 @@
         "primaryAccountLabel": "الحساب الأساسي",
         "primaryAccountHint": "سيُستخدم هذا الحساب كحساب افتراضي للمعاملات الجديدة والإجراءات الأخرى.",
         "archiveLabel": "أرشفة الحساب",
+        "isArchivedLabel": "أرشفة الحساب",
+        "archiveBannerText": "أرشفة الحساب تُخفيه من كل مكان باستثناء التقارير. يمكنك حذف الحساب مع معاملاته نهائياً بعد أرشفته.",
         "deleteLabel": "حذف الحساب نهائياً",
         "archiveWarning": "يمكنك حذف الحساب مع معاملاته نهائياً بعد أرشفته كإجراء أمان.",
         "typeLabel": "نوع الحساب",

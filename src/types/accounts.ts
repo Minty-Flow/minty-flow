@@ -42,6 +42,7 @@ export interface Account {
   colorScheme: MintyColorScheme | null // Computed from colorSchemeName via registry
   isPrimary: boolean
   excludeFromBalance: boolean
+  isArchived: boolean
   createdAt: Date
   updatedAt: Date
   sortOrder: number | null
