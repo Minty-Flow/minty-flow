@@ -1,6 +1,6 @@
 # Project Structure
 
-Generated on: 2026-03-22T18:19:57.321Z
+Generated on: 2026-03-22T19:30:56.970Z
 
 ```
 ./
@@ -369,19 +369,10 @@ Generated on: 2026-03-22T18:19:57.321Z
 │   │   ├── pre-rebase
 │   │   └── prepare-commit-msg
 │   └── pre-commit
-├── .tmp/
-│   └── tasks/
-│       └── bill-splitter-redesign/
-│           ├── subtask_01.json
-│           ├── subtask_02.json
-│           ├── subtask_03.json
-│           ├── subtask_04.json
-│           ├── subtask_05.json
-│           └── task.json
 ├── .vscode/
 │   └── settings.json
 ├── docs/
-│   ├── beta-todo.md
+│   ├── alpha-todo.md
 │   └── STRUCTURE.md
 ├── plugins/
 │   ├── index.js
