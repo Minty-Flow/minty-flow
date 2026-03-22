@@ -1,0 +1,36 @@
+{
+  "id": "bill-splitter-redesign-04",
+  "seq": "04",
+  "title": "Polish names screen and redesign summary screen with inline payer chips",
+  "status": "completed",
+  "agent_id": "coder-agent",
+  "started_at": "2026-03-22T00:00:00Z",
+  "completed_at": "2026-03-22T00:00:00Z",
+  "depends_on": [],
+  "parallel": true,
+  "suggested_agent": "CoderAgent",
+  "context_files": [],
+  "reference_files": [
+    "src/app/settings/bill-splitter/names.tsx",
+    "src/app/settings/bill-splitter/summary.tsx",
+    "src/components/bill-splitter/payer-modal.tsx",
+    "src/stores/bill-splitter.store.ts",
+    "src/types/bill-splitter.ts",
+    "src/i18n/translation/en.json",
+    "src/i18n/translation/ar.json"
+  ],
+  "acceptance_criteria": [
+    "Names screen: card styling consistent with redesigned bill-item-card",
+    "Summary: tabular column headers removed",
+    "Summary: card per participant with name and owed amount",
+    "Summary: inline horizontal scrollable chip selector at top for payer selection (no modal step)",
+    "Summary: payer card styled with muted opacity and '(You)' badge",
+    "Summary: total summary at top showing 'Total bill' and 'Your share'",
+    "Summary: 'Generate All Loans' bottom button only enabled when payer selected",
+    "Files pass TypeScript type checking"
+  ],
+  "deliverables": [
+    "src/app/settings/bill-splitter/names.tsx",
+    "src/app/settings/bill-splitter/summary.tsx"
+  ]
+}

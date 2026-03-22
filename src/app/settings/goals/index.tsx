@@ -1,5 +1,5 @@
 import { withObservables } from "@nozbe/watermelondb/react"
-import { type Href, useNavigation, useRouter } from "expo-router"
+import { useNavigation, useRouter } from "expo-router"
 import { useCallback, useLayoutEffect } from "react"
 import { useTranslation } from "react-i18next"
 import { FlatList } from "react-native"
@@ -31,7 +31,7 @@ function GoalsListContent({ goals }: GoalsListContentProps) {
         <Button
           variant="ghost"
           size="icon"
-          onPress={() => router.push("/settings/goals/archived" as Href)}
+          onPress={() => router.push("/settings/goals/archived")}
           accessibilityLabel={t("screens.settings.goals.archivedButton")}
         >
           <IconSvg name="archive" size={20} />
@@ -46,7 +46,7 @@ function GoalsListContent({ goals }: GoalsListContentProps) {
 
   const handleGoalPress = useCallback(
     (goalId: string) => {
-      router.push(`/settings/goals/${goalId}` as Href)
+      router.push(`/settings/goals/${goalId}`)
     },
     [router],
   )

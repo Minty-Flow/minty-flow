@@ -4,7 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const ROOT: string = process.argv[2] || ".";
-const OUTPUT = "STRUCTURE.md";
+const OUTPUT = "./docs/STRUCTURE.md";
 
 const IGNORE: Set<string> = new Set([
   "node_modules",

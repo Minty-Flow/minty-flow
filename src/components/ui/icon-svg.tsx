@@ -44,6 +44,8 @@ const ICON_MAP = {
   // Shapes & Layout
   circle: FilledIcons.Circle,
   "circle-dot": FilledIcons.CircleDot,
+  square: OutlineIcons.Square,
+  "square-check": OutlineIcons.SquareCheck,
   category: OutlineIcons.Category,
   "category-2": OutlineIcons.Category2,
   "category-plus": OutlineIcons.CategoryPlus,
@@ -67,6 +69,7 @@ const ICON_MAP = {
 
   // File types
   file: FilledIcons.File,
+  "file-x": OutlineIcons.FileX,
   files: FilledIcons.Files,
   "file-description": FilledIcons.FileDescription,
   "file-type-jpg": OutlineIcons.FileTypeJpg,
@@ -141,6 +144,9 @@ const ICON_MAP = {
   activity: OutlineIcons.Activity,
   "device-heart-monitor": FilledIcons.DeviceHeartMonitor,
   user: FilledIcons.User,
+  "user-plus": OutlineIcons.UserPlus,
+  "user-question": OutlineIcons.UserQuestion,
+  users: OutlineIcons.Users,
 
   // Places
   "map-pin": FilledIcons.MapPin,

@@ -62,7 +62,6 @@ const moneyManagementItems: SettingsItem[] = [
     titleKey: "screens.settings.billSplitter.title",
     route: "/settings/bill-splitter",
     icon: "page-break",
-    soon: true,
   },
 ]
 

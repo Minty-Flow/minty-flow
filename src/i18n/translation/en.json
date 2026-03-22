@@ -47,6 +47,7 @@
       "year": "By year",
       "allTime": "All time"
     },
+    "you": "you",
     "account": {
       "types": {
         "checking": "Checking",
@@ -772,9 +773,60 @@
       },
       "billSplitter": {
         "title": "Bill Splitter",
-        "comingSoon": {
-          "title": "Coming Soon",
-          "description": "We are currently developing the bill splitter feature. Stay tuned!"
+        "info": {
+          "title": "How It Works",
+          "description": "Add items to your bill, assign participants, and split costs. When you're done, generate loan transactions for each person who owes you."
+        },
+        "actions": {
+          "clearBill": "Clear",
+          "names": "Names",
+          "summary": "Summary",
+          "addItem": "Add Item",
+          "editItem": "Edit Item",
+          "generateLoans": "Generate Next Loan"
+        },
+        "items": {
+          "empty": {
+            "title": "No Items",
+            "description": "Tap the + button to add an item to split."
+          }
+        },
+        "item": {
+          "name": "Item Name",
+          "price": "Price",
+          "quantity": "Multiplier",
+          "quantityDescription": "Multiplied to every item, useful for tax",
+          "splitEvenly": "Split Evenly",
+          "total": "Total"
+        },
+        "names": {
+          "title": "Participants",
+          "addName": "Add Name",
+          "placeholder": "Enter name",
+          "empty": {
+            "title": "No Participants",
+            "description": "Add people to split the bill with."
+          }
+        },
+        "summary": {
+          "title": "Summary",
+          "name": "Name",
+          "owedToYou": "Your share",
+          "selectAccount": "Select an account",
+          "noAccount": "Please select an account first.",
+          "noPayer": "Please select who you are first.",
+          "noItems": "Add items and participants to see the summary.",
+          "loanDescription": "Bill split",
+          "whoAreYou": {
+            "title": "Who Are You?",
+            "description": "Select yourself to see who owes you money."
+          }
+        },
+        "clear": {
+          "confirm": {
+            "title": "Clear Bill?",
+            "description": "This will remove all items and reset the bill. Participants will be kept."
+          }
         }
       },
       "exchangeRates": {

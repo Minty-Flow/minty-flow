@@ -1,0 +1,32 @@
+{
+  "id": "bill-splitter-redesign",
+  "name": "Bill Splitter Full UI Redesign",
+  "status": "active",
+  "objective": "Fix decimal inputs, improve visual hierarchy, add validation feedback, and polish all bill splitter screens to match app design language",
+  "context_files": [],
+  "reference_files": [
+    "src/app/settings/bill-splitter/index.tsx",
+    "src/app/settings/bill-splitter/add-item.tsx",
+    "src/app/settings/bill-splitter/names.tsx",
+    "src/app/settings/bill-splitter/summary.tsx",
+    "src/components/bill-splitter/bill-item-card.tsx",
+    "src/components/bill-splitter/add-name-modal.tsx",
+    "src/components/bill-splitter/payer-modal.tsx",
+    "src/stores/bill-splitter.store.ts",
+    "src/types/bill-splitter.ts",
+    "src/components/transaction/transaction-form-v3/form-account-picker.tsx",
+    "src/components/budgets/budget-modify/budget-modify-content.tsx"
+  ],
+  "exit_criteria": [
+    "Decimal inputs work correctly for percentages (e.g. 33.33%)",
+    "Split evenly toggle uses standard Switch component",
+    "Percentage total validation shows color-coded feedback",
+    "Account picker matches FormAccountPicker style",
+    "Summary uses inline chip selector for payer",
+    "pnpm types passes",
+    "pnpm lint passes"
+  ],
+  "subtask_count": 5,
+  "completed_count": 0,
+  "created_at": "2026-03-22T00:00:00Z"
+}

@@ -50,6 +50,7 @@ export function LoanModifyContent({
   loanModel,
   accounts,
   categories,
+  prefill,
 }: LoanModifyContentProps) {
   const { t } = useTranslation()
   const router = useRouter()
@@ -70,14 +71,14 @@ export function LoanModifyContent({
   } = useForm<AddLoanFormSchema>({
     resolver: zodResolver(addLoanSchema),
     defaultValues: {
-      loanType: loan?.loanType ?? LoanTypeEnum.LENT,
-      name: loan?.name ?? "",
-      description: loan?.description ?? null,
+      loanType: loan?.loanType ?? prefill?.loanType ?? LoanTypeEnum.LENT,
+      name: loan?.name ?? prefill?.name ?? "",
+      description: loan?.description ?? prefill?.description ?? null,
       icon: loan?.icon ?? "scale",
       colorSchemeName: loan?.colorSchemeName ?? undefined,
-      accountId: loan?.accountId ?? "",
+      accountId: loan?.accountId ?? prefill?.accountId ?? "",
       categoryId: loan?.categoryId ?? "",
-      principalAmount: loan?.principalAmount ?? 0,
+      principalAmount: loan?.principalAmount ?? prefill?.principalAmount ?? 0,
       dueDate: loan?.dueDate ? loan.dueDate.getTime() : null,
     },
   })

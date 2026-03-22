@@ -1,0 +1,27 @@
+{
+  "id": "bill-splitter-redesign-02",
+  "seq": "02",
+  "title": "Redesign BillItemCard component",
+  "status": "completed",
+  "agent_id": "coder-agent",
+  "started_at": "2026-03-22T00:00:00Z",
+  "completed_at": "2026-03-22T00:00:00Z",
+  "depends_on": [],
+  "parallel": true,
+  "suggested_agent": "CoderAgent",
+  "context_files": [],
+  "reference_files": [
+    "src/components/bill-splitter/bill-item-card.tsx",
+    "src/types/bill-splitter.ts",
+    "src/stores/bill-splitter.store.ts"
+  ],
+  "acceptance_criteria": [
+    "Header shows item name (left) + single total amount (right), not allocated/total",
+    "Quantity badge shown as small pill ('x2') when qty > 1",
+    "Per-person rows show name + amount right-aligned, no progress bars",
+    "Delete button positioned at top-right without overlapping content",
+    "Card is tappable to edit (onPress navigates to add-item with itemId)",
+    "File passes TypeScript type checking"
+  ],
+  "deliverables": ["src/components/bill-splitter/bill-item-card.tsx"]
+}

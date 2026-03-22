@@ -213,8 +213,26 @@ export default function RootLayout() {
                 options={{ title: t("screens.settings.pending.title") }}
               />
               <Stack.Screen
-                name="settings/bill-splitter"
+                name="settings/bill-splitter/index"
                 options={{ title: t("screens.settings.billSplitter.title") }}
+              />
+              <Stack.Screen
+                name="settings/bill-splitter/names"
+                options={{
+                  title: t("screens.settings.billSplitter.names.title"),
+                }}
+              />
+              <Stack.Screen
+                name="settings/bill-splitter/add-item"
+                options={{
+                  title: t("screens.settings.billSplitter.actions.addItem"),
+                }}
+              />
+              <Stack.Screen
+                name="settings/bill-splitter/summary"
+                options={{
+                  title: t("screens.settings.billSplitter.summary.title"),
+                }}
               />
               <Stack.Screen
                 name="settings/goals/index"

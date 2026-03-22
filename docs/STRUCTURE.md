@@ -1,6 +1,6 @@
 # Project Structure
 
-Generated on: 2026-03-20T19:41:44.939Z
+Generated on: 2026-03-22T18:19:57.321Z
 
 ```
 ./
@@ -369,10 +369,20 @@ Generated on: 2026-03-20T19:41:44.939Z
 │   │   ├── pre-rebase
 │   │   └── prepare-commit-msg
 │   └── pre-commit
+├── .tmp/
+│   └── tasks/
+│       └── bill-splitter-redesign/
+│           ├── subtask_01.json
+│           ├── subtask_02.json
+│           ├── subtask_03.json
+│           ├── subtask_04.json
+│           ├── subtask_05.json
+│           └── task.json
 ├── .vscode/
 │   └── settings.json
 ├── docs/
-│   └── beta-todo.md
+│   ├── beta-todo.md
+│   └── STRUCTURE.md
 ├── plugins/
 │   ├── index.js
 │   ├── README.md
@@ -403,6 +413,11 @@ Generated on: 2026-03-20T19:41:44.939Z
 │   │   │   ├── index.tsx
 │   │   │   └── start.tsx
 │   │   ├── settings/
+│   │   │   ├── bill-splitter/
+│   │   │   │   ├── add-item.tsx
+│   │   │   │   ├── index.tsx
+│   │   │   │   ├── names.tsx
+│   │   │   │   └── summary.tsx
 │   │   │   ├── budgets/
 │   │   │   │   ├── [budgetId]/
 │   │   │   │   │   ├── index.tsx
@@ -447,7 +462,6 @@ Generated on: 2026-03-20T19:41:44.939Z
 │   │   │   │   ├── [tagId].tsx
 │   │   │   │   └── index.tsx
 │   │   │   ├── all-accounts.tsx
-│   │   │   ├── bill-splitter.tsx
 │   │   │   ├── edit-profile.tsx
 │   │   │   ├── index.tsx
 │   │   │   ├── pending-transactions.tsx
@@ -477,6 +491,9 @@ Generated on: 2026-03-20T19:41:44.939Z
 │   │   │   │   └── use-account-form.ts
 │   │   │   ├── account-card.tsx
 │   │   │   └── account-type-inline.tsx
+│   │   ├── bill-splitter/
+│   │   │   ├── add-name-modal.tsx
+│   │   │   └── bill-item-card.tsx
 │   │   ├── budgets/
 │   │   │   ├── budget-modify/
 │   │   │   │   ├── budget-form-footer.tsx
@@ -854,6 +871,7 @@ Generated on: 2026-03-20T19:41:44.939Z
 │   │   │       ├── FileTypeCsv.tsx
 │   │   │       ├── FileTypeJpg.tsx
 │   │   │       ├── FileTypePdf.tsx
+│   │   │       ├── FileX.tsx
 │   │   │       ├── FileZip.tsx
 │   │   │       ├── FilterOff.tsx
 │   │   │       ├── Fingerprint.tsx
@@ -884,6 +902,8 @@ Generated on: 2026-03-20T19:41:44.939Z
 │   │   │       ├── Search.tsx
 │   │   │       ├── ShieldCheckered.tsx
 │   │   │       ├── ShieldExclamation.tsx
+│   │   │       ├── Square.tsx
+│   │   │       ├── SquareCheck.tsx
 │   │   │       ├── SwitchHorizontal.tsx
 │   │   │       ├── TagPlus.tsx
 │   │   │       ├── Target.tsx
@@ -891,6 +911,9 @@ Generated on: 2026-03-20T19:41:44.939Z
 │   │   │       ├── TrashOff.tsx
 │   │   │       ├── TrendingDown.tsx
 │   │   │       ├── TrendingUp.tsx
+│   │   │       ├── UserPlus.tsx
+│   │   │       ├── UserQuestion.tsx
+│   │   │       ├── Users.tsx
 │   │   │       ├── Wallet.tsx
 │   │   │       ├── WorldMap.tsx
 │   │   │       └── WorldPin.tsx
@@ -1141,6 +1164,7 @@ Generated on: 2026-03-20T19:41:44.939Z
 │   ├── stores/
 │   │   ├── android-sound.store.ts
 │   │   ├── app-lock.store.ts
+│   │   ├── bill-splitter.store.ts
 │   │   ├── button-placement.store.ts
 │   │   ├── exchange-rates-preferences.store.ts
 │   │   ├── export-history.store.ts
@@ -1178,6 +1202,7 @@ Generated on: 2026-03-20T19:41:44.939Z
 │   │   └── unistyles.ts
 │   ├── types/
 │   │   ├── accounts.ts
+│   │   ├── bill-splitter.ts
 │   │   ├── budgets.ts
 │   │   ├── categories.ts
 │   │   ├── currency.ts
@@ -6933,7 +6958,6 @@ Generated on: 2026-03-20T19:41:44.939Z
 ├── pnpm-workspace.yaml
 ├── README.md
 ├── skills-lock.json
-├── STRUCTURE.md
 └── tsconfig.json
 
 ```
