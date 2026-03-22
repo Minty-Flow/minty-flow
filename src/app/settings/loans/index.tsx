@@ -1,5 +1,5 @@
 import { withObservables } from "@nozbe/watermelondb/react"
-import { type Href, useNavigation, useRouter } from "expo-router"
+import { useNavigation, useRouter } from "expo-router"
 import { useCallback, useLayoutEffect, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { FlatList, ScrollView } from "react-native"
@@ -65,7 +65,7 @@ function LoansListContent({ loans }: LoansListContentProps) {
 
   const handleLoanPress = useCallback(
     (loanId: string) => {
-      router.push(`/settings/loans/${loanId}` as Href)
+      router.push(`/settings/loans/${loanId}`)
     },
     [router],
   )

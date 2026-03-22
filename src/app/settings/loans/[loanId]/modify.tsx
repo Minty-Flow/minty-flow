@@ -1,7 +1,9 @@
 import { withObservables } from "@nozbe/watermelondb/react"
 import { useLocalSearchParams } from "expo-router"
+import { useMemo } from "react"
 
 import { LoanModifyContent } from "~/components/loans/loan-modify/loan-modify-content"
+import type { LoanPrefill } from "~/components/loans/loan-modify/types"
 import type LoanModel from "~/database/models/loan"
 import { observeAccounts } from "~/database/services/account-service"
 import { observeAllCategories } from "~/database/services/category-service"
@@ -9,7 +11,7 @@ import { observeLoanById } from "~/database/services/loan-service"
 import { modelToLoan } from "~/database/utils/model-to-loan"
 import type { Account } from "~/types/accounts"
 import type { Category } from "~/types/categories"
-import type { Loan } from "~/types/loans"
+import type { Loan, LoanType } from "~/types/loans"
 import { NewEnum } from "~/types/new"
 
 // --- Edit mode: observes the loan model, accounts, and categories ---
@@ -56,16 +58,23 @@ const EnhancedEditScreen = withObservables(
 
 interface EnhancedAddProps {
   loanId: string
+  prefill?: LoanPrefill
   accounts: Account[]
   categories: Category[]
 }
 
-function AddLoanScreen({ loanId, accounts, categories }: EnhancedAddProps) {
+function AddLoanScreen({
+  loanId,
+  prefill,
+  accounts,
+  categories,
+}: EnhancedAddProps) {
   return (
     <LoanModifyContent
       loanModifyId={loanId}
       accounts={accounts}
       categories={categories}
+      prefill={prefill}
     />
   )
 }
@@ -78,12 +87,43 @@ const EnhancedAddScreen = withObservables([], () => ({
 // --- Route entry point ---
 
 export default function LoanModifyScreen() {
-  const params = useLocalSearchParams<{ loanId: string }>()
+  const params = useLocalSearchParams<{
+    loanId: string
+    prefillName?: string
+    prefillDescription?: string
+    prefillAccountId?: string
+    prefillAmount?: string
+    prefillLoanType?: string
+  }>()
   const loanId = params.loanId ?? NewEnum.NEW
   const isAddMode = loanId === NewEnum.NEW || !loanId
 
+  const prefill = useMemo<LoanPrefill | undefined>(() => {
+    if (
+      !params.prefillName &&
+      !params.prefillAccountId &&
+      !params.prefillAmount
+    )
+      return undefined
+    return {
+      name: params.prefillName,
+      description: params.prefillDescription,
+      accountId: params.prefillAccountId,
+      principalAmount: params.prefillAmount
+        ? Number.parseFloat(params.prefillAmount)
+        : undefined,
+      loanType: params.prefillLoanType as LoanType | undefined,
+    }
+  }, [
+    params.prefillName,
+    params.prefillDescription,
+    params.prefillAccountId,
+    params.prefillAmount,
+    params.prefillLoanType,
+  ])
+
   if (isAddMode) {
-    return <EnhancedAddScreen loanId={NewEnum.NEW} />
+    return <EnhancedAddScreen loanId={NewEnum.NEW} prefill={prefill} />
   }
 
   return <EnhancedEditScreen loanId={loanId} />

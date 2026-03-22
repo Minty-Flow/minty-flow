@@ -211,21 +211,27 @@
 ### Bill Splitter
 
 
-| Item          | Status | Notes                                 |
-| ------------- | ------ | ------------------------------------- |
-| Bill splitter | ⬜      | Placeholder screen, no backend at all |
+| Item                           | Status | Notes                                                     |
+| ------------------------------ | ------ | ---------------------------                               |
+| Bill splitter                  | ✅     | Full-screen form flow: add participants, items, summary   |
+| Add/Edit item form             | ✅     | Route at `/settings/bill-splitter/add-item`               |
+| Bill summary screen            | ✅     | Shows total, allocated, progress bar                       |
+| Clear bill / Confirm actions   | ✅     | ConfirmModal for destructive actions                       |
 
 
 ### Data Management
 
-
-| Item                   | Status | Notes                     |
+| Item                   | Status | Notes                                                                                      |
 | ---------------------- | ------ | ------------------------- |
-| Data management screen | ⬜      | "COMING SOON" placeholder |
-| Export CSV / JSON      | ⬜      |                           |
-| Import CSV / JSON      | ⬜      |                           |
-| Backup / restore       | ⬜      |                           |
-| Wipe all data          | ⬜      |                           |
+| Data management screen | ✅     | `settings/data-management` — full CRUD with actions                                      |
+| Export CSV to device   | ✅     | Save current data as `.csv` file to Android/iOS Files folder                              |
+| Export JSON to device  | ✅     | Save current data as `.json` backup file                                                   |
+| Import JSON backup     | ✅     | Import from previously exported `.json` backup file with validation                       |
+| Import CSV             | ✅     | Import CSV file (validates schema compatibility)                                           |
+| Backup restore         | ✅     | Import backup with confirmation modal, shows record/table counts, error handling          |
+| Wipe all data          | ✅     | Destructive action with ConfirmModal                                                       |
+| Export history         | ✅     | `ExportHistoryStore` tracks export attempts and displays list in detail screen           |
+| Retention preferences  | ✅     | Configurable via Preferences screen                                                        |
 
 
 ---
@@ -284,6 +290,6 @@
 
 ---
 
-*Last updated: 2026-03-18 — loans feature fully implemented: list with All/Lent/Borrowed filter chips, create/edit form (category picker filtered by loan type, initial cash-flow tx on creation), loan detail with progress tracking (repayment-only), collect/settle centered modal (full + partial), swipe-to-delete + tap-to-edit in loan/goal/budget transaction lists; progress tracking fix excludes initial tx by type*
+*Last updated: 2026-03-18 — loans fully implemented; bill splitter complete with participants/items management; data management complete with export CSV/JSON, import JSON/CSV validation, backup restore, export history tracking, and wipe all data; all Data Management and Bill Splitter sections migrated from placeholder to full implementation*
 
 

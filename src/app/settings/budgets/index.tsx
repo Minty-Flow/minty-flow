@@ -1,5 +1,5 @@
 import { withObservables } from "@nozbe/watermelondb/react"
-import { type Href, useRouter } from "expo-router"
+import { useRouter } from "expo-router"
 import { useCallback } from "react"
 import { useTranslation } from "react-i18next"
 import { FlatList } from "react-native"
@@ -33,7 +33,7 @@ function BudgetListContentInner({ budgets }: BudgetListContentInnerProps) {
 
   const handleEditBudget = useCallback(
     (budgetId: string) => {
-      router.push(`/settings/budgets/${budgetId}` as Href)
+      router.push(`/settings/budgets/${budgetId}`)
     },
     [router],
   )
