@@ -47,11 +47,6 @@ export default function NamesScreen() {
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
         contentContainerStyle={styles.listContent}
-        // ListHeaderComponent={
-        //   <Text variant="h2" style={styles.title}>
-        //     {t("screens.settings.billSplitter.names.title")}
-        //   </Text>
-        // }
         ListEmptyComponent={
           <EmptyState
             icon="users"

@@ -374,11 +374,11 @@ export default function RootLayout() {
                 options={({ route }) => {
                   const params = route.params as { id?: string } | undefined
                   return {
+                    presentation: "fullScreenModal",
                     title:
                       params?.id === NewEnum.NEW
                         ? t("components.transactionForm.title.create")
                         : t("components.transactionForm.title.edit"),
-                    presentation: "fullScreenModal",
                   }
                 }}
               />

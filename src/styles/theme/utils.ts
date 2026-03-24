@@ -4,7 +4,7 @@
 
 import type { MintyColorScheme } from "./types"
 
-/**
+/** for future usgae
  * Lighten a hex color by a percentage
  * Used for generating dark theme primary colors
  */
@@ -20,7 +20,7 @@ import type { MintyColorScheme } from "./types"
 //     .toUpperCase()}`
 // }
 
-/**
+/** for future usgae
  * Darken a hex color by a percentage
  */
 // export const darkenColor = (color: string, percent: number = 20): string => {
