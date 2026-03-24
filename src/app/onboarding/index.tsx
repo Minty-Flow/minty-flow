@@ -7,6 +7,7 @@ import PagerView from "react-native-pager-view"
 import { StyleSheet } from "react-native-unistyles"
 
 import { Button } from "~/components/ui/button"
+import { ChevronIcon } from "~/components/ui/chevron-icon"
 import { IconSvg } from "~/components/ui/icon-svg"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
@@ -133,10 +134,10 @@ export default function OnboardingScreen() {
         </View>
         <Button onPress={goNext}>
           <Text>{nextLabel}</Text>
-          <IconSvg
-            name="chevron-right"
-            size={18}
+          <ChevronIcon
+            direction="trailing"
             color={styles.nextButtonIconColor.color}
+            size={18}
           />
         </Button>
       </View>

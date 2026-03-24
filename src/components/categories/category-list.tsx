@@ -125,8 +125,6 @@ const CategoryListInner = ({
     />
   )
 
-  const footer = null
-
   const allCategories = categories
 
   // Filter categories based on search query
@@ -190,7 +188,6 @@ const CategoryListInner = ({
       renderItem={renderItem}
       contentContainerStyle={styles.listContent}
       ListHeaderComponent={header}
-      ListFooterComponent={footer}
     />
   )
 }
@@ -243,35 +240,6 @@ const styles = StyleSheet.create((theme) => ({
     textAlign: "center",
     marginBottom: 20,
     lineHeight: 20,
-  },
-  emptyButton: {
-    minWidth: 200,
-    marginTop: 10,
-  },
-  emptyButtonText: {
-    fontWeight: "600",
-    color: theme.colors.onPrimary,
-  },
-  footerContainer: {
-    paddingHorizontal: 20,
-    paddingTop: 10,
-    paddingBottom: 40,
-  },
-  footerSeparator: {
-    marginVertical: 20,
-  },
-  archivedEntryLeft: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-  },
-  archivedIcon: {
-    color: theme.colors.onSecondary,
-  },
-  archivedText: {
-    fontSize: 14,
-    fontWeight: "500",
-    color: theme.colors.onSecondary,
   },
 }))
 

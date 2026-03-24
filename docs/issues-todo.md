@@ -1,7 +1,7 @@
 # Project Issue Tracker
 
-> Code review date: 2026-03-24 | Files reviewed: ~752
-> Legend: 🔴 CRITICAL · 🟠 HIGH · 🟡 MEDIUM · 🟢 LOW
+> Code review date: 2026-03-24
+> Legend:  🟡 MEDIUM · 🟢 LOW
 
 ---
 
@@ -39,12 +39,8 @@
 
 ---
 
-## 🟢 LOW (17 issues)
+## 🟢 LOW (9 issues)
 
-- [ ] Large commented-out code blocks in `src/styles/theme/registry.ts` and `utils.ts`
-- [ ] `ProfileSection` redundant `paddingBottom` inside `paddingVertical`
-- [ ] Missing `displayName` on memoized `IconItem` component
-- [ ] Dead `footer = null` variable in `CategoryList` · `src/components/categories/category-list.tsx` line 128
 - [ ] `matchFont` called at module level in `use-chart-font.ts` before Skia is ready
 - [ ] `use-notification-sync.ts` store subscription could use Zustand v5 `subscribe` overload with selector
 - [ ] `stats-service.ts` fetches all accounts and categories unconditionally — should filter by IDs present in result set
@@ -54,6 +50,3 @@
 - [ ] `pending-transactions.store.ts` `getUpdateDateUponConfirmation` getter anti-pattern — bypasses selector memoization
 - [ ] `money-formatting.store.ts` shake detection only activates privacy mode, never deactivates — worth a comment
 - [ ] `onboarding/index.tsx` `goToPage` double-sets page state + PagerView imperatively — can drift · `src/app/onboarding/index.tsx`
-- [ ] Commented-out `ListHeaderComponent` JSX in `names.tsx` · `src/app/settings/loans`
-- [ ] `transaction/[id].tsx` `presentation: "fullScreenModal"` set in runtime callback instead of static options
-

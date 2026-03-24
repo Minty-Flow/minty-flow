@@ -47,7 +47,6 @@ const styles = StyleSheet.create((theme) => ({
     marginBottom: 20,
   },
   profileInfo: {
-    paddingBottom: 20,
     paddingVertical: 20,
     flexDirection: "column",
     alignItems: "center",
