@@ -110,3 +110,46 @@ export async function getBudgetSpent(
   )
   return row?.total ?? 0
 }
+
+export async function getBudgetSpentByCategory(
+  accountIds: string[],
+  categoryIds: string[],
+  period: BudgetPeriod,
+  startDateIso: string,
+  endDateIso: string | null,
+): Promise<Record<string, number>> {
+  if (accountIds.length === 0) return {}
+
+  const { periodStart, periodEnd } = getBudgetPeriodRange(
+    period,
+    startDateIso,
+    endDateIso,
+  )
+
+  const conditions = [
+    "is_deleted = 0",
+    "is_pending = 0",
+    "type = 'expense'",
+    "is_transfer = 0",
+    `account_id IN (${accountIds.map(() => "?").join(",")})`,
+    "transaction_date >= ?",
+    "transaction_date <= ?",
+    "category_id IS NOT NULL",
+  ]
+  const values: SQLiteBindValue[] = [...accountIds, periodStart, periodEnd]
+
+  if (categoryIds.length > 0) {
+    conditions.push(`category_id IN (${categoryIds.map(() => "?").join(",")})`)
+    values.push(...categoryIds)
+  }
+
+  const rows = await query<{ category_id: string; total: number }>(
+    `SELECT category_id, COALESCE(SUM(amount), 0) as total FROM transactions WHERE ${conditions.join(" AND ")} GROUP BY category_id`,
+    values,
+  )
+  const result: Record<string, number> = {}
+  for (const row of rows) {
+    result[row.category_id] = row.total
+  }
+  return result
+}

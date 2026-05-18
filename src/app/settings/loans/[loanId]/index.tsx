@@ -1,3 +1,4 @@
+import { differenceInDays } from "date-fns"
 import { useLocalSearchParams, useNavigation, useRouter } from "expo-router"
 import {
   useCallback,
@@ -7,7 +8,7 @@ import {
   useState,
 } from "react"
 import { useTranslation } from "react-i18next"
-import { FlatList, View as RNView } from "react-native"
+import { type DimensionValue, FlatList, View as RNView } from "react-native"
 import type { SwipeableMethods } from "react-native-gesture-handler/ReanimatedSwipeable"
 import { StyleSheet, useUnistyles } from "react-native-unistyles"
 
@@ -27,9 +28,11 @@ import { createTransaction } from "~/database/services-sqlite/transaction-servic
 import { useAccount } from "~/stores/db/account.store"
 import { useLoan } from "~/stores/db/loan.store"
 import { useTransactions } from "~/stores/db/transaction.store"
+import { useLanguageStore } from "~/stores/language.store"
 import { LoanTypeEnum } from "~/types/loans"
 import { TransactionTypeEnum } from "~/types/transactions"
 import { logger } from "~/utils/logger"
+import { formatShortMonthDay } from "~/utils/time-utils"
 import { Toast } from "~/utils/toast"
 
 /* ------------------------------------------------------------------ */
@@ -41,6 +44,7 @@ function LoanDetailInner({ loanId }: { loanId: string }) {
   const router = useRouter()
   const navigation = useNavigation()
   const { theme } = useUnistyles()
+  const isRTL = useLanguageStore((s) => s.isRTL)
   const [actionModalVisible, setActionModalVisible] = useState(false)
   const [isCreatingTransaction, setIsCreatingTransaction] = useState(false)
   const [paidAmount, setPaidAmount] = useState(0)
@@ -94,7 +98,7 @@ function LoanDetailInner({ loanId }: { loanId: string }) {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: loan?.name ?? t("screens.settings.loans.detail.title"),
+      title: t("screens.settings.loans.detail.title"),
       headerRight: () => (
         <Button
           variant="ghost"
@@ -110,7 +114,7 @@ function LoanDetailInner({ loanId }: { loanId: string }) {
         </Button>
       ),
     })
-  }, [navigation, router, loanId, loan?.name, t])
+  }, [navigation, router, loanId, t])
 
   if (!loan) {
     return (
@@ -132,20 +136,37 @@ function LoanDetailInner({ loanId }: { loanId: string }) {
   const isPaid = progress >= 1
   const remaining = Math.max(principal - paid, 0)
 
-  const progressBarColor = isPaid
-    ? theme.colors.customColors.income
-    : theme.colors.primary
+  const accentColor = loan.colorScheme?.primary ?? theme.colors.primary
+  const accentTint = loan.colorScheme?.secondary ?? `${theme.colors.primary}20`
+  const mutedColor = theme.colors.onSecondary
 
-  const dueDateLabel = (): string | null => {
+  const progressBarColor = isPaid ? mutedColor : accentColor
+
+  const dueText = (): string => {
+    if (isPaid) return t("screens.settings.loans.card.settled")
     if (!loan.dueDate) return t("screens.settings.loans.card.noDueDate")
+    const diff = differenceInDays(loan.dueDate, new Date())
+    if (diff === 0) return t("screens.settings.loans.card.dueToday")
+    if (diff === 1) return t("screens.settings.loans.card.dueTomorrow")
+    if (diff > 1 && diff <= 14)
+      return t("screens.settings.loans.card.dueInDays", { count: diff })
     return t("screens.settings.loans.card.dueDate", {
-      date: loan.dueDate.toLocaleDateString(undefined, {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      }),
+      date: formatShortMonthDay(loan.dueDate),
     })
   }
+
+  const subtitleParts = [account?.name, dueText()].filter(Boolean)
+  const subtitleColor =
+    loan.isOverdue && !isPaid ? theme.colors.customColors.expense : mutedColor
+
+  const badgeLabel = isPaid
+    ? t("screens.settings.loans.card.statusPaid")
+    : isLent
+      ? t("screens.settings.loans.type.lent")
+      : t("screens.settings.loans.type.borrowed")
+  const badgeIcon = isLent || isPaid ? "arrow-up-right" : "arrow-down-left"
+  const badgeColor = isPaid ? mutedColor : accentColor
+  const badgeBg = isPaid ? theme.colors.secondary : accentTint
 
   const currencyCode = account?.currencyCode ?? ""
 
@@ -210,66 +231,55 @@ function LoanDetailInner({ loanId }: { loanId: string }) {
 
   const headerContent = (
     <View style={styles.headerCard}>
-      {/* Icon + name + type badge + overdue badge */}
       <View style={styles.headerTopRow}>
         <DynamicIcon
           icon={loan.icon ?? "hand-coins"}
-          size={36}
+          size={24}
           colorScheme={loan.colorScheme}
           variant="badge"
         />
         <View style={styles.headerInfo}>
-          <Text style={styles.loanName}>{loan.name}</Text>
-          <View style={styles.metaRow}>
-            <View style={styles.typeBadge}>
-              <Text style={styles.typeBadgeText}>
-                {isLent
-                  ? t("screens.settings.loans.type.lent")
-                  : t("screens.settings.loans.type.borrowed")}
-              </Text>
-            </View>
-            {isPaid ? (
-              <View style={styles.paidBadge}>
-                <IconSvg
-                  name="check"
-                  size={14}
-                  color={theme.colors.customColors.income}
-                />
-                <Text style={styles.paidBadgeText}>
-                  {t("screens.settings.loans.card.completed")}
-                </Text>
-              </View>
-            ) : loan.isOverdue ? (
-              <View style={styles.overdueBadge}>
-                <IconSvg
-                  name="alert-circle"
-                  size={14}
-                  color={theme.colors.customColors.expense}
-                />
-                <Text style={styles.overdueText}>
-                  {t("screens.settings.loans.card.overdue")}
-                </Text>
-              </View>
-            ) : (
-              <Text style={styles.dateText}>{dueDateLabel()}</Text>
-            )}
-          </View>
+          <Text style={styles.loanName} numberOfLines={1}>
+            {loan.name}
+          </Text>
+          <Text
+            style={[styles.subtitle, { color: subtitleColor }]}
+            numberOfLines={1}
+          >
+            {subtitleParts.join(" · ")}
+          </Text>
+        </View>
+        <View style={[styles.badge, { backgroundColor: badgeBg }]}>
+          <IconSvg
+            name={badgeIcon}
+            size={12}
+            color={badgeColor}
+            style={isRTL ? styles.badgeIconRTL : undefined}
+          />
+          <Text
+            style={[
+              styles.badgeText,
+              { color: badgeColor },
+              isRTL && styles.badgeTextRTL,
+            ]}
+          >
+            {badgeLabel}
+          </Text>
         </View>
       </View>
 
-      {/* Description */}
       {loan.description ? (
         <Text style={styles.description}>{loan.description}</Text>
       ) : null}
 
-      {/* Progress bar */}
       <View style={styles.progressSection}>
         <View style={styles.progressTrack}>
           <RNView
             style={[
               styles.progressFill,
               {
-                width: `${(clampedProgress * 100).toFixed(1)}%` as `${number}%`,
+                width:
+                  `${(clampedProgress * 100).toFixed(1)}%` as DimensionValue,
                 backgroundColor: progressBarColor,
               },
             ]}
@@ -279,8 +289,7 @@ function LoanDetailInner({ loanId }: { loanId: string }) {
           <Text style={styles.amountText}>
             {isLent
               ? t("screens.settings.loans.card.received")
-              : t("screens.settings.loans.card.paid")}
-            :{" "}
+              : t("screens.settings.loans.card.paidBack")}{" "}
             <Money
               value={paid}
               currency={currencyCode}
@@ -295,19 +304,19 @@ function LoanDetailInner({ loanId }: { loanId: string }) {
               hideSign
             />
           </Text>
-          <Text style={styles.remainingText}>
-            {isPaid ? null : (
-              <>
-                <Money
-                  value={remaining}
-                  currency={currencyCode}
-                  tone="transfer"
-                  hideSign
-                />{" "}
-                {t("screens.settings.loans.card.remaining")}
-              </>
-            )}
-          </Text>
+          {isPaid ? (
+            <Text style={[styles.remainingText, { color: mutedColor }]}>
+              {t("screens.settings.loans.card.settled")}
+            </Text>
+          ) : (
+            <Money
+              value={remaining}
+              currency={currencyCode}
+              tone="transfer"
+              hideSign
+              style={[styles.remainingText, { color: accentColor }]}
+            />
+          )}
         </View>
       </View>
 
@@ -407,60 +416,37 @@ const styles = StyleSheet.create((theme) => ({
   },
   headerInfo: {
     flex: 1,
-    gap: 4,
+    gap: 2,
+    minWidth: 0,
   },
   loanName: {
     fontSize: theme.typography.titleMedium.fontSize,
     fontWeight: "700",
     color: theme.colors.onSurface,
   },
-  metaRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-  },
-  typeBadge: {
-    backgroundColor: theme.colors.secondary,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: theme.radius,
-  },
-  typeBadgeText: {
-    fontSize: theme.typography.labelXSmall.fontSize,
-    fontWeight: "600",
-    color: theme.colors.onSecondary,
-  },
-  paidBadge: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4,
-    backgroundColor: `${theme.colors.customColors.income}20`,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: theme.radius,
-  },
-  paidBadgeText: {
-    fontSize: theme.typography.labelXSmall.fontSize,
-    fontWeight: "600",
-    color: theme.colors.customColors.income,
-  },
-  overdueBadge: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4,
-    backgroundColor: `${theme.colors.customColors.expense}20`,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: theme.radius,
-  },
-  overdueText: {
-    fontSize: theme.typography.labelXSmall.fontSize,
-    fontWeight: "600",
-    color: theme.colors.customColors.expense,
-  },
-  dateText: {
+  subtitle: {
     fontSize: theme.typography.labelMedium.fontSize,
-    color: theme.colors.onSecondary,
+  },
+  badge: {
+    flexShrink: 0,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 100,
+  },
+  badgeText: {
+    fontSize: theme.typography.labelXSmall.fontSize,
+    fontWeight: "700",
+    letterSpacing: 0.5,
+    textTransform: "uppercase",
+  },
+  badgeTextRTL: {
+    letterSpacing: 0,
+  },
+  badgeIconRTL: {
+    transform: [{ scaleX: -1 }],
   },
   description: {
     fontSize: theme.typography.labelLarge.fontSize,
@@ -495,8 +481,8 @@ const styles = StyleSheet.create((theme) => ({
   },
   remainingText: {
     fontSize: theme.typography.bodyMedium.fontSize,
-    color: theme.colors.onSecondary,
     flexShrink: 0,
+    fontWeight: "600",
   },
 
   // Transactions

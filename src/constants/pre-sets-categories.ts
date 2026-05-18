@@ -314,4 +314,13 @@ export const IncomePresets: CategoryPreset[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
+  {
+    name: "components.categories.presets.income.overtime",
+    type: "income",
+    icon: "hourglass",
+    colorSchemeName: "",
+    transactionCount: 0,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
 ]

@@ -579,13 +579,26 @@
           "noDeadline": "No deadline",
           "allAccounts": "All Accounts",
           "archived": "Archived",
+          "left": "left",
+          "reachedLabel": "Reached!",
           "type": {
             "savings": "Savings",
             "expense": "Expense"
+          },
+          "status": {
+            "onTrack": "On track",
+            "behind": "Behind",
+            "flexible": "Flexible",
+            "reached": "Reached"
+          },
+          "insight": {
+            "savePerDay": "Save {{amount}}/day to hit it",
+            "spendPerDay": "Spend {{amount}}/day to hit it",
+            "goalReached": "🎉 Goal reached"
           }
         },
         "detail": {
-          "title": "Goal Details",
+          "title": "Goal",
           "transactions": "Transactions",
           "noTransactions": "No transactions linked to this goal yet",
           "progress": "Progress",
@@ -643,16 +656,39 @@
         },
         "card": {
           "spent": "Spent",
+          "spend": "SPEND",
+          "time": "TIME",
           "of": "of",
+          "over": "over",
+          "left": "left",
           "remaining": "remaining",
           "noCategory": "All Categories",
           "allAccounts": "All Accounts",
           "overBudget": "Over budget",
           "alertThresholdReached": "Alert threshold reached",
-          "disabled": "Disabled"
+          "disabled": "Disabled",
+          "dayOf": "day {{current}}/{{total}}",
+          "dayXofY": "Day {{current}} of {{total}}",
+          "uncategorized": "Uncategorized",
+          "status": {
+            "onTrack": "On track",
+            "watch": "Watch",
+            "over": "Over"
+          },
+          "insight": {
+            "over": {
+              "daily": "Over by {{amount}} today",
+              "weekly": "Over by {{amount}} this week",
+              "monthly": "Over by {{amount}} this month",
+              "yearly": "Over by {{amount}} this year",
+              "custom": "Over by {{amount}} in {{range}}"
+            },
+            "dailyPace_one": "{{amount}}/day for {{count}} day",
+            "dailyPace_other": "{{amount}}/day for {{count}} days"
+          }
         },
         "detail": {
-          "title": "Budget Details",
+          "title": "Budget",
           "transactions": "Transactions",
           "noTransactions": "No transactions in this period"
         },
@@ -700,20 +736,28 @@
         },
         "card": {
           "paid": "Paid",
+          "paidBack": "Paid back",
           "received": "Received",
           "remaining": "Remaining",
           "of": "of",
           "overdue": "Overdue",
           "dueDate": "Due {{date}}",
+          "dueToday": "Due today",
+          "dueTomorrow": "Due tomorrow",
+          "dueInDays_one": "Due in {{count}} day",
+          "dueInDays_other": "Due in {{count}} days",
           "noDueDate": "No due date",
-          "completed": "Completed"
+          "completed": "Completed",
+          "settled": "Settled",
+          "statusPaid": "Paid"
         },
         "form": {
           "loadingText": "Loading loan...",
-          "amountLabel": "Principal Amount"
+          "amountLabel": "Principal Amount",
+          "deleteLabel": "Delete Loan"
         },
         "detail": {
-          "title": "Loan Details",
+          "title": "Loan",
           "transactions": "Transactions",
           "noTransactions": "No transactions linked to this loan yet"
         },
@@ -1179,6 +1223,8 @@
         "addSelected": "Add {{count}} Selected",
         "selectAll": "Select all",
         "deselectAll": "Deselect all",
+        "selectedCount": "{{count}} selected",
+        "noneSelected": "None selected",
         "expense": {
           "groceries": "Groceries",
           "transportation": "Transportation",
@@ -1213,7 +1259,8 @@
           "taxRefund": "Tax Refund",
           "cashback": "Cashback",
           "commission": "Commission",
-          "allowance": "Allowance"
+          "allowance": "Allowance",
+          "overtime": "Overtime"
         }
       },
       "search": {

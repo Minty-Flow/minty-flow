@@ -24,11 +24,6 @@ const moneyManagementItems: SettingsItem[] = [
     icon: "wallet",
   },
   {
-    titleKey: "screens.settings.loans.title",
-    route: "/settings/loans",
-    icon: "scale",
-  },
-  {
     titleKey: "components.categories.title",
     route: "/settings/categories",
     icon: "category-2",
@@ -42,6 +37,11 @@ const moneyManagementItems: SettingsItem[] = [
     titleKey: "screens.settings.trash.title",
     route: "/settings/trash",
     icon: "trash",
+  },
+  {
+    titleKey: "screens.settings.loans.title",
+    route: "/settings/loans",
+    icon: "scale",
   },
   {
     titleKey: "screens.settings.goals.title",

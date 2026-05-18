@@ -485,7 +485,7 @@ export function LoanModifyContent({
                 color={loanModifyStyles.deleteIcon.color}
               />
               <Text variant="default" style={loanModifyStyles.deleteText}>
-                {t("screens.settings.goals.form.deleteLabel")}
+                {t("screens.settings.loans.form.deleteLabel")}
               </Text>
             </Button>
           </View>

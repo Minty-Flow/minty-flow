@@ -124,7 +124,7 @@ export const Money: FC<MoneyProps> = ({
 
   // Privacy masking
   const privacyMasked = useMemo(
-    () => formatted.replace(/\d/g, "⁕"),
+    () => formatted.replace(/[\d٠-٩۰-۹]/gu, "⁕"),
     [formatted],
   )
 

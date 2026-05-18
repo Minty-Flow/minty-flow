@@ -1,3 +1,14 @@
+import {
+  differenceInCalendarDays,
+  endOfDay,
+  endOfMonth,
+  endOfWeek,
+  endOfYear,
+  startOfDay,
+  startOfMonth,
+  startOfWeek,
+  startOfYear,
+} from "date-fns"
 import { useLocalSearchParams, useNavigation, useRouter } from "expo-router"
 import {
   useCallback,
@@ -8,7 +19,7 @@ import {
   useState,
 } from "react"
 import { useTranslation } from "react-i18next"
-import { FlatList, View as RNView } from "react-native"
+import { type DimensionValue, FlatList, View as RNView } from "react-native"
 import type { SwipeableMethods } from "react-native-gesture-handler/ReanimatedSwipeable"
 import { StyleSheet, useUnistyles } from "react-native-unistyles"
 
@@ -25,13 +36,20 @@ import type { TransactionWithRelations } from "~/database/mappers/hydrateTransac
 import {
   getBudgetPeriodRange,
   getBudgetSpent,
+  getBudgetSpentByCategory,
 } from "~/database/repos/budget-repo"
 import type { TranslationKey } from "~/i18n/config"
 import { useAccounts } from "~/stores/db/account.store"
 import { useBudget } from "~/stores/db/budget.store"
 import { useCategories } from "~/stores/db/category.store"
 import { useTransactions } from "~/stores/db/transaction.store"
+import { useLanguageStore } from "~/stores/language.store"
+import { useMoneyFormattingStore } from "~/stores/money-formatting.store"
+import { getWeekStartsOn } from "~/utils/get-week-start-on"
+import { formatDisplayValue } from "~/utils/number-format"
 import { formatCustomPeriodRange } from "~/utils/time-utils"
+
+type BudgetStatus = "onTrack" | "watch" | "over"
 
 /* ------------------------------------------------------------------ */
 /* Detail screen                                                      */
@@ -42,12 +60,18 @@ function BudgetDetailInner({ budgetId }: { budgetId: string }) {
   const router = useRouter()
   const navigation = useNavigation()
   const { theme } = useUnistyles()
+  const isRTL = useLanguageStore((s) => s.isRTL)
+  const privacyMode = useMoneyFormattingStore((s) => s.privacyMode)
+  const currencyLook = useMoneyFormattingStore((s) => s.currencyLook)
   const openSwipeableRef = useRef<SwipeableMethods | null>(null)
 
   const budget = useBudget(budgetId)
   const allAccounts = useAccounts()
   const allCategories = useCategories()
   const [spentAmount, setSpentAmount] = useState(0)
+  const [spentByCategory, setSpentByCategory] = useState<
+    Record<string, number>
+  >({})
 
   const accountNames = useMemo(
     () =>
@@ -57,14 +81,13 @@ function BudgetDetailInner({ budgetId }: { budgetId: string }) {
     [budget?.accountIds, allAccounts],
   )
 
-  const categoryNames = useMemo(
+  const linkedCategories = useMemo(
     () =>
       (budget?.categoryIds ?? [])
-        .map((id) => allCategories.find((c) => c.id === id)?.name)
-        .filter(Boolean) as string[],
+        .map((id) => allCategories.find((c) => c.id === id))
+        .filter((c): c is NonNullable<typeof c> => Boolean(c)),
     [budget?.categoryIds, allCategories],
   )
-
   const periodRange = useMemo(() => {
     if (!budget) return null
     return getBudgetPeriodRange(
@@ -88,7 +111,7 @@ function BudgetDetailInner({ budgetId }: { budgetId: string }) {
   useEffect(() => {
     if (!budget) return
     let cancelled = false
-    const fetch = () =>
+    const fetch = () => {
       getBudgetSpent(
         budget.accountIds,
         budget.categoryIds,
@@ -98,6 +121,16 @@ function BudgetDetailInner({ budgetId }: { budgetId: string }) {
       ).then((v) => {
         if (!cancelled) setSpentAmount(v)
       })
+      getBudgetSpentByCategory(
+        budget.accountIds,
+        budget.categoryIds,
+        budget.period,
+        budget.startDate.toISOString(),
+        budget.endDate?.toISOString() ?? null,
+      ).then((v) => {
+        if (!cancelled) setSpentByCategory(v)
+      })
+    }
     fetch()
     const unsub = on("transactions:dirty", fetch)
     return () => {
@@ -135,7 +168,7 @@ function BudgetDetailInner({ budgetId }: { budgetId: string }) {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: budget?.name ?? t("screens.settings.budgets.detail.title"),
+      title: t("screens.settings.budgets.detail.title"),
       headerRight: () => (
         <Button
           variant="ghost"
@@ -151,7 +184,7 @@ function BudgetDetailInner({ budgetId }: { budgetId: string }) {
         </Button>
       ),
     })
-  }, [navigation, router, budgetId, budget?.name, t])
+  }, [navigation, router, budgetId, t])
 
   if (!budget) {
     return (
@@ -165,116 +198,256 @@ function BudgetDetailInner({ budgetId }: { budgetId: string }) {
     )
   }
 
-  const progress = budget.amount > 0 ? spentAmount / budget.amount : 0
-  const clampedProgress = Math.min(progress, 1)
-  const isOverBudget = progress > 1
-  const remaining = Math.max(budget.amount - spentAmount, 0)
+  const limit = budget.amount
+  const spent = spentAmount
+  const isOverBudget = spent > limit
+  const remaining = limit - spent
 
-  const progressBarColor = isOverBudget
-    ? theme.colors.error
-    : theme.colors.primary
+  // Period bounds — match card logic.
+  const { periodStart, periodEnd } = (() => {
+    const now = new Date()
+    const wso = getWeekStartsOn()
+    switch (budget.period) {
+      case "daily":
+        return { periodStart: startOfDay(now), periodEnd: endOfDay(now) }
+      case "weekly":
+        return {
+          periodStart: startOfWeek(now, { weekStartsOn: wso }),
+          periodEnd: endOfWeek(now, { weekStartsOn: wso }),
+        }
+      case "monthly":
+        return { periodStart: startOfMonth(now), periodEnd: endOfMonth(now) }
+      case "yearly":
+        return { periodStart: startOfYear(now), periodEnd: endOfYear(now) }
+      default:
+        return {
+          periodStart: budget.startDate,
+          periodEnd: budget.endDate ?? now,
+        }
+    }
+  })()
+
+  const totalDays =
+    Math.max(differenceInCalendarDays(periodEnd, periodStart), 0) + 1
+  const elapsedDays = Math.min(
+    Math.max(differenceInCalendarDays(new Date(), periodStart), 0) + 1,
+    totalDays,
+  )
+  const daysRemaining = Math.max(totalDays - elapsedDays, 0)
+  const timeRatio = totalDays > 0 ? elapsedDays / totalDays : 0
+  const spendRatio = limit > 0 ? Math.min(spent / limit, 1) : 0
+
+  const status: BudgetStatus = isOverBudget
+    ? "over"
+    : limit > 0 && spent / limit - timeRatio >= 0.1
+      ? "watch"
+      : "onTrack"
+
+  const statusColor = {
+    onTrack: theme.colors.customColors.income,
+    watch: theme.colors.customColors.warning,
+    over: theme.colors.customColors.expense,
+  }[status]
+  const statusBg = `${statusColor}20`
+  const progressBarColor = statusColor
 
   const periodLabel =
     budget.period === "custom"
       ? formatCustomPeriodRange(budget.startDate, budget.endDate)
       : t(`screens.settings.budgets.periods.${budget.period}` as TranslationKey)
 
-  const categoryLabel =
-    categoryNames.length > 0
-      ? categoryNames.join(", ")
-      : t("screens.settings.budgets.card.noCategory")
+  const formatAmt = (n: number) => {
+    const raw = formatDisplayValue(n.toString(), {
+      currency: budget.currencyCode,
+      currencyDisplay: currencyLook,
+      hideSign: true,
+    })
+    return privacyMode ? raw.replace(/[\d٠-٩۰-۹]/gu, "⁕") : raw
+  }
+  const insight = isOverBudget
+    ? t(
+        `screens.settings.budgets.card.insight.over.${budget.period}` as TranslationKey,
+        {
+          amount: formatAmt(Math.abs(remaining)),
+          range:
+            budget.period === "custom"
+              ? formatCustomPeriodRange(budget.startDate, budget.endDate)
+              : "",
+        },
+      )
+    : daysRemaining > 0
+      ? t("screens.settings.budgets.card.insight.dailyPace", {
+          amount: formatAmt(remaining / daysRemaining),
+          count: daysRemaining,
+        })
+      : null
+
+  // Per-category breakdown — sorted by spend descending, only categories with
+  // non-zero spend. The segmented progress bar mirrors this order so colors
+  // map left-to-right.
+  const categoryBreakdown = linkedCategories
+    .map((c) => ({ category: c, spent: spentByCategory[c.id] ?? 0 }))
+    .sort((a, b) => b.spent - a.spent)
+
+  // Uncategorized portion — when total spend exceeds the sum of category
+  // segments (transactions without a linked category, etc.).
+  const categorizedTotal = categoryBreakdown.reduce(
+    (sum, b) => sum + b.spent,
+    0,
+  )
+  const uncategorizedSpent = Math.max(spent - categorizedTotal, 0)
+
+  // Segment widths are percentages of the limit so segments stay proportional
+  // to their share of spend. We cap each at 100% so a single over-budget
+  // segment doesn't overflow the bar visually.
+  const segmentPct = (n: number) =>
+    limit > 0 ? Math.min((n / limit) * 100, 100) : 0
 
   const headerContent = (
     <View style={styles.headerCard}>
-      {/* Icon + name + period badge */}
-      <View style={styles.headerTopRow}>
-        <DynamicIcon
-          icon={budget.icon || "chart-pie"}
-          size={36}
-          colorScheme={budget.colorScheme}
-          variant="badge"
-        />
-        <View style={styles.headerInfo}>
-          <Text style={styles.budgetName}>{budget.name}</Text>
-          <View style={styles.metaRow}>
-            <View style={styles.periodBadge}>
-              <Text style={styles.periodBadgeText}>{periodLabel}</Text>
-            </View>
-            {isOverBudget ? (
-              <View style={styles.overBudgetBadge}>
-                <IconSvg
-                  name="alert-triangle"
-                  size={14}
-                  color={theme.colors.error}
+      <View style={styles.titleRow}>
+        <View style={styles.titleLeft}>
+          <View style={styles.nameRow}>
+            <Text style={styles.budgetName} numberOfLines={1}>
+              {budget.name}
+            </Text>
+            {budget.isActive ? (
+              <View style={[styles.statusBadge, { backgroundColor: statusBg }]}>
+                <RNView
+                  style={[styles.statusDot, { backgroundColor: statusColor }]}
                 />
-                <Text style={styles.overBudgetText}>
-                  {t("screens.settings.budgets.card.overBudget")}
+                <Text
+                  style={[
+                    styles.statusText,
+                    { color: statusColor },
+                    isRTL && styles.statusTextRTL,
+                  ]}
+                >
+                  {t(
+                    `screens.settings.budgets.card.status.${status}` as TranslationKey,
+                  )}
                 </Text>
               </View>
-            ) : null}
+            ) : (
+              <View style={styles.disabledBadge}>
+                <Text style={styles.disabledText}>
+                  {t("screens.settings.budgets.card.disabled")}
+                </Text>
+              </View>
+            )}
           </View>
+          <Text style={styles.subtitle} numberOfLines={1}>
+            {periodLabel} ·{" "}
+            {t("screens.settings.budgets.card.dayXofY", {
+              current: elapsedDays,
+              total: totalDays,
+            })}
+          </Text>
+        </View>
+        <View style={styles.amountColumn}>
+          <Money
+            value={spent}
+            currency={budget.currencyCode}
+            tone="transfer"
+            hideSign
+            style={[styles.spentAmount, isOverBudget && { color: statusColor }]}
+          />
+          <Text style={styles.ofLimit}>
+            {t("screens.settings.budgets.card.of")}{" "}
+            <Money
+              value={limit}
+              currency={budget.currencyCode}
+              tone="transfer"
+              hideSign
+              variant="small"
+              style={styles.ofLimit}
+            />
+          </Text>
         </View>
       </View>
 
-      {/* Categories */}
-      <Text style={styles.categoryText}>{categoryLabel}</Text>
+      <View style={styles.segmentTrack}>
+        {categoryBreakdown.length > 0 || uncategorizedSpent > 0 ? (
+          <View style={styles.segmentRow}>
+            {categoryBreakdown.map((b) => (
+              <RNView
+                key={b.category.id}
+                style={{
+                  width: `${segmentPct(b.spent)}%` as DimensionValue,
+                  height: "100%",
+                  backgroundColor:
+                    b.category.colorScheme?.primary ?? progressBarColor,
+                }}
+              />
+            ))}
+            {uncategorizedSpent > 0 && (
+              <RNView
+                style={{
+                  width: `${segmentPct(uncategorizedSpent)}%` as DimensionValue,
+                  height: "100%",
+                  backgroundColor: progressBarColor,
+                }}
+              />
+            )}
+          </View>
+        ) : (
+          <RNView
+            style={{
+              width: `${(spendRatio * 100).toFixed(1)}%` as DimensionValue,
+              height: "100%",
+              backgroundColor: progressBarColor,
+            }}
+          />
+        )}
+      </View>
 
-      {/* Accounts */}
-      <Text style={styles.accountsText}>
+      {categoryBreakdown.length > 0 && (
+        <View style={styles.breakdownList}>
+          {categoryBreakdown.map((b) => (
+            <View key={b.category.id} style={styles.breakdownRow}>
+              <DynamicIcon
+                icon={b.category.icon}
+                colorScheme={b.category.colorScheme}
+                size={16}
+              />
+              <Text style={styles.breakdownName} numberOfLines={1}>
+                {b.category.name}
+              </Text>
+              <Money
+                value={b.spent}
+                currency={budget.currencyCode}
+                tone="transfer"
+                hideSign
+                style={styles.breakdownAmount}
+              />
+            </View>
+          ))}
+          {uncategorizedSpent > 0 && (
+            <View style={styles.breakdownRow}>
+              <View style={styles.uncategorizedDot} />
+              <Text style={styles.breakdownName} numberOfLines={1}>
+                {t("screens.settings.budgets.card.uncategorized")}
+              </Text>
+              <Money
+                value={uncategorizedSpent}
+                currency={budget.currencyCode}
+                tone="transfer"
+                hideSign
+                style={styles.breakdownAmount}
+              />
+            </View>
+          )}
+        </View>
+      )}
+
+      {insight && <Text style={styles.insight}>{insight}</Text>}
+
+      <Text style={styles.accountsText} numberOfLines={1}>
         {accountNames.length > 0
           ? accountNames.join(", ")
           : t("screens.settings.budgets.card.allAccounts")}
       </Text>
 
-      {/* Progress bar */}
-      <View style={styles.progressSection}>
-        <View style={styles.progressTrack}>
-          <RNView
-            style={[
-              styles.progressFill,
-              {
-                width: `${clampedProgress * 100}%`,
-                backgroundColor: progressBarColor,
-              },
-            ]}
-          />
-        </View>
-        <View style={styles.amountRow}>
-          <Text style={styles.amountText}>
-            {t("screens.settings.budgets.card.spent")}:{" "}
-            <Money
-              value={spentAmount}
-              currency={budget.currencyCode}
-              tone="transfer"
-              hideSign
-            />{" "}
-            {t("screens.settings.budgets.card.of")}{" "}
-            <Money
-              value={budget.amount}
-              currency={budget.currencyCode}
-              tone="transfer"
-              hideSign
-            />
-          </Text>
-          <Text style={styles.remainingText}>
-            {isOverBudget ? (
-              t("screens.settings.budgets.card.overBudget")
-            ) : (
-              <>
-                <Money
-                  value={remaining}
-                  currency={budget.currencyCode}
-                  tone="transfer"
-                  hideSign
-                />{" "}
-                {t("screens.settings.budgets.card.remaining")}
-              </>
-            )}
-          </Text>
-        </View>
-      </View>
-
-      {/* Transactions section label */}
       <Text style={styles.transactionsLabel}>
         {t("screens.settings.budgets.detail.transactions")}
       </Text>
@@ -335,88 +508,127 @@ const styles = StyleSheet.create((theme) => ({
     padding: 20,
     gap: 14,
   },
-  headerTopRow: {
+  titleRow: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+    gap: 12,
+  },
+  titleLeft: {
+    flex: 1,
+    minWidth: 0,
+    gap: 4,
+  },
+  nameRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    flexWrap: "wrap",
+  },
+  budgetName: {
+    ...theme.typography.titleLarge,
+    fontWeight: "700",
+    color: theme.colors.onSurface,
+    flexShrink: 1,
+  },
+  subtitle: {
+    fontSize: theme.typography.labelMedium.fontSize,
+    color: theme.colors.onSecondary,
+  },
+  statusBadge: {
+    flexShrink: 0,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 100,
+  },
+  statusDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+  },
+  statusText: {
+    fontSize: theme.typography.labelXSmall.fontSize,
+    fontWeight: "700",
+    letterSpacing: 0.5,
+    textTransform: "uppercase",
+  },
+  statusTextRTL: {
+    letterSpacing: 0,
+  },
+  disabledBadge: {
+    flexShrink: 0,
+    backgroundColor: theme.colors.secondary,
+    borderRadius: theme.radius,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+  },
+  disabledText: {
+    fontSize: theme.typography.labelSmall.fontSize,
+    color: theme.colors.onSecondary,
+    fontWeight: "600",
+  },
+  amountColumn: {
+    alignItems: "flex-end",
+    flexShrink: 0,
+    gap: 2,
+  },
+  spentAmount: {
+    fontSize: theme.typography.titleLarge.fontSize,
+    fontWeight: "700",
+    color: theme.colors.onSurface,
+  },
+  ofLimit: {
+    fontSize: theme.typography.labelSmall.fontSize,
+    color: theme.colors.onSecondary,
+  },
+  segmentTrack: {
+    height: 8,
+    backgroundColor: theme.colors.secondary,
+    borderRadius: 4,
+    overflow: "hidden",
+  },
+  segmentRow: {
+    flexDirection: "row",
+    height: "100%",
+    gap: 2,
+  },
+  breakdownList: {
+    gap: 10,
+    marginTop: 2,
+  },
+  breakdownRow: {
     flexDirection: "row",
     alignItems: "center",
     gap: 12,
   },
-  headerInfo: {
-    flex: 1,
-    gap: 4,
-  },
-  budgetName: {
-    ...theme.typography.titleMedium,
-    fontWeight: "700",
+  breakdownName: {
+    fontSize: theme.typography.bodyMedium.fontSize,
+    fontWeight: "600",
     color: theme.colors.onSurface,
+    flex: 1,
   },
-  metaRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-  },
-  periodBadge: {
-    backgroundColor: theme.colors.secondary,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: theme.radius,
-  },
-  periodBadgeText: {
-    ...theme.typography.labelXSmall,
-    fontWeight: "600",
-    color: theme.colors.onSecondary,
-  },
-  overBudgetBadge: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4,
-    backgroundColor: `${theme.colors.error}20`,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: theme.radius,
-  },
-  overBudgetText: {
-    ...theme.typography.labelXSmall,
-    fontWeight: "600",
-    color: theme.colors.error,
-  },
-  categoryText: {
+  breakdownAmount: {
     fontSize: theme.typography.bodyMedium.fontSize,
     color: theme.colors.onSecondary,
+    fontWeight: "600",
+  },
+  uncategorizedDot: {
+    width: 32,
+    height: 32,
+    borderRadius: theme.radius,
+    backgroundColor: theme.colors.secondary,
   },
   accountsText: {
-    fontSize: theme.typography.bodyMedium.fontSize,
+    fontSize: theme.typography.labelSmall.fontSize,
     color: theme.colors.onSecondary,
   },
-
-  // Progress
-  progressSection: {
-    gap: 8,
-  },
-  progressTrack: {
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: theme.colors.secondary,
-    overflow: "hidden",
-  },
-  progressFill: {
-    height: "100%",
-    borderRadius: 4,
-  },
-  amountRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  amountText: {
-    fontSize: theme.typography.bodyMedium.fontSize,
+  insight: {
+    fontSize: theme.typography.labelSmall.fontSize,
     color: theme.colors.onSecondary,
-    flex: 1,
-    marginRight: 8,
-  },
-  remainingText: {
-    fontSize: theme.typography.bodyMedium.fontSize,
-    color: theme.colors.onSecondary,
-    flexShrink: 0,
+    fontStyle: "italic",
   },
 
   // Transactions
