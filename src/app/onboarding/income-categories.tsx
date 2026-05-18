@@ -4,9 +4,8 @@ import { useTranslation } from "react-i18next"
 import { FlatList } from "react-native"
 import { StyleSheet } from "react-native-unistyles"
 
-import { DynamicIcon } from "~/components/dynamic-icon"
+import { PresetListItem } from "~/components/preset-list-item"
 import { Button } from "~/components/ui/button"
-import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
@@ -97,81 +96,53 @@ export default function OnboardingIncomeCategoriesScreen() {
 
   const renderItem = ({ item }: { item: CategoryPreset }) => {
     const key = `${item.icon}:${item.type}`
-    const isAdded = addedKeys.has(key)
-    const isSelected = selectedKeys.has(key)
     return (
-      <Pressable
-        style={styles.presetItem}
+      <PresetListItem
+        icon={item.icon}
+        label={t(item.name as TranslationKey)}
+        isSelected={selectedKeys.has(key)}
+        isAdded={addedKeys.has(key)}
         onPress={() => togglePreset(key)}
-        disabled={isAdded}
-      >
-        <DynamicIcon icon={item.icon} size={24} />
-        <View style={styles.presetTextContainer}>
-          <Text style={styles.presetName}>
-            {t(item.name as TranslationKey)}
-          </Text>
-        </View>
-        {isAdded ? (
-          <View style={styles.addedBadge}>
-            <Text style={styles.addedText}>
-              {t("components.categories.presets.added")}
-            </Text>
-          </View>
-        ) : isSelected ? (
-          <View style={styles.checkmark}>
-            <IconSvg
-              name="check"
-              size={16}
-              color={styles.checkmarkIconColor.color}
-            />
-          </View>
-        ) : (
-          <View style={styles.plusCircle}>
-            <IconSvg name="plus" size={20} />
-          </View>
-        )}
-      </Pressable>
+      />
     )
   }
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        {/* <Text style={styles.title}>
-          {t("onboarding.incomeCategories.title")}
-        </Text> */}
         <Text style={styles.subtitle}>
           {t("onboarding.incomeCategories.subtitle")}
         </Text>
       </View>
 
-      <Pressable style={styles.selectAllRow} onPress={toggleSelectAll}>
-        <Text style={styles.selectAllText}>
-          {allSelected
-            ? t("components.categories.presets.deselectAll")
-            : t("components.categories.presets.selectAll")}
+      <View style={styles.selectionBar}>
+        <Text style={styles.selectionCount}>
+          {selectedKeys.size > 0
+            ? t("components.categories.presets.selectedCount", {
+                count: selectedKeys.size,
+              })
+            : t("components.categories.presets.noneSelected")}
         </Text>
-        <IconSvg name={allSelected ? "checks" : "check"} size={20} />
-
-        {/* {allSelected ? (
-          <View style={styles.checkmark}>
-            <IconSvg
-              name="check"
-              size={16}
-              color={styles.checkmarkIconColor.color}
-            />
-          </View>
-        ) : (
-          <View style={styles.plusCircle}>
-            <IconSvg name="plus" size={20} />
-          </View>
-        )} */}
-      </Pressable>
+        <Pressable
+          style={styles.selectAllButton}
+          onPress={toggleSelectAll}
+          hitSlop={8}
+        >
+          <Text style={styles.selectAllText}>
+            {allSelected
+              ? t("components.categories.presets.deselectAll")
+              : t("components.categories.presets.selectAll")}
+          </Text>
+        </Pressable>
+      </View>
 
       <FlatList
         data={IncomePresets}
         keyExtractor={(item) => `${item.icon}:${item.type}`}
         renderItem={renderItem}
+        numColumns={3}
+        columnWrapperStyle={styles.columnWrapper}
+        contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
         style={styles.list}
       />
@@ -199,84 +170,46 @@ const styles = StyleSheet.create((theme) => ({
   header: {
     paddingHorizontal: 20,
     paddingTop: 16,
-    paddingBottom: 12,
-    gap: 4,
-  },
-  title: {
-    fontSize: theme.typography.displaySmall.fontSize,
-    fontWeight: "700",
-    color: theme.colors.onSurface,
+    paddingBottom: 8,
   },
   subtitle: {
     fontSize: theme.typography.labelLarge.fontSize,
     color: theme.colors.onSecondary,
     lineHeight: 20,
   },
-  selectAllRow: {
+  selectionBar: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
     paddingHorizontal: 20,
-    paddingVertical: 12,
-    gap: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: theme.colors.secondary,
+    paddingVertical: 10,
+  },
+  selectionCount: {
+    fontSize: theme.typography.labelMedium.fontSize,
+    fontWeight: "600",
+    color: theme.colors.onSecondary,
+  },
+  selectAllButton: {
+    paddingHorizontal: 14,
+    paddingVertical: 6,
+    borderRadius: 20,
+    backgroundColor: `${theme.colors.primary}18`,
   },
   selectAllText: {
-    flex: 1,
-    fontSize: theme.typography.labelLarge.fontSize,
+    fontSize: theme.typography.labelMedium.fontSize,
     fontWeight: "600",
     color: theme.colors.primary,
   },
   list: {
     flex: 1,
   },
-  presetItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 20,
-    gap: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: theme.colors.secondary,
+  listContent: {
+    paddingHorizontal: 16,
+    paddingBottom: 8,
+    gap: 8,
   },
-  presetTextContainer: {
-    flex: 1,
-  },
-  presetName: {
-    fontSize: theme.typography.bodyLarge.fontSize,
-    fontWeight: "600",
-    color: theme.colors.onSurface,
-  },
-  checkmark: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: theme.colors.primary,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  checkmarkIconColor: {
-    color: theme.colors.onPrimary,
-  },
-  plusCircle: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: theme.colors.surface,
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 1,
-    borderColor: theme.colors.onSecondary,
-  },
-  addedBadge: {
-    paddingHorizontal: 10,
-    paddingVertical: 3,
-    borderRadius: 16,
-    backgroundColor: theme.colors.primary,
-  },
-  addedText: {
-    fontSize: theme.typography.labelMedium.fontSize,
-    fontWeight: "600",
-    color: theme.colors.onPrimary,
+  columnWrapper: {
+    gap: 8,
   },
   buttonRow: {
     paddingHorizontal: 20,

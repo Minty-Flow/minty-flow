@@ -9,7 +9,7 @@ import {
   useState,
 } from "react"
 import { useTranslation } from "react-i18next"
-import { FlatList, View as RNView } from "react-native"
+import { type DimensionValue, FlatList, View as RNView } from "react-native"
 import type { SwipeableMethods } from "react-native-gesture-handler/ReanimatedSwipeable"
 import { StyleSheet, useUnistyles } from "react-native-unistyles"
 
@@ -26,11 +26,30 @@ import { on } from "~/database/events"
 import type { TransactionWithRelations } from "~/database/mappers/hydrateTransactions"
 import { getGoalProgress } from "~/database/repos/goal-repo"
 import { unarchiveGoalById } from "~/database/services-sqlite/goal-service"
+import type { TranslationKey } from "~/i18n/config"
 import { useAccounts } from "~/stores/db/account.store"
 import { useGoal } from "~/stores/db/goal.store"
 import { useTransactions } from "~/stores/db/transaction.store"
+import { useLanguageStore } from "~/stores/language.store"
+import { useMoneyFormattingStore } from "~/stores/money-formatting.store"
+import type { Goal } from "~/types/goals"
 import { logger } from "~/utils/logger"
+import { formatDisplayValue } from "~/utils/number-format"
 import { Toast } from "~/utils/toast"
+
+type GoalStatus = "onTrack" | "behind" | "flexible" | "reached"
+
+function getGoalStatus(goal: Goal, progress: number): GoalStatus {
+  if (progress >= 1) return "reached"
+  if (!goal.targetDate) return "flexible"
+  const today = new Date()
+  const daysLeft = differenceInDays(goal.targetDate, today)
+  if (daysLeft < 0) return "behind"
+  const totalDays = differenceInDays(goal.targetDate, goal.createdAt)
+  if (totalDays <= 0) return "onTrack"
+  const elapsed = differenceInDays(today, goal.createdAt)
+  return progress >= Math.min(elapsed / totalDays, 1) ? "onTrack" : "behind"
+}
 
 /* ------------------------------------------------------------------ */
 /* Detail screen                                                      */
@@ -41,6 +60,9 @@ function GoalDetailInner({ goalId }: { goalId: string }) {
   const router = useRouter()
   const navigation = useNavigation()
   const { theme } = useUnistyles()
+  const isRTL = useLanguageStore((s) => s.isRTL)
+  const privacyMode = useMoneyFormattingStore((s) => s.privacyMode)
+  const currencyLook = useMoneyFormattingStore((s) => s.currencyLook)
   const openSwipeableRef = useRef<SwipeableMethods | null>(null)
   const [unarchiveModalVisible, setUnarchiveModalVisible] = useState(false)
 
@@ -113,7 +135,7 @@ function GoalDetailInner({ goalId }: { goalId: string }) {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: goal?.name ?? t("screens.settings.goals.detail.title"),
+      title: t("screens.settings.goals.detail.title"),
       headerRight: () =>
         isArchived ? (
           <Button
@@ -138,7 +160,7 @@ function GoalDetailInner({ goalId }: { goalId: string }) {
           </Button>
         ),
     })
-  }, [navigation, router, goalId, goal?.name, isArchived, t])
+  }, [navigation, router, goalId, isArchived, t])
 
   if (!goal) {
     return (
@@ -159,24 +181,69 @@ function GoalDetailInner({ goalId }: { goalId: string }) {
   const isCompleted = progress >= 1
   const remaining = Math.max(goal.targetAmount - resolved, 0)
 
-  const progressBarColor = isCompleted
-    ? theme.colors.customColors.income
-    : theme.colors.primary
+  const status = getGoalStatus(goal, progress)
 
-  const targetDateLabel = (): string => {
+  const statusColors: Record<
+    GoalStatus,
+    { dot: string; text: string; bg: string }
+  > = {
+    reached: {
+      dot: theme.colors.customColors.income,
+      text: theme.colors.customColors.income,
+      bg: `${theme.colors.customColors.income}20`,
+    },
+    onTrack: {
+      dot: theme.colors.customColors.income,
+      text: theme.colors.customColors.income,
+      bg: `${theme.colors.customColors.income}20`,
+    },
+    behind: {
+      dot: theme.colors.customColors.expense,
+      text: theme.colors.customColors.expense,
+      bg: `${theme.colors.customColors.expense}20`,
+    },
+    flexible: {
+      dot: theme.colors.onSecondary,
+      text: theme.colors.onSecondary,
+      bg: theme.colors.secondary,
+    },
+  }
+  const badge = statusColors[status]
+
+  const progressBarColor =
+    isCompleted || status === "reached"
+      ? theme.colors.customColors.income
+      : status === "behind"
+        ? theme.colors.customColors.expense
+        : theme.colors.primary
+
+  const dateSubtitle = (): string => {
+    if (isCompleted) return t("screens.settings.goals.card.reachedLabel")
     if (!goal.targetDate) return t("screens.settings.goals.card.noDeadline")
     const diff = differenceInDays(goal.targetDate, new Date())
     if (diff === 0)
-      return t("screens.settings.goals.card.daysLeft", {
-        count: 0,
-      })
+      return t("screens.settings.goals.card.daysLeft", { count: 0 })
     if (diff < 0)
-      return t("screens.settings.goals.card.overdue", {
-        count: Math.abs(diff),
-      })
-    return t("screens.settings.goals.card.daysLeft", {
-      count: diff,
+      return t("screens.settings.goals.card.overdue", { count: Math.abs(diff) })
+    return t("screens.settings.goals.card.daysLeft", { count: diff })
+  }
+
+  const insightText = (): string => {
+    if (isCompleted) return t("screens.settings.goals.card.insight.goalReached")
+    if (!goal.targetDate) return t("screens.settings.goals.card.noDeadline")
+    const today = new Date()
+    const daysLeft = Math.max(differenceInDays(goal.targetDate, today), 1)
+    const daily = remaining / daysLeft
+    const raw = formatDisplayValue(daily, {
+      currency: goal.currencyCode,
+      currencyDisplay: currencyLook,
+      hideSign: true,
     })
+    const amount = privacyMode ? raw.replace(/[\d٠-٩۰-۹]/gu, "⁕") : raw
+    const key = isExpenseGoal
+      ? "screens.settings.goals.card.insight.spendPerDay"
+      : "screens.settings.goals.card.insight.savePerDay"
+    return t(key, { amount })
   }
 
   const progressLabel = isExpenseGoal
@@ -185,70 +252,72 @@ function GoalDetailInner({ goalId }: { goalId: string }) {
 
   const headerContent = (
     <View style={styles.headerCard}>
-      {/* Icon + name + type badge */}
       <View style={styles.headerTopRow}>
         <DynamicIcon
           icon={goal.icon || "target"}
-          size={36}
+          size={24}
           colorScheme={goal.colorScheme}
           variant="badge"
         />
         <View style={styles.headerInfo}>
-          <Text style={styles.goalName}>{goal.name}</Text>
-          <View style={styles.metaRow}>
-            <View style={styles.typeBadge}>
-              <Text style={styles.typeBadgeText}>
-                {isExpenseGoal
-                  ? t("screens.settings.goals.card.type.expense")
-                  : t("screens.settings.goals.card.type.savings")}
-              </Text>
-            </View>
-            {isArchived ? (
-              <View style={styles.archivedContainer}>
-                <IconSvg name="archive" size={14} />
-
-                <Text style={styles.archivedText}>
-                  {t("screens.settings.goals.card.archived")}
-                </Text>
-              </View>
-            ) : isCompleted ? (
-              <View style={styles.completedBadge}>
-                <IconSvg
-                  name="check"
-                  size={14}
-                  color={theme.colors.customColors.income}
-                />
-                <Text style={styles.completedText}>
-                  {t("screens.settings.goals.card.completed")}
-                </Text>
-              </View>
-            ) : (
-              <Text style={styles.dateText}>{targetDateLabel()}</Text>
-            )}
-          </View>
+          <Text style={styles.goalName} numberOfLines={1}>
+            {goal.name}
+          </Text>
+          <Text style={styles.dateSubtitle} numberOfLines={1}>
+            {dateSubtitle()}
+          </Text>
         </View>
+        {isArchived ? (
+          <View style={styles.archivedBadge}>
+            <IconSvg
+              name="archive"
+              size={12}
+              color={theme.colors.onSecondary}
+            />
+            <Text
+              style={[styles.archivedText, isRTL && styles.archivedTextRTL]}
+            >
+              {t("screens.settings.goals.card.archived")}
+            </Text>
+          </View>
+        ) : (
+          <View style={[styles.statusBadge, { backgroundColor: badge.bg }]}>
+            <RNView
+              style={[styles.statusDot, { backgroundColor: badge.dot }]}
+            />
+            <Text
+              style={[
+                styles.statusText,
+                { color: badge.text },
+                isRTL && styles.statusTextRTL,
+              ]}
+            >
+              {t(
+                `screens.settings.goals.card.status.${status}` as TranslationKey,
+              )}
+            </Text>
+          </View>
+        )}
       </View>
 
-      {/* Description */}
       {goal.description ? (
         <Text style={styles.description}>{goal.description}</Text>
       ) : null}
 
-      {/* Accounts */}
       <Text style={styles.accountsText}>
         {accountNames.length > 0
           ? accountNames.join(", ")
           : t("screens.settings.goals.card.allAccounts")}
       </Text>
 
-      {/* Progress bar */}
       <View style={styles.progressSection}>
         <View style={styles.progressTrack}>
           <RNView
             style={[
               styles.progressFill,
               {
-                width: `${clampedProgress * 100}%`,
+                width:
+                  `${(clampedProgress * 100).toFixed(1)}%` as DimensionValue,
                 backgroundColor: progressBarColor,
               },
             ]}
@@ -256,7 +325,7 @@ function GoalDetailInner({ goalId }: { goalId: string }) {
         </View>
         <View style={styles.amountRow}>
           <Text style={styles.amountText}>
-            {progressLabel}:{" "}
+            {progressLabel}{" "}
             <Money
               value={resolved}
               currency={goal.currencyCode}
@@ -271,23 +340,31 @@ function GoalDetailInner({ goalId }: { goalId: string }) {
               hideSign
             />
           </Text>
-          <Text style={styles.remainingText}>
-            {isCompleted ? (
-              t("screens.settings.goals.card.completed")
-            ) : (
-              <>
-                <Money
-                  value={remaining}
-                  currency={goal.currencyCode}
-                  tone="transfer"
-                  hideSign
-                />{" "}
-                {t("screens.settings.goals.card.remaining")}
-              </>
-            )}
-          </Text>
+          {isCompleted ? (
+            <Text
+              style={[
+                styles.remainingText,
+                { color: theme.colors.customColors.income },
+              ]}
+            >
+              100%
+            </Text>
+          ) : (
+            <Money
+              value={remaining}
+              currency={goal.currencyCode}
+              tone="income"
+              hideSign
+              style={[
+                styles.remainingText,
+                { color: theme.colors.customColors.income },
+              ]}
+            />
+          )}
         </View>
       </View>
+
+      <Text style={styles.insight}>{insightText()}</Text>
 
       {/* Pending transactions notice — always shown so users know pending txns are excluded */}
       <View style={styles.pendingNoticeRow}>
@@ -383,56 +460,60 @@ const styles = StyleSheet.create((theme) => ({
   },
   headerInfo: {
     flex: 1,
-    gap: 4,
+    gap: 2,
+    minWidth: 0,
   },
   goalName: {
     ...theme.typography.titleMedium,
     fontWeight: "700",
     color: theme.colors.onSurface,
   },
-  metaRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-  },
-  typeBadge: {
-    backgroundColor: theme.colors.secondary,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: theme.radius,
-  },
-  typeBadgeText: {
-    ...theme.typography.labelXSmall,
-    fontWeight: "600",
-    color: theme.colors.onSecondary,
-  },
-  archivedContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 6,
-  },
-  archivedText: {
-    ...theme.typography.labelXSmall,
-    fontWeight: "600",
-    color: theme.colors.primary,
-  },
-  completedBadge: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4,
-    backgroundColor: `${theme.colors.customColors.income}20`,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: theme.radius,
-  },
-  completedText: {
-    ...theme.typography.labelXSmall,
-    fontWeight: "600",
-    color: theme.colors.customColors.income,
-  },
-  dateText: {
+  dateSubtitle: {
     fontSize: theme.typography.labelMedium.fontSize,
     color: theme.colors.onSecondary,
+  },
+  statusBadge: {
+    flexShrink: 0,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 100,
+  },
+  statusDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+  },
+  statusText: {
+    fontSize: theme.typography.labelXSmall.fontSize,
+    fontWeight: "700",
+    letterSpacing: 0.5,
+    textTransform: "uppercase",
+  },
+  statusTextRTL: {
+    letterSpacing: 0,
+  },
+  archivedBadge: {
+    flexShrink: 0,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 100,
+    backgroundColor: theme.colors.secondary,
+  },
+  archivedText: {
+    fontSize: theme.typography.labelXSmall.fontSize,
+    fontWeight: "700",
+    letterSpacing: 0.5,
+    color: theme.colors.onSecondary,
+    textTransform: "uppercase",
+  },
+  archivedTextRTL: {
+    letterSpacing: 0,
   },
   description: {
     fontSize: theme.typography.labelLarge.fontSize,
@@ -471,8 +552,13 @@ const styles = StyleSheet.create((theme) => ({
   },
   remainingText: {
     fontSize: theme.typography.bodyMedium.fontSize,
-    color: theme.colors.onSecondary,
     flexShrink: 0,
+    fontWeight: "600",
+  },
+  insight: {
+    fontSize: theme.typography.labelSmall.fontSize,
+    color: theme.colors.onSecondary,
+    fontStyle: "italic",
   },
 
   // Pending notice

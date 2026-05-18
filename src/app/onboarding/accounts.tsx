@@ -91,56 +91,52 @@ export default function OnboardingAccountsScreen() {
           {t("onboarding.accounts.suggested")}
         </Text>
 
-        {AccountPresets.map((preset) => {
-          const key = `${preset.icon}:${preset.type}`
-          const isExisting = existingKeys.has(key)
-          const isSelected = selectedKeys.has(key) || isExisting
-          return (
-            <Pressable
-              key={key}
-              style={[
-                styles.presetItem,
-                isSelected && styles.presetItemSelected,
-              ]}
-              onPress={() => togglePreset(key)}
-              disabled={isExisting}
-            >
-              <View
+        <View style={styles.cardList}>
+          {AccountPresets.map((preset) => {
+            const key = `${preset.icon}:${preset.type}`
+            const isExisting = existingKeys.has(key)
+            const isSelected = selectedKeys.has(key) || isExisting
+            return (
+              <Pressable
+                key={key}
                 style={[
-                  styles.iconCircle,
-                  isSelected && styles.iconCircleSelected,
+                  styles.card,
+                  isSelected && styles.cardSelected,
+                  isExisting && styles.cardAdded,
                 ]}
+                onPress={() => togglePreset(key)}
+                disabled={isExisting}
               >
-                <DynamicIcon icon={preset.icon} size={26} />
-              </View>
-              <Text style={styles.presetName}>
-                {t(preset.name as TranslationKey)}
-              </Text>
-              <View
-                style={[
-                  styles.indicator,
-                  isSelected && styles.indicatorSelected,
-                ]}
-              >
-                {isSelected ? (
-                  <IconSvg
-                    name="check"
-                    size={14}
-                    color={styles.checkIconColor.color}
-                  />
-                ) : (
-                  <IconSvg name="plus" size={16} />
+                <DynamicIcon icon={preset.icon} size={24} />
+                <View style={styles.cardText}>
+                  <Text
+                    style={[
+                      styles.cardName,
+                      isSelected && styles.cardNameSelected,
+                    ]}
+                  >
+                    {t(preset.name as TranslationKey)}
+                  </Text>
+                </View>
+                {isSelected && (
+                  <View style={styles.checkBadge}>
+                    <IconSvg
+                      name="check"
+                      size={14}
+                      color={styles.checkColor.color}
+                    />
+                  </View>
                 )}
-              </View>
-            </Pressable>
-          )
-        })}
+              </Pressable>
+            )
+          })}
+        </View>
 
         <Pressable
           style={styles.addNewButton}
           onPress={() => router.push(`/accounts/${NewEnum.NEW}/modify`)}
         >
-          <View style={styles.addNewIconCircle}>
+          <View style={styles.addNewIconWrap}>
             <IconSvg name="plus" size={20} />
           </View>
           <Text style={styles.addNewText}>
@@ -189,68 +185,64 @@ const styles = StyleSheet.create((theme) => ({
     letterSpacing: 1,
     textTransform: "uppercase",
     color: theme.colors.onSecondary,
-    marginBottom: 10,
+    marginBottom: 12,
   },
-  presetItem: {
+  cardList: {
+    gap: 10,
+  },
+  card: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 14,
-    backgroundColor: theme.colors.secondary,
+    gap: 16,
+    paddingHorizontal: 20,
+    paddingVertical: 18,
     borderRadius: theme.radius,
-    padding: 16,
-    marginBottom: 8,
+    backgroundColor: theme.colors.secondary,
   },
-  presetItemSelected: {
-    borderColor: theme.colors.primary,
+  cardSelected: {
+    backgroundColor: `${theme.colors.primary}18`,
   },
-  iconCircle: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: theme.colors.surface,
-    alignItems: "center",
-    justifyContent: "center",
+  cardAdded: {
+    opacity: 0.45,
   },
-  iconCircleSelected: {
-    backgroundColor: `${theme.colors.primary}20`,
-  },
-  presetName: {
+  cardText: {
     flex: 1,
+  },
+  cardName: {
     fontSize: theme.typography.bodyLarge.fontSize,
     fontWeight: "600",
     color: theme.colors.onSurface,
   },
-  indicator: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    borderWidth: 2,
-    borderColor: theme.colors.onSecondary,
+  cardNameSelected: {
+    color: theme.colors.primary,
+  },
+  checkBadge: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: theme.colors.primary,
     alignItems: "center",
     justifyContent: "center",
   },
-  indicatorSelected: {
-    backgroundColor: theme.colors.primary,
-    borderColor: theme.colors.primary,
-  },
-  checkIconColor: {
+  checkColor: {
     color: theme.colors.onPrimary,
   },
   addNewButton: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 14,
+    gap: 16,
+    paddingHorizontal: 20,
+    paddingVertical: 18,
+    marginTop: 10,
     borderRadius: theme.radius,
-    padding: 16,
-    marginTop: 8,
     borderWidth: 1.5,
-    borderColor: `${theme.colors.onSecondary}50`,
+    borderColor: `${theme.colors.onSecondary}40`,
     borderStyle: "dashed",
   },
-  addNewIconCircle: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+  addNewIconWrap: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     backgroundColor: theme.colors.secondary,
     alignItems: "center",
     justifyContent: "center",

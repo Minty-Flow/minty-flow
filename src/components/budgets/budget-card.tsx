@@ -1,7 +1,18 @@
-import { format } from "date-fns"
+import {
+  differenceInCalendarDays,
+  endOfDay,
+  endOfMonth,
+  endOfWeek,
+  endOfYear,
+  format,
+  startOfDay,
+  startOfMonth,
+  startOfWeek,
+  startOfYear,
+} from "date-fns"
 import { useEffect, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
-import { View as RNView } from "react-native"
+import { type DimensionValue, View as RNView } from "react-native"
 import { createMMKV } from "react-native-mmkv"
 import { StyleSheet, useUnistyles } from "react-native-unistyles"
 
@@ -14,7 +25,11 @@ import { on } from "~/database/events"
 import { getBudgetSpent } from "~/database/repos/budget-repo"
 import type { TranslationKey } from "~/i18n/config"
 import { useCategories } from "~/stores/db/category.store"
+import { useLanguageStore } from "~/stores/language.store"
+import { useMoneyFormattingStore } from "~/stores/money-formatting.store"
 import type { Budget } from "~/types/budgets"
+import { getWeekStartsOn } from "~/utils/get-week-start-on"
+import { formatDisplayValue } from "~/utils/number-format"
 import { formatCustomPeriodRange } from "~/utils/time-utils"
 import { Toast } from "~/utils/toast"
 
@@ -56,10 +71,6 @@ function getBudgetPeriodKey(budget: BudgetAlertCtx): string {
   }
 }
 
-// Module-level singleton — correct in production (shared across all BudgetCard
-// instances). In development, fast-refresh re-initializes this in-memory Set
-// while MMKV retains the persisted keys, so alerts may appear "stuck" after a
-// hot reload. Reload the full app (not just the module) to clear dev state.
 const alertedKeys = loadAlertedKeys()
 
 function hasAlertedInPeriod(budget: BudgetAlertCtx): boolean {
@@ -72,6 +83,8 @@ function markAlerted(budget: BudgetAlertCtx): void {
   budgetAlertStorage.set(ALERTED_STORAGE_KEY, JSON.stringify([...alertedKeys]))
 }
 
+type BudgetStatus = "onTrack" | "watch" | "over"
+
 interface BudgetCardProps {
   budget: Budget
   onPress: () => void
@@ -80,12 +93,17 @@ interface BudgetCardProps {
 export function BudgetCard({ budget, onPress }: BudgetCardProps) {
   const [spentAmount, setSpentAmount] = useState(0)
   const allCategories = useCategories()
+  const { t } = useTranslation()
+  const { theme } = useUnistyles()
+  const isRTL = useLanguageStore((s) => s.isRTL)
+  const privacyMode = useMoneyFormattingStore((s) => s.privacyMode)
+  const currencyLook = useMoneyFormattingStore((s) => s.currencyLook)
 
-  const categoryNames = useMemo(
+  const linkedCategories = useMemo(
     () =>
       budget.categoryIds
-        .map((id) => allCategories.find((c) => c.id === id)?.name)
-        .filter(Boolean) as string[],
+        .map((id) => allCategories.find((c) => c.id === id))
+        .filter((c): c is NonNullable<typeof c> => Boolean(c)),
     [budget.categoryIds, allCategories],
   )
 
@@ -115,14 +133,9 @@ export function BudgetCard({ budget, onPress }: BudgetCardProps) {
     budget.endDate,
   ])
 
-  const { t } = useTranslation()
-  const { theme } = useUnistyles()
-
   const spent = spentAmount
   const limit = budget.amount
 
-  // Destructure to stable primitives so the effect only re-runs when alert-relevant
-  // fields change, not on every budget field mutation (budget is a new ref each emission).
   const budgetId = budget.id
   const budgetName = budget.name
   const alertThreshold = budget.alertThreshold
@@ -156,18 +169,98 @@ export function BudgetCard({ budget, onPress }: BudgetCardProps) {
     t,
   ])
 
-  const ratio = limit > 0 ? Math.min(spent / limit, 1) : 0
+  // Period bounds — used for the TIME gauge. Rolling periods snap to current
+  // window; custom periods use the budget's own start/end (falling back to
+  // now if endDate is unset).
+  const { periodStart, periodEnd } = useMemo(() => {
+    const now = new Date()
+    const wso = getWeekStartsOn()
+    switch (budget.period) {
+      case "daily":
+        return { periodStart: startOfDay(now), periodEnd: endOfDay(now) }
+      case "weekly":
+        return {
+          periodStart: startOfWeek(now, { weekStartsOn: wso }),
+          periodEnd: endOfWeek(now, { weekStartsOn: wso }),
+        }
+      case "monthly":
+        return { periodStart: startOfMonth(now), periodEnd: endOfMonth(now) }
+      case "yearly":
+        return { periodStart: startOfYear(now), periodEnd: endOfYear(now) }
+      default:
+        return {
+          periodStart: budget.startDate,
+          periodEnd: budget.endDate ?? now,
+        }
+    }
+  }, [budget.period, budget.startDate, budget.endDate])
+
+  const totalDays =
+    Math.max(differenceInCalendarDays(periodEnd, periodStart), 0) + 1
+  const elapsedDays = Math.min(
+    Math.max(differenceInCalendarDays(new Date(), periodStart), 0) + 1,
+    totalDays,
+  )
+  const daysRemaining = Math.max(totalDays - elapsedDays, 0)
+  const timeRatio = totalDays > 0 ? elapsedDays / totalDays : 0
+  const spendRatio = limit > 0 ? Math.min(spent / limit, 1) : 0
+  const spendPercent = limit > 0 ? (spent / limit) * 100 : 0
+
   const isOverBudget = spent > limit
   const remaining = limit - spent
+  const status: BudgetStatus = isOverBudget
+    ? "over"
+    : limit > 0 && spent / limit - timeRatio >= 0.1
+      ? "watch"
+      : "onTrack"
 
-  const progressColor = isOverBudget
-    ? theme.colors.customColors.expense
-    : theme.colors.primary
+  const statusColor = {
+    onTrack: theme.colors.customColors.income,
+    watch: theme.colors.customColors.warning,
+    over: theme.colors.customColors.expense,
+  }[status]
+  const statusBg = `${statusColor}20`
 
-  const periodLabel =
-    budget.period === "custom"
-      ? formatCustomPeriodRange(budget.startDate, budget.endDate)
-      : t(`screens.settings.budgets.periods.${budget.period}` as TranslationKey)
+  const progressColor = statusColor
+
+  // Insight line: per-day pace remaining, or over-budget summary.
+  const insight = (() => {
+    const formatAmt = (n: number) => {
+      const raw = formatDisplayValue(n.toString(), {
+        currency: budget.currencyCode,
+        currencyDisplay: currencyLook,
+        hideSign: true,
+      })
+      return privacyMode ? raw.replace(/[\d٠-٩۰-۹]/gu, "⁕") : raw
+    }
+    if (isOverBudget) {
+      return t(
+        `screens.settings.budgets.card.insight.over.${budget.period}` as TranslationKey,
+        {
+          amount: formatAmt(Math.abs(remaining)),
+          range:
+            budget.period === "custom"
+              ? formatCustomPeriodRange(budget.startDate, budget.endDate)
+              : "",
+        },
+      )
+    }
+    if (daysRemaining <= 0) return null
+    const dailyPace = remaining / daysRemaining
+    return t("screens.settings.budgets.card.insight.dailyPace", {
+      amount: formatAmt(dailyPace),
+      count: daysRemaining,
+    })
+  })()
+
+  // Icons: up to 2 category icons + overflow chip; falls back to budget icon
+  // when no categories are linked.
+  const visibleCats = linkedCategories.slice(0, 1)
+  const overflowCount = Math.max(
+    linkedCategories.length - visibleCats.length,
+    0,
+  )
+  const useCategoryIcons = visibleCats.length > 0
 
   return (
     <Pressable
@@ -175,34 +268,112 @@ export function BudgetCard({ budget, onPress }: BudgetCardProps) {
       onPress={onPress}
       accessibilityLabel={budget.name}
     >
-      {/* Row 1: icon + name + category chip / period chip */}
       <View style={styles.row1}>
         <View style={styles.row1Left}>
-          <DynamicIcon
-            icon={budget.icon}
-            colorScheme={budget.colorScheme}
-            size={20}
-          />
+          <View style={styles.iconStack}>
+            {useCategoryIcons ? (
+              <>
+                {visibleCats.map((c) => (
+                  <DynamicIcon
+                    key={c.id}
+                    icon={c.icon}
+                    colorScheme={c.colorScheme}
+                    size={16}
+                  />
+                ))}
+                {overflowCount > 0 && (
+                  <View style={styles.overflowChip}>
+                    <Text variant="small" style={styles.overflowText}>
+                      +{overflowCount}
+                    </Text>
+                  </View>
+                )}
+              </>
+            ) : (
+              <DynamicIcon
+                icon={budget.icon}
+                colorScheme={budget.colorScheme}
+                size={20}
+              />
+            )}
+          </View>
           <View style={styles.nameContainer}>
             <Text variant="default" style={styles.name} numberOfLines={1}>
               {budget.name}
             </Text>
-            <Text
-              variant="small"
-              style={styles.categoryLabel}
-              numberOfLines={1}
-            >
-              {categoryNames.length > 0
-                ? categoryNames.join(", ")
-                : t("screens.settings.budgets.card.noCategory")}
+            <Text variant="small" style={styles.subtitle} numberOfLines={1}>
+              {isOverBudget ? (
+                <>
+                  <Text
+                    variant="small"
+                    style={[styles.subtitleAccent, { color: statusColor }]}
+                  >
+                    +
+                    <Money
+                      value={Math.abs(remaining)}
+                      currency={budget.currencyCode}
+                      variant="small"
+                      tone="transfer"
+                      hideSign
+                      style={{ color: statusColor }}
+                    />{" "}
+                    {t("screens.settings.budgets.card.over")}
+                  </Text>{" "}
+                  · {t("screens.settings.budgets.card.of")}{" "}
+                  <Money
+                    value={limit}
+                    currency={budget.currencyCode}
+                    variant="small"
+                    tone="transfer"
+                    hideSign
+                  />
+                </>
+              ) : (
+                <>
+                  <Text
+                    variant="small"
+                    style={[styles.subtitleAccent, { color: statusColor }]}
+                  >
+                    <Money
+                      value={Math.max(remaining, 0)}
+                      currency={budget.currencyCode}
+                      variant="small"
+                      tone="transfer"
+                      hideSign
+                      style={{ color: statusColor }}
+                    />{" "}
+                    {t("screens.settings.budgets.card.left")}
+                  </Text>{" "}
+                  · {t("screens.settings.budgets.card.of")}{" "}
+                  <Money
+                    value={limit}
+                    currency={budget.currencyCode}
+                    variant="small"
+                    tone="transfer"
+                    hideSign
+                  />
+                </>
+              )}
             </Text>
           </View>
         </View>
         <View style={styles.row1Right}>
           {budget.isActive ? (
-            <View style={styles.periodBadge}>
-              <Text variant="small" style={styles.periodText}>
-                {periodLabel}
+            <View style={[styles.statusBadge, { backgroundColor: statusBg }]}>
+              <RNView
+                style={[styles.statusDot, { backgroundColor: statusColor }]}
+              />
+              <Text
+                variant="small"
+                style={[
+                  styles.statusText,
+                  { color: statusColor },
+                  isRTL && styles.statusTextRTL,
+                ]}
+              >
+                {t(
+                  `screens.settings.budgets.card.status.${status}` as TranslationKey,
+                )}
               </Text>
             </View>
           ) : (
@@ -215,71 +386,66 @@ export function BudgetCard({ budget, onPress }: BudgetCardProps) {
         </View>
       </View>
 
-      {/* Row 2: Progress bar */}
-      <View style={styles.progressTrack}>
-        <RNView
-          style={[
-            styles.progressFill,
-            {
-              width: `${(ratio * 100).toFixed(1)}%` as `${number}%`,
-              backgroundColor: progressColor,
-            },
-          ]}
-        />
+      <View style={styles.gaugeRow}>
+        <Text
+          variant="small"
+          style={[styles.gaugeLabel, isRTL && styles.gaugeLabelRTL]}
+        >
+          {t("screens.settings.budgets.card.time")}
+        </Text>
+        <View style={styles.gaugeTrack}>
+          <RNView
+            style={[
+              styles.gaugeFill,
+              {
+                width: `${(timeRatio * 100).toFixed(1)}%` as DimensionValue,
+                backgroundColor: theme.colors.onSecondary,
+              },
+            ]}
+          />
+        </View>
+        <Text variant="small" style={styles.gaugeValue}>
+          {t("screens.settings.budgets.card.dayOf", {
+            current: elapsedDays,
+            total: totalDays,
+          })}
+        </Text>
       </View>
 
-      {/* Row 3: spent label and remaining label */}
-      <View style={styles.row3}>
-        <Text variant="small" style={styles.spentLabel}>
-          {t("screens.settings.budgets.card.spent")}:{" "}
-          <Money
-            value={spent}
-            currency={budget.currencyCode}
-            variant="small"
-            tone="transfer"
-            hideSign
-          />{" "}
-          {t("screens.settings.budgets.card.of")}{" "}
-          <Money
-            value={limit}
-            currency={budget.currencyCode}
-            variant="small"
-            tone="transfer"
-            hideSign
-          />
+      <View style={styles.gaugeRow}>
+        <Text
+          variant="small"
+          style={[styles.gaugeLabel, isRTL && styles.gaugeLabelRTL]}
+        >
+          {t("screens.settings.budgets.card.spend")}
         </Text>
+        <View style={styles.gaugeTrack}>
+          <RNView
+            style={[
+              styles.gaugeFill,
+              {
+                width: `${(spendRatio * 100).toFixed(1)}%` as DimensionValue,
+                backgroundColor: progressColor,
+              },
+            ]}
+          />
+        </View>
         <Text
           variant="small"
           style={[
-            styles.remainingLabel,
-            isOverBudget && { color: theme.colors.customColors.expense },
+            styles.gaugeValue,
+            { color: progressColor, fontWeight: "700" },
           ]}
         >
-          {isOverBudget ? (
-            <>
-              {t("screens.settings.budgets.card.overBudget")}{" "}
-              <Money
-                value={Math.abs(remaining)}
-                currency={budget.currencyCode}
-                variant="small"
-                tone="transfer"
-                hideSign
-              />
-            </>
-          ) : (
-            <>
-              <Money
-                value={remaining}
-                currency={budget.currencyCode}
-                variant="small"
-                tone="transfer"
-                hideSign
-              />{" "}
-              {t("screens.settings.budgets.card.remaining")}
-            </>
-          )}
+          {Math.round(spendPercent)}%
         </Text>
       </View>
+
+      {insight && (
+        <Text variant="small" style={styles.insight}>
+          {insight}
+        </Text>
+      )}
     </Pressable>
   )
 }
@@ -314,19 +480,42 @@ const styles = StyleSheet.create((t) => ({
     flex: 1,
     minWidth: 0,
   },
+  iconStack: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    flexShrink: 0,
+  },
+  overflowChip: {
+    paddingHorizontal: 6,
+    height: 24,
+    minWidth: 24,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: t.radius,
+    backgroundColor: t.colors.secondary,
+  },
+  overflowText: {
+    fontSize: t.typography.labelXSmall.fontSize,
+    fontWeight: "700",
+    color: t.colors.onSecondary,
+  },
   nameContainer: {
     flex: 1,
     minWidth: 0,
+    gap: 2,
   },
   name: {
     fontWeight: "600",
     color: t.colors.onSurface,
     fontSize: t.typography.bodyLarge.fontSize,
   },
-  categoryLabel: {
-    color: t.colors.onSecondary,
+  subtitle: {
     fontSize: t.typography.labelMedium.fontSize,
-    opacity: 0.7,
+    color: t.colors.onSecondary,
+  },
+  subtitleAccent: {
+    fontWeight: "700",
   },
   row1Right: {
     flexDirection: "row",
@@ -334,16 +523,30 @@ const styles = StyleSheet.create((t) => ({
     gap: 6,
     flexShrink: 0,
   },
-  periodBadge: {
-    backgroundColor: t.colors.secondary,
-    borderRadius: t.radius,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
+  statusBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 100,
   },
-  periodText: {
-    fontSize: t.typography.labelSmall.fontSize,
-    color: t.colors.onSecondary,
-    fontWeight: "600",
+  statusDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+  },
+  statusText: {
+    fontSize: t.typography.labelXSmall.fontSize,
+    fontWeight: "700",
+    letterSpacing: 0.5,
+    textTransform: "uppercase",
+  },
+  statusTextRTL: {
+    letterSpacing: 0,
+  },
+  gaugeLabelRTL: {
+    letterSpacing: 0,
   },
   disabledBadge: {
     backgroundColor: t.colors.secondary,
@@ -356,30 +559,38 @@ const styles = StyleSheet.create((t) => ({
     color: t.colors.onSecondary,
     fontWeight: "600",
   },
-  progressTrack: {
+  gaugeRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  gaugeLabel: {
+    fontSize: t.typography.labelXSmall.fontSize,
+    fontWeight: "700",
+    color: t.colors.onSecondary,
+    letterSpacing: 0.5,
+    width: 48,
+  },
+  gaugeTrack: {
+    flex: 1,
     height: 6,
     backgroundColor: t.colors.secondary,
     borderRadius: 3,
     overflow: "hidden",
   },
-  progressFill: {
+  gaugeFill: {
     height: "100%",
     borderRadius: 3,
   },
-  row3: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    gap: 8,
-  },
-  spentLabel: {
+  gaugeValue: {
+    fontSize: t.typography.labelSmall.fontSize,
     color: t.colors.onSecondary,
-    fontSize: t.typography.labelMedium.fontSize,
-    flex: 1,
+    minWidth: 60,
+    textAlign: "right",
   },
-  remainingLabel: {
+  insight: {
+    fontSize: t.typography.labelSmall.fontSize,
     color: t.colors.onSecondary,
-    fontSize: t.typography.labelMedium.fontSize,
-    flexShrink: 0,
+    fontStyle: "italic",
   },
 }))

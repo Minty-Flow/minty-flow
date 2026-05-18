@@ -1,6 +1,7 @@
+import { differenceInDays } from "date-fns"
 import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
-import { View as RNView } from "react-native"
+import { type DimensionValue, View as RNView } from "react-native"
 import { StyleSheet, useUnistyles } from "react-native-unistyles"
 
 import { DynamicIcon } from "~/components/dynamic-icon"
@@ -12,8 +13,10 @@ import { View } from "~/components/ui/view"
 import { on } from "~/database/events"
 import { getLoanProgress } from "~/database/repos/loan-repo"
 import { useAccount } from "~/stores/db/account.store"
+import { useLanguageStore } from "~/stores/language.store"
 import type { Loan } from "~/types/loans"
 import { LoanTypeEnum } from "~/types/loans"
+import { formatShortMonthDay } from "~/utils/time-utils"
 
 interface LoanCardProps {
   loan: Loan
@@ -23,6 +26,9 @@ interface LoanCardProps {
 export function LoanCard({ loan, onPress }: LoanCardProps) {
   const [paidAmount, setPaidAmount] = useState(0)
   const account = useAccount(loan.accountId)
+  const { t } = useTranslation()
+  const { theme } = useUnistyles()
+  const isRTL = useLanguageStore((s) => s.isRTL)
 
   useEffect(() => {
     let cancelled = false
@@ -37,8 +43,6 @@ export function LoanCard({ loan, onPress }: LoanCardProps) {
       unsub()
     }
   }, [loan.id, loan.loanType])
-  const { t } = useTranslation()
-  const { theme } = useUnistyles()
 
   const isLent = loan.loanType === LoanTypeEnum.LENT
   const paid = paidAmount ?? 0
@@ -48,21 +52,38 @@ export function LoanCard({ loan, onPress }: LoanCardProps) {
   const isPaid = progress >= 1
   const remaining = Math.max(principal - paid, 0)
 
-  // Due date display string
-  const dueDateLabel = (): string | null => {
-    if (!loan.dueDate) return null
+  const accentColor = loan.colorScheme?.primary ?? theme.colors.primary
+  const accentTint = loan.colorScheme?.secondary ?? `${theme.colors.primary}20`
+  const mutedColor = theme.colors.onSecondary
+
+  const dueText = (): string => {
+    if (isPaid) return t("screens.settings.loans.card.settled")
+    if (!loan.dueDate) return t("screens.settings.loans.card.noDueDate")
+    const diff = differenceInDays(loan.dueDate, new Date())
+    if (diff === 0) return t("screens.settings.loans.card.dueToday")
+    if (diff === 1) return t("screens.settings.loans.card.dueTomorrow")
+    if (diff > 1 && diff <= 14)
+      return t("screens.settings.loans.card.dueInDays", { count: diff })
     return t("screens.settings.loans.card.dueDate", {
-      date: loan.dueDate.toLocaleDateString(undefined, {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      }),
+      date: formatShortMonthDay(loan.dueDate),
     })
   }
 
-  const progressBarColor = isPaid
-    ? theme.colors.customColors.income
-    : theme.colors.primary
+  const subtitleParts = [account?.name, dueText()].filter(Boolean)
+  const subtitleColor =
+    loan.isOverdue && !isPaid ? theme.colors.customColors.expense : mutedColor
+
+  const badgeLabel = isPaid
+    ? t("screens.settings.loans.card.statusPaid")
+    : isLent
+      ? t("screens.settings.loans.type.lent")
+      : t("screens.settings.loans.type.borrowed")
+  const badgeIcon = isLent || isPaid ? "arrow-up-right" : "arrow-down-left"
+  const badgeColor = isPaid ? mutedColor : accentColor
+  const badgeBg = isPaid ? theme.colors.secondary : accentTint
+
+  const progressBarColor = isPaid ? mutedColor : accentColor
+  const progressPercent = Number((clampedProgress * 100).toFixed(1))
 
   return (
     <Pressable
@@ -70,7 +91,6 @@ export function LoanCard({ loan, onPress }: LoanCardProps) {
       onPress={onPress}
       accessibilityLabel={loan.name}
     >
-      {/* Row 1: icon + name + type badge + overdue badge */}
       <View style={styles.row1}>
         <View style={styles.row1Left}>
           <DynamicIcon
@@ -78,57 +98,57 @@ export function LoanCard({ loan, onPress }: LoanCardProps) {
             size={18}
             colorScheme={loan.colorScheme}
           />
-          <Text variant="default" style={styles.name} numberOfLines={1}>
-            {loan.name}
-          </Text>
-        </View>
-
-        <View style={styles.row1Right}>
-          {/* Loan type badge — Lent or Borrowed */}
-          <View style={styles.typeBadge}>
-            <Text variant="small" style={styles.typeBadgeText}>
-              {isLent
-                ? t("screens.settings.loans.type.lent")
-                : t("screens.settings.loans.type.borrowed")}
+          <View style={styles.nameBlock}>
+            <Text variant="default" style={styles.name} numberOfLines={1}>
+              {loan.name}
+            </Text>
+            <Text
+              variant="small"
+              style={[styles.subtitle, { color: subtitleColor }]}
+              numberOfLines={1}
+            >
+              {subtitleParts.join(" · ")}
             </Text>
           </View>
+        </View>
 
-          {/* Overdue badge */}
-          {loan.isOverdue && !isPaid && (
-            <View style={styles.overdueBadge}>
-              <IconSvg
-                name="alert-circle"
-                size={12}
-                color={theme.colors.customColors.expense}
-              />
-              <Text variant="small" style={styles.overdueText}>
-                {t("screens.settings.loans.card.overdue")}
-              </Text>
-            </View>
-          )}
+        <View style={[styles.badge, { backgroundColor: badgeBg }]}>
+          <IconSvg
+            name={badgeIcon}
+            size={12}
+            color={badgeColor}
+            style={isRTL ? styles.badgeIconRTL : undefined}
+          />
+          <Text
+            variant="small"
+            style={[
+              styles.badgeText,
+              { color: badgeColor },
+              isRTL && styles.badgeTextRTL,
+            ]}
+          >
+            {badgeLabel}
+          </Text>
         </View>
       </View>
 
-      {/* Row 2: Progress bar */}
       <View style={styles.progressTrack}>
         <RNView
           style={[
             styles.progressFill,
             {
-              width: `${(clampedProgress * 100).toFixed(1)}%` as `${number}%`,
+              width: `${progressPercent}%` as DimensionValue,
               backgroundColor: progressBarColor,
             },
           ]}
         />
       </View>
 
-      {/* Row 3: paid/principal amounts + due date or remaining */}
       <View style={styles.row3}>
         <Text variant="small" style={styles.paidLabel}>
           {isLent
             ? t("screens.settings.loans.card.received")
-            : t("screens.settings.loans.card.paid")}
-          :{" "}
+            : t("screens.settings.loans.card.paidBack")}{" "}
           <Money
             value={paid}
             currency={account?.currencyCode ?? ""}
@@ -146,31 +166,24 @@ export function LoanCard({ loan, onPress }: LoanCardProps) {
           />
         </Text>
 
-        <Text variant="small" style={styles.remainingLabel}>
-          {isPaid ? null : (
-            <>
-              <Money
-                value={remaining}
-                currency={account?.currencyCode ?? ""}
-                variant="small"
-                tone="transfer"
-                hideSign
-              />{" "}
-              {t("screens.settings.loans.card.remaining")}
-            </>
-          )}
-        </Text>
-      </View>
-
-      {/* Row 4: Due date chip (only when present and not overdue) */}
-      {loan.dueDate && !loan.isOverdue && !isPaid && (
-        <View style={styles.dueDateRow}>
-          <IconSvg name="calendar" size={12} color={theme.colors.onSecondary} />
-          <Text variant="small" style={styles.dueDateText}>
-            {dueDateLabel()}
+        {isPaid ? (
+          <Text
+            variant="small"
+            style={[styles.rightText, { color: mutedColor }]}
+          >
+            {t("screens.settings.loans.card.settled")}
           </Text>
-        </View>
-      )}
+        ) : (
+          <Money
+            value={remaining}
+            currency={account?.currencyCode ?? ""}
+            variant="small"
+            tone="transfer"
+            hideSign
+            style={{ color: accentColor }}
+          />
+        )}
+      </View>
     </Pressable>
   )
 }
@@ -196,42 +209,38 @@ const styles = StyleSheet.create((t) => ({
     flex: 1,
     marginRight: 8,
   },
+  nameBlock: {
+    flex: 1,
+    gap: 2,
+  },
   name: {
     ...t.typography.bodyLarge,
     fontWeight: "600",
     color: t.colors.onSurface,
-    flex: 1,
   },
-  row1Right: {
+  subtitle: {
+    fontSize: t.typography.labelSmall.fontSize,
+  },
+  badge: {
     flexShrink: 0,
     flexDirection: "row",
     alignItems: "center",
-    gap: 6,
+    gap: 4,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 100,
   },
-  typeBadge: {
-    backgroundColor: t.colors.secondary,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: t.radius,
+  badgeText: {
+    fontSize: t.typography.labelXSmall.fontSize,
+    fontWeight: "700",
+    letterSpacing: 0.5,
+    textTransform: "uppercase",
   },
-  typeBadgeText: {
-    fontSize: t.typography.labelSmall.fontSize,
-    fontWeight: "600",
-    color: t.colors.onSecondary,
+  badgeTextRTL: {
+    letterSpacing: 0,
   },
-  overdueBadge: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 3,
-    backgroundColor: `${t.colors.customColors.expense}20`,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: t.radius,
-  },
-  overdueText: {
-    fontSize: t.typography.labelSmall.fontSize,
-    fontWeight: "600",
-    color: t.colors.customColors.expense,
+  badgeIconRTL: {
+    transform: [{ scaleX: -1 }],
   },
   progressTrack: {
     height: 6,
@@ -254,19 +263,9 @@ const styles = StyleSheet.create((t) => ({
     flex: 1,
     marginRight: 8,
   },
-  remainingLabel: {
+  rightText: {
     fontSize: t.typography.labelMedium.fontSize,
-    color: t.colors.onSecondary,
     flexShrink: 0,
-  },
-  dueDateRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4,
-  },
-  dueDateText: {
-    fontSize: t.typography.labelXSmall.fontSize,
-    color: t.colors.onSecondary,
-    opacity: 0.7,
+    fontWeight: "600",
   },
 }))

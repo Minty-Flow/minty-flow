@@ -4,9 +4,8 @@ import { useTranslation } from "react-i18next"
 import { FlatList } from "react-native"
 import { StyleSheet } from "react-native-unistyles"
 
-import { DynamicIcon } from "~/components/dynamic-icon"
+import { PresetListItem } from "~/components/preset-list-item"
 import { Button } from "~/components/ui/button"
-import { IconSvg } from "~/components/ui/icon-svg"
 import { Pressable } from "~/components/ui/pressable"
 import { Text } from "~/components/ui/text"
 import { View } from "~/components/ui/view"
@@ -68,13 +67,29 @@ const CategoryPresetsScreenInner = ({
     [categories, presets],
   )
 
-  const togglePreset = (presetName: string) => {
+  const availableKeys = presets
+    .filter((p) => !addedPresets.has(`${p.icon}:${p.type}`))
+    .map((p) => `${p.icon}:${p.type}`)
+
+  const allSelected =
+    availableKeys.length > 0 &&
+    availableKeys.every((k) => selectedPresets.has(k))
+
+  const toggleSelectAll = () => {
+    if (allSelected) {
+      setSelectedPresets(new Set())
+    } else {
+      setSelectedPresets(new Set(availableKeys))
+    }
+  }
+
+  const togglePreset = (presetKey: string) => {
     setSelectedPresets((prev) => {
       const next = new Set(prev)
-      if (next.has(presetName)) {
-        next.delete(presetName)
+      if (next.has(presetKey)) {
+        next.delete(presetKey)
       } else {
-        next.add(presetName)
+        next.add(presetKey)
       }
       return next
     })
@@ -87,13 +102,12 @@ const CategoryPresetsScreenInner = ({
     if (selected.length === 0) return
 
     const toCreate = selected.map((preset) => ({
-      name: t(preset.name), // resolve the translation at save time
+      name: t(preset.name),
       type: preset.type,
       icon: preset.icon,
       colorSchemeName: preset.colorSchemeName,
     }))
 
-    // Only keep the side-effectful async work inside try/catch
     try {
       await createCategories(toCreate)
       setSelectedPresets(new Set())
@@ -109,72 +123,59 @@ const CategoryPresetsScreenInner = ({
 
   const renderPresetItem = ({ item }: { item: (typeof presets)[0] }) => {
     const presetKey = `${item.icon}:${item.type}`
-    const isAdded = addedPresets.has(presetKey)
-    const isSelected = selectedPresets.has(presetKey)
-
     return (
-      <Pressable
-        style={styles.presetItem}
-        onPress={() => {
-          if (!isAdded) {
-            togglePreset(`${item.icon}:${item.type}`)
-          }
-        }}
-        disabled={isAdded}
-      >
-        {/* Icon container - using DynamicIcon */}
-        <DynamicIcon icon={item.icon} size={24} />
-
-        {/* Text content */}
-        <View style={styles.textContainer}>
-          <Text variant="default" style={styles.presetName}>
-            {t(item.name)}
-          </Text>
-        </View>
-
-        {/* Right side action */}
-        {isAdded ? (
-          <View style={styles.addedBadge}>
-            <Text variant="small" style={styles.addedText}>
-              {t("components.categories.presets.added")}
-            </Text>
-          </View>
-        ) : isSelected ? (
-          <View style={styles.checkmark}>
-            <IconSvg
-              name="check"
-              size={16}
-              color={styles.checkmarkColor.color}
-            />
-          </View>
-        ) : (
-          <View style={styles.plusButton}>
-            <IconSvg name="plus" size={20} />
-          </View>
-        )}
-      </Pressable>
+      <PresetListItem
+        icon={item.icon}
+        label={t(item.name)}
+        isSelected={selectedPresets.has(presetKey)}
+        isAdded={addedPresets.has(presetKey)}
+        onPress={() => togglePreset(presetKey)}
+      />
     )
   }
 
   return (
     <View style={styles.container}>
+      <View style={styles.selectionBar}>
+        <Text style={styles.selectionCount}>
+          {selectedPresets.size > 0
+            ? t("components.categories.presets.selectedCount", {
+                count: selectedPresets.size,
+              })
+            : t("components.categories.presets.noneSelected")}
+        </Text>
+        <Pressable
+          style={styles.selectAllButton}
+          onPress={toggleSelectAll}
+          hitSlop={8}
+        >
+          <Text style={styles.selectAllText}>
+            {allSelected
+              ? t("components.categories.presets.deselectAll")
+              : t("components.categories.presets.selectAll")}
+          </Text>
+        </Pressable>
+      </View>
+
       <FlatList
         data={presets}
         keyExtractor={(item) => `${item.icon}:${item.type}`}
         renderItem={renderPresetItem}
-        showsVerticalScrollIndicator={false}
+        numColumns={3}
+        columnWrapperStyle={styles.columnWrapper}
         contentContainerStyle={styles.listContent}
+        showsVerticalScrollIndicator={false}
         style={styles.list}
       />
 
-      <View style={[styles.buttonContainer, { paddingBottom: 16 }]}>
+      <View style={styles.buttonContainer}>
         <Button
           variant="default"
           onPress={handleAddSelected}
           disabled={selectedPresets.size === 0}
           style={styles.addButton}
         >
-          <Text variant="default" style={styles.addButtonText}>
+          <Text style={styles.addButtonText}>
             {t("components.categories.presets.addSelected", {
               count: selectedPresets.size,
             })}
@@ -196,68 +197,48 @@ const styles = StyleSheet.create((theme) => ({
     flex: 1,
     backgroundColor: theme.colors.surface,
   },
+  selectionBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+  },
+  selectionCount: {
+    fontSize: theme.typography.labelMedium.fontSize,
+    fontWeight: "600",
+    color: theme.colors.onSecondary,
+  },
+  selectAllButton: {
+    paddingHorizontal: 14,
+    paddingVertical: 6,
+    borderRadius: 20,
+    backgroundColor: `${theme.colors.primary}18`,
+  },
+  selectAllText: {
+    fontSize: theme.typography.labelMedium.fontSize,
+    fontWeight: "600",
+    color: theme.colors.primary,
+  },
   list: {
     flex: 1,
   },
-
-  listContent: {},
-
-  presetItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 20,
-    gap: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: theme.colors.secondary,
-    borderBottomOpacity: 0.1,
+  listContent: {
+    paddingHorizontal: 16,
+    paddingBottom: 8,
+    gap: 8,
   },
-  textContainer: {
-    flex: 1,
-  },
-  presetName: {
-    fontSize: theme.typography.bodyLarge.fontSize,
-    fontWeight: "600",
-    color: theme.colors.onSurface,
-  },
-  checkmark: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: theme.colors.primary,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  checkmarkColor: {
-    color: theme.colors.onPrimary,
-  },
-  plusButton: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: theme.colors.secondary,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  addedBadge: {
-    paddingHorizontal: 10,
-    paddingVertical: 3,
-    borderRadius: 16,
-    backgroundColor: theme.colors.primary,
-  },
-  addedText: {
-    fontSize: theme.typography.labelMedium.fontSize,
-    fontWeight: "600",
-    color: theme.colors.onPrimary,
+  columnWrapper: {
+    gap: 8,
   },
   buttonContainer: {
     paddingHorizontal: 20,
+    paddingVertical: 16,
     backgroundColor: theme.colors.surface,
   },
-
   addButton: {
     width: "100%",
   },
-
   addButtonText: {
     fontSize: theme.typography.bodyLarge.fontSize,
     fontWeight: "600",

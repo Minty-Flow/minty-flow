@@ -579,13 +579,26 @@
           "noDeadline": "بلا موعد",
           "allAccounts": "جميع الحسابات",
           "archived": "مؤرشف",
+          "left": "متبقي",
+          "reachedLabel": "تم الوصول!",
           "type": {
             "savings": "ادخار",
             "expense": "إنفاق"
+          },
+          "status": {
+            "onTrack": "في الموعد",
+            "behind": "متأخر",
+            "flexible": "مرن",
+            "reached": "مكتمل"
+          },
+          "insight": {
+            "savePerDay": "ادخر {{amount}}/يوم للوصول إليه",
+            "spendPerDay": "أنفق {{amount}}/يوم للوصول إليه",
+            "goalReached": "🎉 تم تحقيق الهدف"
           }
         },
         "detail": {
-          "title": "تفاصيل الهدف",
+          "title": "هدف",
           "transactions": "المعاملات",
           "noTransactions": "لا توجد معاملات مرتبطة بهذا الهدف",
           "progress": "التقدم",
@@ -643,16 +656,43 @@
         },
         "card": {
           "spent": "تم الإنفاق",
+          "spend": "الإنفاق",
+          "time": "الزمن",
           "of": "من",
+          "over": "تجاوز",
+          "left": "متبقي",
           "remaining": "متبقي",
           "noCategory": "جميع الفئات",
           "allAccounts": "جميع الحسابات",
           "overBudget": "تجاوز الميزانية",
           "alertThresholdReached": "تم بلوغ حد التنبيه",
-          "disabled": "معطّل"
+          "disabled": "معطّل",
+          "dayOf": "يوم {{current}}/{{total}}",
+          "dayXofY": "اليوم {{current}} من {{total}}",
+          "uncategorized": "غير مصنف",
+          "status": {
+            "onTrack": "على المسار",
+            "watch": "انتبه",
+            "over": "تجاوز"
+          },
+          "insight": {
+            "over": {
+              "daily": "تجاوز بمقدار {{amount}} اليوم",
+              "weekly": "تجاوز بمقدار {{amount}} هذا الأسبوع",
+              "monthly": "تجاوز بمقدار {{amount}} هذا الشهر",
+              "yearly": "تجاوز بمقدار {{amount}} هذا العام",
+              "custom": "تجاوز بمقدار {{amount}} خلال {{range}}"
+            },
+            "dailyPace_zero": "{{amount}}/يوم لمدة {{count}} يوم",
+            "dailyPace_one": "{{amount}}/يوم لمدة يوم واحد",
+            "dailyPace_two": "{{amount}}/يوم لمدة يومين",
+            "dailyPace_few": "{{amount}}/يوم لمدة {{count}} أيام",
+            "dailyPace_many": "{{amount}}/يوم لمدة {{count}} يومًا",
+            "dailyPace_other": "{{amount}}/يوم لمدة {{count}} يوم"
+          }
         },
         "detail": {
-          "title": "تفاصيل الميزانية",
+          "title": "ميزانية",
           "transactions": "المعاملات",
           "noTransactions": "لا توجد معاملات في هذه الفترة"
         },
@@ -700,20 +740,32 @@
         },
         "card": {
           "paid": "مدفوع",
+          "paidBack": "تم سداد",
           "received": "مُستلَم",
           "remaining": "متبقي",
           "of": "من",
           "overdue": "متأخر",
           "dueDate": "يستحق {{date}}",
+          "dueToday": "يستحق اليوم",
+          "dueTomorrow": "يستحق غدًا",
+          "dueInDays_zero": "يستحق خلال {{count}} يوم",
+          "dueInDays_one": "يستحق خلال يوم واحد",
+          "dueInDays_two": "يستحق خلال يومين",
+          "dueInDays_few": "يستحق خلال {{count}} أيام",
+          "dueInDays_many": "يستحق خلال {{count}} يومًا",
+          "dueInDays_other": "يستحق خلال {{count}} يوم",
           "noDueDate": "بلا تاريخ استحقاق",
-          "completed": "مكتمل"
+          "completed": "مكتمل",
+          "settled": "مُسوّى",
+          "statusPaid": "مدفوع"
         },
         "form": {
           "loadingText": "جاري تحميل القرض...",
-          "amountLabel": "المبلغ الأصلي"
+          "amountLabel": "المبلغ الأصلي",
+          "deleteLabel": "حذف القرض"
         },
         "detail": {
-          "title": "تفاصيل القرض",
+          "title": "قرض",
           "transactions": "المعاملات",
           "noTransactions": "لا توجد معاملات مرتبطة بهذا القرض حتى الآن"
         },
@@ -1179,6 +1231,8 @@
         "addSelected": "إضافة {{count}} محدد",
         "selectAll": "تحديد الكل",
         "deselectAll": "إلغاء تحديد الكل",
+        "selectedCount": "{{count}} محدد",
+        "noneSelected": "لم يتم التحديد",
         "expense": {
           "education": "تعليم",
           "groceries": "بقالة",
@@ -1213,7 +1267,8 @@
           "taxRefund": "استرداد ضريبي",
           "cashback": "استرداد نقدي",
           "commission": "عمولة",
-          "allowance": "مصروف"
+          "allowance": "مصروف",
+          "overtime": "وقت إضافي"
         }
       },
       "search": {

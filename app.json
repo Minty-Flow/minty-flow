@@ -1,13 +1,12 @@
 {
   "expo": {
-    "version": "2.0.1",
+    "version": "2.0.2",
     "name": "Minty Flow",
     "slug": "minty-flow-app",
     "extra": {
       "supportsRTL": true
     },
     "owner": "adelefaells-organization",
-    "orientation": "portrait",
     "icon": "./src/assets/images/icon.png",
     "scheme": "mintyflow",
     "userInterfaceStyle": "automatic",
@@ -19,7 +18,7 @@
       }
     },
     "android": {
-      "versionCode": 21,
+      "versionCode": 22,
       "permissions": [
         "READ_CONTACTS",
         "WRITE_CONTACTS",
@@ -54,10 +53,7 @@
           "image": "./src/assets/images/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#CCFFD5",
-          "dark": {
-            "backgroundColor": "#007B17"
-          }
+          "backgroundColor": "#1a1a1a"
         }
       ],
       [

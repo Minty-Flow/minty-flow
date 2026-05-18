@@ -1,6 +1,6 @@
 # Project Structure
 
-Generated on: 2026-05-16T23:08:29.271Z
+Generated on: 2026-05-18T18:51:48.621Z
 
 ```
 ./
@@ -279,6 +279,7 @@ Generated on: 2026-05-16T23:08:29.271Z
 │   │   ├── 6-phase.md
 │   │   ├── 7-phase.md
 │   │   └── plan-overview.md
+│   ├── release-notes-format.md
 │   ├── STRUCTURE.md
 │   └── typography-migration.md
 ├── scripts/
@@ -981,6 +982,7 @@ Generated on: 2026-05-16T23:08:29.271Z
 │   │   ├── keyboard-sticky-view-minty.tsx
 │   │   ├── money.tsx
 │   │   ├── month-year-picker.tsx
+│   │   ├── preset-list-item.tsx
 │   │   ├── privacy-eye-control.tsx
 │   │   ├── reorderable-list-v2.tsx
 │   │   ├── screen-shared-header.tsx
